@@ -1,23 +1,17 @@
-# Arknights: Endfield Essence Solver
+# Arknights: Endfield Weapon Essence Tracker
 
-An interactive tool for optimizing essence farming selections in Arknights: Endfield.
-
-## Features
-- **Visual Arsenal**: View and categorize your weapons by type with rarity-coded styling.
-- **Priority Targeting**: Select priority (Star) and tracked (Normal) targets to optimize your farming.
-- **Live Optimizer**: Calculates the best Severe Energy Alluvium locations and selections (3 Attributes + 1 Stat) based on your priorities.
-- **Detailed Insights**: Click any selection to see a full breakdown of matching weapons, including their stats and icons.
-- **Quick Reference**: Hover or click weapon names in the results to see their specific essence stats instantly.
-- **Persistence**: Your selections are saved to your browser's local storage.
+An interactive tool for tracking and optimizing weapon essence engravings.
 
 ## Preview
+
+### Main Window
 ![Main Window](images/preview_main.png)
+
+### Selection Details
 ![Selection Details](images/preview_detail.png)
 
 ## How to Use
-1. Open the [Essence Solver](https://nakomaru.github.io/essencesolver/).
-2. Click on weapons in the **ESSENCE TARGETS** section to cycle priorities:
-   - **Priority (Star)**: High priority target (Weight: 1000).
-   - **Tracked (Normal)**: Standard target (Weight: 1).
-   - **Untracked (Gray)**: Ignored in primary calculations (Weight: 0.001).
-3. View the **ESSENCE MATCHES** table to find the best locations and selections for your current goals.
+1. Open the [Weapon Essence Tracker](https://nakomaru.github.io/essencetracker/).
+2. Click on weapons in the **Essence Targets** section to cycle priorities.
+3. View the **Essence Matches** table to find locations with the most matches for your current targets.
+4. Click on a match for a summary.
