@@ -133,7 +133,21 @@
             display: inline-block;
         }
 
-        .reset-btn { font-size: 0.75rem; }
+        .reset-btn { 
+            font-size: 0.75rem; 
+            background: #222; 
+            border: 1px solid #444; 
+            color: #aaa;
+            padding: 4px 12px;
+            border-radius: 4px;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .reset-btn:hover {
+            background: #333;
+            border-color: #666;
+            color: #eee;
+        }
 
         .color-p2 { color: #eef6ff !important; border-color: #eef6ff !important; }
         .color-p1 { color: #a0d8ef !important; border-color: #a0d8ef !important; }
@@ -179,6 +193,41 @@
             align-items: center;
             z-index: 1000;
         }
+
+        /* Modal Styles */
+        .custom-modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+        .custom-modal {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 24px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+        }
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .modal-btn {
+            padding: 6px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+        .btn-confirm { background: #d9534f; border: 1px solid #d43f3a; color: white; }
+        .btn-cancel { background: #333; border: 1px solid #444; color: #ccc; }
     </style>
 </head>
 <body>
@@ -196,6 +245,7 @@
                 return saved ? JSON.parse(saved) : null;
             });
             const [filter, setFilter] = useState('');
+            const [showResetModal, setShowResetModal] = useState(false);
 
             useEffect(() => {
                 fetch('data.json')
@@ -216,12 +266,11 @@
                 }
             }, [priorities]);
 
-            const resetPriorities = () => {
-                if (window.confirm('Reset all to default?')) {
-                    const initial = {};
-                    data.weapons.forEach(w => { initial[w.name] = 1; });
-                    setPriorities(initial);
-                }
+            const confirmReset = () => {
+                const initial = {};
+                data.weapons.forEach(w => { initial[w.name] = 1; });
+                setPriorities(initial);
+                setShowResetModal(false);
             };
 
             const togglePriority = (name) => {
@@ -303,7 +352,6 @@
                     filtered = solverResults.filter(r => r.p2Count > 0);
                 }
                 
-                // Always prune entirely untracked (only p0)
                 filtered = filtered.filter(r => r.p2Count > 0 || r.p1Count > 0);
 
                 return filtered.sort((a, b) => b.score - a.score).slice(0, 100);
@@ -329,13 +377,27 @@
 
             return (
                 <div className="container-fluid py-4">
+                    {showResetModal && (
+                        <div className="custom-modal-overlay">
+                            <div className="custom-modal">
+                                <h4 className="mb-3">Reset Priorities</h4>
+                                <p className="text-muted">Restore all weapons to tracked status?</p>
+                                <div className="modal-buttons">
+                                    <button className="modal-btn btn-confirm" onClick={confirmReset}>RESET</button>
+                                    <button className="modal-btn btn-cancel" onClick={() => setShowResetModal(false)}>CANCEL</button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
                     <div className="row g-4">
                         <div className="col-lg-6">
                             <div className="d-flex justify-content-between align-items-center mb-3">
                                 <h3 className="m-0 fw-bold">ESSENCE TARGETS</h3>
-                                <div className="d-flex gap-3">
-                                    <input type="text" className="form-control form-control-sm bg-dark text-light border-secondary" placeholder="Search..." value={filter} onChange={e => setFilter(e.target.value)} style={{width: '180px'}} />
-                                    <button className="btn btn-outline-secondary btn-sm" onClick={resetPriorities}>RESET</button>
+                                <div className="d-flex gap-3 align-items-center">
+                                    <span style={{fontSize: '0.8rem', color: '#666', fontWeight: 'bold'}}>SEARCH:</span>
+                                    <input type="text" className="form-control form-control-sm bg-dark text-light border-secondary" placeholder="..." value={filter} onChange={e => setFilter(e.target.value)} style={{width: '180px'}} />
+                                    <button className="reset-btn" onClick={() => setShowResetModal(true)}>RESET</button>
                                 </div>
                             </div>
                             
@@ -401,7 +463,7 @@
                                                     {results.map((r, i) => (
                                                         <tr key={i}>
                                                             <td className="ps-3 py-3">
-                                                                <div className="fw-bold mb-1" style={{fontSize: '1.1rem', color: '#aaa'}}>{r.location}</div>
+                                                                <div className="fw-bold mb-1" style={{fontSize: '1.1rem', color: '#a0d8ef'}}>{r.location}</div>
                                                                 <div className="mb-2" style={{fontSize: '0.75rem'}}>
                                                                     <span className="text-uppercase" style={{letterSpacing: '0.5px', color: '#aaa'}}>Matches: </span>
                                                                     <span className="color-p2 fw-bold">{r.p2Count}</span>
