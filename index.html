@@ -230,12 +230,12 @@
         .btn-confirm { background: #d9534f; border: 1px solid #d43f3a; color: white; }
         .btn-cancel { background: #333; border: 1px solid #444; color: #ccc; }
 
-        /* Tooltip Styles - Repositioned to the left */
+        /* Tooltip Styles - Repositioned below */
         .stat-tooltip {
             position: absolute;
-            top: 50%;
-            right: calc(100% + 15px);
-            transform: translateY(-50%);
+            top: calc(100% + 8px);
+            left: 50%;
+            transform: translateX(-50%);
             background: #1a1a1a;
             border: 1px solid #444;
             padding: 8px;
@@ -252,12 +252,12 @@
         .stat-tooltip::after {
             content: '';
             position: absolute;
-            left: 100%;
-            top: 50%;
-            transform: translateY(-50%);
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
             border-width: 6px;
             border-style: solid;
-            border-color: transparent transparent transparent #444;
+            border-color: transparent transparent #444 transparent;
         }
     </style>
 </head>
@@ -434,12 +434,14 @@
 
                     <div className="row g-4">
                         <div className="col-lg-6">
-                            <div className="d-flex justify-content-between align-items-center mb-3">
-                                <h3 className="m-0 fw-bold">ESSENCE TARGETS</h3>
-                                <div className="d-flex gap-3 align-items-center">
-                                    <span style={{fontSize: '0.8rem', color: '#666', fontWeight: 'bold'}}>SEARCH:</span>
-                                    <input type="text" className="form-control form-control-sm bg-dark text-light border-secondary" placeholder="..." value={filter} onChange={e => setFilter(e.target.value)} style={{width: '180px'}} />
+                            <div className="mb-3">
+                                <div className="d-flex justify-content-between align-items-center mb-2">
+                                    <h3 className="m-0 fw-bold">ESSENCE TARGETS</h3>
                                     <button className="reset-btn" onClick={() => setShowResetModal(true)}>RESET</button>
+                                </div>
+                                <div className="d-flex gap-2 align-items-center">
+                                    <span style={{fontSize: '0.8rem', color: '#666', fontWeight: 'bold'}}>SEARCH:</span>
+                                    <input type="text" className="form-control form-control-sm bg-dark text-light border-secondary" placeholder="..." value={filter} onChange={e => setFilter(e.target.value)} style={{flex: 1}} />
                                 </div>
                             </div>
                             
