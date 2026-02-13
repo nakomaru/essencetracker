@@ -396,7 +396,6 @@
                                                 <thead className="text-uppercase text-muted" style={{fontSize: '0.75rem'}}>
                                                     <tr>
                                                         <th className="ps-3 py-3" style={{width: '35%'}}>Location / Selection</th>
-                                                        <th className="text-center py-3" style={{width: '10%'}}>Matches</th>
                                                         <th className="py-3 pe-3">Weapon Essences</th>
                                                     </tr>
                                                 </thead>
@@ -404,18 +403,21 @@
                                                     {results.map((r, i) => (
                                                         <tr key={i}>
                                                             <td className="ps-3 py-3">
-                                                                <div className="text-info fw-bold mb-3" style={{fontSize: '1.1rem'}}>{r.location}</div>
+                                                                <div className="fw-bold mb-1" style={{fontSize: '1.1rem', color: '#aaa'}}>{r.location}</div>
+                                                                <div className="mb-2" style={{fontSize: '0.75rem'}}>
+                                                                    <span className="text-muted text-uppercase" style={{letterSpacing: '0.5px'}}>Matches: </span>
+                                                                    <span className="color-p2 fw-bold">{r.p2Count}</span>
+                                                                    <span className="mx-1 text-muted opacity-50">|</span>
+                                                                    <span className="color-p1 fw-bold">{r.p1Count}</span>
+                                                                    <span className="mx-1 text-muted opacity-50">|</span>
+                                                                    <span className="color-p0 fw-bold">{r.p0Count}</span>
+                                                                </div>
                                                                 <div className="d-flex flex-wrap gap-1">
                                                                     {r.attrItems.map((a, ai) => (
                                                                         <span key={ai} className="stat-badge" style={{color: '#888'}}>{a}</span>
                                                                     ))}
                                                                     <span className="stat-badge" style={{color: '#888'}}>{r.selItem}</span>
                                                                 </div>
-                                                            </td>
-                                                            <td className="text-center align-middle">
-                                                                <div className="outcome-row color-p2 match-count">{r.p2Count}</div>
-                                                                <div className="outcome-row color-p1 match-count">{r.p1Count}</div>
-                                                                <div className="outcome-row color-p0 match-count">{r.p0Count}</div>
                                                             </td>
                                                             <td className="align-middle pe-3">
                                                                 <div className="outcome-row">
