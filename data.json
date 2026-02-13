@@ -1,0 +1,633 @@
+{
+  "weapons": [
+    {
+      "name": "Sundered Prince",
+      "type": "Greatsword",
+      "rarity": 6,
+      "attr_stat": "Strength",
+      "attr_val": 156.0,
+      "sec_stat": "Critical Rate Boost",
+      "sec_val": 19.5,
+      "skill_stat": "Crusher",
+      "skill_effect": "Princely Deterrence: When the wielder performs a Final Strike on the enemy, ATK +28.0% for 8s. If the wielder is also the controlled operator, Final Strike deals Stagger +33.6% to the enemy. Effects of the same name cannot stack."
+    },
+    {
+      "name": "Artzy Tyrannical",
+      "type": "Handcannon",
+      "rarity": 6,
+      "attr_stat": "Intellect",
+      "attr_val": 156.0,
+      "sec_stat": "Critical Rate Boost",
+      "sec_val": 19.5,
+      "skill_stat": "Fracture",
+      "skill_effect": "Artzy Exaggeration: Cryo DMG Dealt +44.8% After the wielder scores a critical hit with a battle skill or combo skill, the wielder gains Cryo DMG Dealt +39.2% for 30s. Max stacks of the same name: 3. Duration of each stack is counted separately. Effect only triggers once every 0.1s."
+    },
+    {
+      "name": "Delivery Guaranteed",
+      "type": "Arts Unit",
+      "rarity": 6,
+      "attr_stat": "Will",
+      "attr_val": 156.0,
+      "sec_stat": "Ultimate Gain Boost",
+      "sec_val": 46.4,
+      "skill_stat": "Pursuit",
+      "skill_effect": "Duty Fulfilled: Nature DMG Dealt +44.8% After the wielder's combo skill applies Lifted, the team gains Arts DMG Dealt +28.0% for 15s. For every enemy Lifted, the team gains bonus Arts DMG Dealt +5.6%, up to a max of 22.4%. Effects of the same name cannot stack."
+    },
+    {
+      "name": "Forgeborn Scathe",
+      "type": "Sword",
+      "rarity": 6,
+      "attr_stat": "Intellect",
+      "attr_val": 156.0,
+      "sec_stat": "Attack Boost",
+      "sec_val": 39.0,
+      "skill_stat": "Twilight",
+      "skill_effect": "Blazing Wail: Heat DMG Dealt +44.8% When the wielder casts an ultimate, the wielder gains Basic Attack DMG Dealt +210.0% for 20s. Effects of the same name cannot stack."
+    },
+    {
+      "name": "Thermite Cutter",
+      "type": "Sword",
+      "rarity": 6,
+      "attr_stat": "Will",
+      "attr_val": 156.0,
+      "sec_stat": "Attack Boost",
+      "sec_val": 39.0,
+      "skill_stat": "Flow",
+      "skill_effect": "Thermal Release: ATK+28.0% After the wielder's skill recovers SP or grants a Link state, the entire team gains ATK +14.0% for 20s. Max stacks for effects of the same name: 2. Duration of each stack is counted separately."
+    },
+    {
+      "name": "Umbral Torch",
+      "type": "Sword",
+      "rarity": 6,
+      "attr_stat": "Intellect",
+      "attr_val": 156.0,
+      "sec_stat": "Heat DMG Boost",
+      "sec_val": 43.3,
+      "skill_stat": "Infliction",
+      "skill_effect": "Covetous Buildup: ATK +19.6% Whenever Combustion or Corrosion is applied to an enemy, the wielder gains Heat DMG Dealt and Nature DMG Dealt +22.4% Max stacks for effects with the same name: 3."
+    },
+    {
+      "name": "Former Finery",
+      "type": "Greatsword",
+      "rarity": 6,
+      "attr_stat": "Will",
+      "attr_val": 156.0,
+      "sec_stat": "HP Boost",
+      "sec_val": 78.0,
+      "skill_stat": "Efficacy",
+      "skill_effect": "Mincing Therapy: Treatment Efficiency +28.0% After a Protected operator takes DMG, the wielder restores the said operator's HP by (235 + Will x 1.96) Effect only triggers once every 15s."
+    },
+    {
+      "name": "Thunderberge",
+      "type": "Greatsword",
+      "rarity": 6,
+      "attr_stat": "Strength",
+      "attr_val": 156.0,
+      "sec_stat": "HP Boost",
+      "sec_val": 78.0,
+      "skill_stat": "Medicant",
+      "skill_effect": "Eye of Talos: Shield applied +67.2% After the wielder's combo skill provides HP treatment, the controlled operator gains an additional (19.6% x Wielder's Max HP) Shield for 15s. Effect only triggers once every 15s."
+    },
+    {
+      "name": "Mountain Bearer",
+      "type": "Polearm",
+      "rarity": 6,
+      "attr_stat": "Agility",
+      "attr_val": 156.0,
+      "sec_stat": "Physical DMG Boost",
+      "sec_val": 43.3,
+      "skill_stat": "Efficacy",
+      "skill_effect": "Weight of Mountain: Against Vulnerable enemies, the wielder gains DMG Dealt +56.0% When the wielder's battle skill applies Vulnerability, the wielder gains all attributes +22.4% for 15s. When the wielder's battle skill applies Physical Susceptibility, the wielder gains all attributes +22.4% for 15s. Max stacks of the same name: 2. Duration of each stack is counted separately. Effect only triggers once every 0.1s."
+    },
+    {
+      "name": "Valiant",
+      "type": "Polearm",
+      "rarity": 6,
+      "attr_stat": "Agility",
+      "attr_val": 156.0,
+      "sec_stat": "Physical DMG Boost",
+      "sec_val": 43.3,
+      "skill_stat": "Combative",
+      "skill_effect": "Virtuous Gain: ATK +28.0% After the wielder applies a Physical Statuses, the wielder also deals another hit of Physical DMG equal to 336.0% of the wielder's ATK."
+    },
+    {
+      "name": "Wedge",
+      "type": "Handcannon",
+      "rarity": 6,
+      "attr_stat": "Main Attribute",
+      "attr_val": 132.0,
+      "sec_stat": "Critical Rate Boost",
+      "sec_val": 19.5,
+      "skill_stat": "Infliction",
+      "skill_effect": "Wedge of Civilization: Arts DMG Dealt +33.6% When the wielder casts a battle skill, the wielder gains Arts DMG Dealt +22.4% for 15s. When the wielder's battle skill applies an Arts Reaction, the wielder gains Arts DMG Dealt +44.8% for 15s. The two effects apply separately and do not stack with themselves."
+    },
+    {
+      "name": "Chivalric Virtues",
+      "type": "Arts Unit",
+      "rarity": 6,
+      "attr_stat": "Will",
+      "attr_val": 156.0,
+      "sec_stat": "HP Boost",
+      "sec_val": 78.0,
+      "skill_stat": "Medicant",
+      "skill_effect": "Blight Fervor: Treatment Efficiency +28.0% After the wielder gives HP treatment with their own skill, the entire team gains ATK +25.2% for 15s. Effects of the same name cannot stack."
+    },
+    {
+      "name": "Detonation Unit",
+      "type": "Arts Unit",
+      "rarity": 6,
+      "attr_stat": "Main Attribute",
+      "attr_val": 132.0,
+      "sec_stat": "Arts Intensity Boost",
+      "sec_val": 78.0,
+      "skill_stat": "Detonate",
+      "skill_effect": "Imposing Champion: Secondary Attribute +28.0% When the wielder applies an Arts Burst, target enemy suffers Arts DMG Taken +25.2% for 15s. Effects of the same name cannot stack."
+    },
+    {
+      "name": "Oblivion",
+      "type": "Arts Unit",
+      "rarity": 6,
+      "attr_stat": "Intellect",
+      "attr_val": 156.0,
+      "sec_stat": "Arts DMG Boost",
+      "sec_val": 43.3,
+      "skill_stat": "Twilight",
+      "skill_effect": "Humiliation: Critical Rate +14.0% When the wielder casts an ultimate, the wielder gains Arts DMG Dealt +67.2% for 15s. When the wielder casts a combo skill, the wielder gains Arts DMG Dealt +33.6% for 15s. The two effects apply separately and do not stack with themselves."
+    },
+    {
+      "name": "Opus: Etch Figure",
+      "type": "Arts Unit",
+      "rarity": 6,
+      "attr_stat": "Will",
+      "attr_val": 156.0,
+      "sec_stat": "Nature DMG Boost",
+      "sec_val": 43.3,
+      "skill_stat": "Suppression",
+      "skill_effect": "Tillite Etchings: ATK +19.6% When the wielder's battle skill applies Nature Infliction, other operators in the team gain Arts DMG Dealt +14.0% for 15s. For every enemy suffering from Nature Infliction applied by the said battle skill, the team gains Arts DMG Dealt +5.6%, up to a max of 16.8%. Effects of the same name cannot stack."
+    },
+    {
+      "name": "Grand Vision",
+      "type": "Sword",
+      "rarity": 6,
+      "attr_stat": "Agility",
+      "attr_val": 156.0,
+      "sec_stat": "Attack Boost",
+      "sec_val": 39.0,
+      "skill_stat": "Infliction",
+      "skill_effect": "Long Time Wish: Arts Intensity +84 When the wielder applies Originium Crystals or Solidification, during the next battle skill or ultimate cast within 20s, the wielder gains Physical DMG Dealt +100.8%. Effects of the same name cannot stack."
+    },
+    {
+      "name": "Never Rest",
+      "type": "Sword",
+      "rarity": 6,
+      "attr_stat": "Will",
+      "attr_val": 156.0,
+      "sec_stat": "Attack Boost",
+      "sec_val": 39.0,
+      "skill_stat": "Flow",
+      "skill_effect": "Reincarnation: Physical DMG Dealt +44.8% After the wielder's skill recovers SP, the wielder gains Physical DMG Dealt +14.0% while the other operators in the team gain Physical DMG Dealt +7.0% for 30s. Max stacks for effects of the same name: 5. Duration of each stack is counted separately. Effect only triggers once every 0.1s."
+    },
+    {
+      "name": "Rapid Ascent",
+      "type": "Sword",
+      "rarity": 6,
+      "attr_stat": "Main Attribute",
+      "attr_val": 132.0,
+      "sec_stat": "Critical Rate Boost",
+      "sec_val": 19.5,
+      "skill_stat": "Twilight",
+      "skill_effect": "Azure Clouds: Battle skills and ultimates gain Physical DMG Dealt +42.0% Against Staggered enemies, battle skills and ultimates also gain DMG Dealt +98.0%."
+    },
+    {
+      "name": "Eminent Repute",
+      "type": "Sword",
+      "rarity": 6,
+      "attr_stat": "Main Attribute",
+      "attr_val": 132.0,
+      "sec_stat": "Physical DMG Boost",
+      "sec_val": 43.3,
+      "skill_stat": "Brutality",
+      "skill_effect": "Disciplinarian: ATK +28.0% After the wielder consumes Vulnerable stack(s), ATK +(14.0% + 7.0% x Stacks Consumed) while other operators in the team gain half of this buff for 20s. Effects of the same name cannot stack."
+    },
+    {
+      "name": "White Night Nova",
+      "type": "Sword",
+      "rarity": 6,
+      "attr_stat": "Main Attribute",
+      "attr_val": 132.0,
+      "sec_stat": "Arts Intensity Boost",
+      "sec_val": 78.0,
+      "skill_stat": "Infliction",
+      "skill_effect": "White Night Nova: Arts DMG Dealt +33.6% After the wielder applies Combustion or Electrification, the wielder gains Arts DMG Dealt +33.6% and Arts Intensity +70 for 15s. Effects of the same name cannot stack."
+    },
+    {
+      "name": "Khravengger",
+      "type": "Greatsword",
+      "rarity": 6,
+      "attr_stat": "Strength",
+      "attr_val": 156.0,
+      "sec_stat": "Attack Boost",
+      "sec_val": 39.0,
+      "skill_stat": "Detonate",
+      "skill_effect": "Bonechilling: Skill DMG Dealt +56.0% (for every skill). When the wielder's battle skill applies Cryo Infliction, the wielder gains Cryo DMG Dealt +28.0% for 15s. When the wielder deals combo skill DMG to an enemy with Cryo Infliction, the wielder gains Cryo DMG Dealt +56.0% for 15s."
+    },
+    {
+      "name": "Exemplar",
+      "type": "Greatsword",
+      "rarity": 6,
+      "attr_stat": "Main Attribute",
+      "attr_val": 132.0,
+      "sec_stat": "Attack Boost",
+      "sec_val": 39.0,
+      "skill_stat": "Suppression",
+      "skill_effect": "Stacked Hew: Physical DMG Dealt +28.0% When the wielder's battle skill hits an enemy, the wielder gains Physical DMG Dealt +28.0% for 30s. Max stacks for the same name: 3. Duration of each stack is counted separately. Effect only triggers once every 0.1s."
+    },
+    {
+      "name": "JET",
+      "type": "Polearm",
+      "rarity": 6,
+      "attr_stat": "Main Attribute",
+      "attr_val": 132.0,
+      "sec_stat": "Attack Boost",
+      "sec_val": 39.0,
+      "skill_stat": "Suppression",
+      "skill_effect": "Astrophysics: Arts DMG Dealt +33.6% When the wielder casts a battle skill, the wielder gains Arts DMG Dealt +33.6% for 15s. When the wielder casts a combo skill, Arts DMG Dealt +33.6% for 15s. The two effects apply separately and do not stack with themselves."
+    },
+    {
+      "name": "Navigator",
+      "type": "Handcannon",
+      "rarity": 6,
+      "attr_stat": "Intellect",
+      "attr_val": 156.0,
+      "sec_stat": "Cryo DMG Boost",
+      "sec_val": 43.3,
+      "skill_stat": "Infliction",
+      "skill_effect": "Lone and Distant Sail: Critical Rate +9.8% When Solidification or Corrosion is applied to enemies, the wielder gains Cryo DMG Dealt and Nature DMG Dealt +9.8%, and Critical Rate +5.6% for 15s. If this effect is triggered by the wielder, double the increase gained. Effects of the same name cannot stack. Effect only triggers once every 20s."
+    },
+    {
+      "name": "Clannibal",
+      "type": "Handcannon",
+      "rarity": 6,
+      "attr_stat": "Main Attribute",
+      "attr_val": 132.0,
+      "sec_stat": "Arts DMG Boost",
+      "sec_val": 43.3,
+      "skill_stat": "Infliction",
+      "skill_effect": "Vicious Purge: Arts DMG +33.6% After the wielder consumes an Arts Reaction, target enemy suffers Arts DMG Taken +28.0% (for the specified element) for 15s. Effect only triggers once every 25s."
+    },
+    {
+      "name": "Dreams of the Starry Beach",
+      "type": "Arts Unit",
+      "rarity": 6,
+      "attr_stat": "Intellect",
+      "attr_val": 156.0,
+      "sec_stat": "Treatment Efficiency Boost",
+      "sec_val": 46.4,
+      "skill_stat": "Infliction",
+      "skill_effect": "Tidal Murmurs: Secondary Attribute +44.8% After the wielder consumes Corrosion, target enemy suffers Arts DMG Taken +28.0% for 25s. Effects of the same name cannot stack."
+    },
+    {
+      "name": "Sundering Steel",
+      "type": "Sword",
+      "rarity": 5,
+      "attr_stat": "Agility",
+      "attr_val": 124.0,
+      "sec_stat": "Physical DMG Boost",
+      "sec_val": 34.7,
+      "skill_stat": "Combative",
+      "skill_effect": "Anthem of Cinder: ATK +14.0% When the wielder deals a Physical Status, ATK +21.0% for 20s. Max stacks of the same name: 2. Duration of each stack is counted separately. Effect only triggers once every 0.1s."
+    },
+    {
+      "name": "Wild Wanderer",
+      "type": "Arts Unit",
+      "rarity": 5,
+      "attr_stat": "Intellect",
+      "attr_val": 124.0,
+      "sec_stat": "Electric DMG Boost",
+      "sec_val": 34.7,
+      "skill_stat": "Infliction",
+      "skill_effect": "Wilderness Cluster: Arts Intensity +28 When the wielder applies Electrification, the team gains Physical DMG Dealt and Electric DMG Dealt +22.4% for 15s. Effects of the same name cannot stack."
+    },
+    {
+      "name": "Fortmaker",
+      "type": "Sword",
+      "rarity": 5,
+      "attr_stat": "Intellect",
+      "attr_val": 124.0,
+      "sec_stat": "Ultimate Gain Boost",
+      "sec_val": 37.1,
+      "skill_stat": "Inspiring",
+      "skill_effect": "Back to the Broken City: ATK +14.0% Arts Intensity +70"
+    },
+    {
+      "name": "Finishing Call",
+      "type": "Greatsword",
+      "rarity": 5,
+      "attr_stat": "Strength",
+      "attr_val": 124.0,
+      "sec_stat": "HP Boost",
+      "sec_val": 62.4,
+      "skill_stat": "Medicant",
+      "skill_effect": "Glory of Knighthood: Secondary Attribute +14.0% Combo skill HP treatment effect +56.0%"
+    },
+    {
+      "name": "Chimeric Justice",
+      "type": "Polearm",
+      "rarity": 5,
+      "attr_stat": "Strength",
+      "attr_val": 124.0,
+      "sec_stat": "Ultimate Gain Boost",
+      "sec_val": 37.1,
+      "skill_stat": "Brutality",
+      "skill_effect": "Cemented Fury: Critical Rate +8.4% When the wielder applies Vulnerable to an enemy with no Vulnerable stacks, ATK +42.0% for 15s. Effects of the same name cannot stack."
+    },
+    {
+      "name": "Rational Farewell",
+      "type": "Handcannon",
+      "rarity": 5,
+      "attr_stat": "Strength",
+      "attr_val": 124.0,
+      "sec_stat": "Heat DMG Boost",
+      "sec_val": 34.7,
+      "skill_stat": "Pursuit",
+      "skill_effect": "Aid from the Past: Battle Skill DMG Dealt +28.0% When the wielder's combo skill applies Arts Burst or Combusted, ATK +44.8% for 15s. Effects of the same name cannot stack."
+    },
+    {
+      "name": "Monaihe",
+      "type": "Arts Unit",
+      "rarity": 5,
+      "attr_stat": "Will",
+      "attr_val": 124.0,
+      "sec_stat": "Ultimate Gain Boost",
+      "sec_val": 37.1,
+      "skill_stat": "Inspiring",
+      "skill_effect": "Mortise-and-Tenon Analysis: Main Attribute +14.0% Arts Intensity +70"
+    },
+    {
+      "name": "Stanza of Memorials",
+      "type": "Arts Unit",
+      "rarity": 5,
+      "attr_stat": "Intellect",
+      "attr_val": 124.0,
+      "sec_stat": "Attack Boost",
+      "sec_val": 31.2,
+      "skill_stat": "Twilight",
+      "skill_effect": "Lustrous Pyre: Max HP +28.0% When the wielder casts an ultimate, operators whose elements differ from the wielder gain ATK +22.4% for 20s. Effects of the same name cannot stack."
+    },
+    {
+      "name": "Finchaser 3.0",
+      "type": "Sword",
+      "rarity": 5,
+      "attr_stat": "Strength",
+      "attr_val": 124.0,
+      "sec_stat": "Cryo DMG Boost",
+      "sec_val": 34.7,
+      "skill_stat": "Suppression",
+      "skill_effect": "Fin Chaser's Intent: ATK +14.0% When the wielder's battle skill applies Solidification, target enemy suffers Cryo DMG Taken +19.6% for 15s. Effects of the same name cannot stack."
+    },
+    {
+      "name": "Twelve Questions",
+      "type": "Sword",
+      "rarity": 5,
+      "attr_stat": "Agility",
+      "attr_val": 124.0,
+      "sec_stat": "Attack Boost",
+      "sec_val": 31.2,
+      "skill_stat": "Infliction",
+      "skill_effect": "Sincere Interrogation: Secondary Attribute +14.0%% After the wielder consumes an Arts Reaction, ATK +21.0% for 20s. Max stacks for effects of the same name: 2. Duration of each stack is counted separately."
+    },
+    {
+      "name": "OBJ Edge of Lightness",
+      "type": "Sword",
+      "rarity": 5,
+      "attr_stat": "Agility",
+      "attr_val": 124.0,
+      "sec_stat": "Attack Boost",
+      "sec_val": 31.2,
+      "skill_stat": "Flow",
+      "skill_effect": "Unbridled Edge: Secondary Attribute +14.0% After the wielder recovers SP by their own skill, the entire team gains Heat DMG Dealt and Electric DMG Dealt +8.4% for 20s. Max stacks for effects of the same name: 3. Duration of each stack is counted separately."
+    },
+    {
+      "name": "Aspirant",
+      "type": "Sword",
+      "rarity": 5,
+      "attr_stat": "Agility",
+      "attr_val": 124.0,
+      "sec_stat": "Physical DMG Boost",
+      "sec_val": 34.7,
+      "skill_stat": "Twilight",
+      "skill_effect": "Imposing Peak: Ultimate DMG Dealt 44.8% After the wielder applies Lifted, during the next ultimate cast within 30s, the wielder gains Physical DMG Dealt +33.6%. Max stacks for effects of the same name: 3. Duration of each stack is counted separately. Effect only triggers once every 0.5s."
+    },
+    {
+      "name": "Seeker of Dark Lung",
+      "type": "Greatsword",
+      "rarity": 5,
+      "attr_stat": "Strength",
+      "attr_val": 124.0,
+      "sec_stat": "Ultimate Gain Boost",
+      "sec_val": 37.1,
+      "skill_stat": "Detonate",
+      "skill_effect": "Seeker of the Esoteric: Main Attribute +14.0% When the wielder applies an Arts Burst, ATK +16.8% for 30s. Max stacks for the same name: 3. Duration of each stack is counted separately. Effect only triggers once every 0.1s."
+    },
+    {
+      "name": "Ancient Canal",
+      "type": "Greatsword",
+      "rarity": 5,
+      "attr_stat": "Strength",
+      "attr_val": 124.0,
+      "sec_stat": "Arts Intensity Boost",
+      "sec_val": 62.0,
+      "skill_stat": "Brutality",
+      "skill_effect": "Lands of Yore: Arts Intensity +28 After the wielder consumes Vulnerable stack(s), the wielder gains Physical DMG Dealt +(14.0% x Stacks Consumed) for 20s. Effects of the same name cannot stack."
+    },
+    {
+      "name": "OBJ Heavy Burden",
+      "type": "Greatsword",
+      "rarity": 5,
+      "attr_stat": "Strength",
+      "attr_val": 124.0,
+      "sec_stat": "HP Boost",
+      "sec_val": 62.4,
+      "skill_stat": "Efficacy",
+      "skill_effect": "Tenacious Will: Secondary Attribute +14.0% When the wielder applies Knocked Down or Weakened, DEF +50.4% for 15s. Effects of the same name cannot stack."
+    },
+    {
+      "name": "OBJ Razorhorn",
+      "type": "Polearm",
+      "rarity": 5,
+      "attr_stat": "Will",
+      "attr_val": 124.0,
+      "sec_stat": "Physical DMG Boost",
+      "sec_val": 34.7,
+      "skill_stat": "Infliction",
+      "skill_effect": "Conquest of Icy Peaks: To enemies with Cryo Infliction or Solidification, the wielder gains DMG Dealt +22.4%. After consuming Solidification, ATK +33.6% for 15s. Effects of the same name cannot stack."
+    },
+    {
+      "name": "Opus: The Living",
+      "type": "Handcannon",
+      "rarity": 5,
+      "attr_stat": "Agility",
+      "attr_val": 124.0,
+      "sec_stat": "Arts DMG Boost",
+      "sec_val": 34.7,
+      "skill_stat": "Infliction",
+      "skill_effect": "Road Home for All Life: Critical Rate +8.4% When the wielder applies an Arts Reaction, the wielder gains ATK +21.0% for 20s. Max stacks of the same name: 2. Duration of each stack is counted separately. Effect only triggers once every 0.1s."
+    },
+    {
+      "name": "OBJ Velocitous",
+      "type": "Handcannon",
+      "rarity": 5,
+      "attr_stat": "Agility",
+      "attr_val": 124.0,
+      "sec_stat": "Ultimate Gain Boost",
+      "sec_val": 37.1,
+      "skill_stat": "Detonate",
+      "skill_effect": "Rapid Strike: ATK +14.0% After the wielder consumes an Arts Infliction, the wielder gains Nature DMG Dealt +(14.0% x Stacks Consumed) for 20s. Effects of the same name cannot stack."
+    },
+    {
+      "name": "Freedom to Proselytize",
+      "type": "Arts Unit",
+      "rarity": 5,
+      "attr_stat": "Will",
+      "attr_val": 124.0,
+      "sec_stat": "Treatment Efficiency Boost",
+      "sec_val": 37.1,
+      "skill_stat": "Medicant",
+      "skill_effect": "Redemption of Faith: Main Attribute +14.0% When the wielder's battle skill provides HP treatment, the controlled operator is restored for another (168 + Will x 1.40) HP. Effect only triggers once every 15s."
+    },
+    {
+      "name": "OBJ Arts Identifier",
+      "type": "Arts Unit",
+      "rarity": 5,
+      "attr_stat": "Intellect",
+      "attr_val": 124.0,
+      "sec_stat": "Arts Intensity Boost",
+      "sec_val": 62.0,
+      "skill_stat": "Pursuit",
+      "skill_effect": "Transcendent Arts: Max HP +28.0% When the wielder's combo skill applies Arts Burst or Physical Status, the entire team gains Heat DMG Dealt and Electric DMG Dealt +22.4% for 15s. Effects of the same name cannot stack."
+    },
+    {
+      "name": "Cohesive Traction",
+      "type": "Polearm",
+      "rarity": 5,
+      "attr_stat": "Will",
+      "attr_val": 124.0,
+      "sec_stat": "Electric DMG Boost",
+      "sec_val": 34.7,
+      "skill_stat": "Suppression",
+      "skill_effect": "Concentric Circles: Combo Skill DMG Dealt +28.0% When the wielder casts a combo skill, during the next battle skill cast within 30s, the wielder gains Electric DMG Dealt +28.0%. Max stacks of the same name: 3. Duration of each stack is counted separately."
+    }
+  ],
+  "alluvium": {
+    "The Hub": {
+      "secondary": [
+        "Attack Boost",
+        "Heat DMG Boost",
+        "Electric DMG Boost",
+        "Cryo DMG Boost",
+        "Nature DMG Boost",
+        "Arts Intensity Boost",
+        "Ultimate Gain Boost",
+        "Arts DMG Boost"
+      ],
+      "skill": [
+        "Assault",
+        "Suppression",
+        "Pursuit",
+        "Crusher",
+        "Combative",
+        "Detonate",
+        "Flow",
+        "Efficacy"
+      ]
+    },
+    "Originium Science Park": {
+      "secondary": [
+        "Attack Boost",
+        "Physical DMG Boost",
+        "Electric DMG Boost",
+        "Cryo DMG Boost",
+        "Nature DMG Boost",
+        "Critical Rate Boost",
+        "Ultimate Gain Boost",
+        "Arts DMG Boost"
+      ],
+      "skill": [
+        "Suppression",
+        "Pursuit",
+        "Inspiring",
+        "Combative",
+        "Infliction",
+        "Medicant",
+        "Fracture",
+        "Efficacy"
+      ]
+    },
+    "Origin Lodespring": {
+      "secondary": [
+        "HP Boost",
+        "Physical DMG Boost",
+        "Heat DMG Boost",
+        "Cryo DMG Boost",
+        "Nature DMG Boost",
+        "Critical Rate Boost",
+        "Arts Intensity Boost",
+        "Treatment Efficiency Boost"
+      ],
+      "skill": [
+        "Assault",
+        "Suppression",
+        "Combative",
+        "Brutality",
+        "Infliction",
+        "Detonate",
+        "Twilight",
+        "Efficacy"
+      ]
+    },
+    "Power Plateau": {
+      "secondary": [
+        "Attack Boost",
+        "HP Boost",
+        "Physical DMG Boost",
+        "Heat DMG Boost",
+        "Nature DMG Boost",
+        "Critical Rate Boost",
+        "Arts Intensity Boost",
+        "Treatment Efficiency Boost"
+      ],
+      "skill": [
+        "Pursuit",
+        "Crusher",
+        "Inspiring",
+        "Brutality",
+        "Infliction",
+        "Medicant",
+        "Fracture",
+        "Flow"
+      ]
+    },
+    "Wuling City": {
+      "secondary": [
+        "Attack Boost",
+        "HP Boost",
+        "Electric DMG Boost",
+        "Cryo DMG Boost",
+        "Critical Rate Boost",
+        "Ultimate Gain Boost",
+        "Arts DMG Boost",
+        "Treatment Efficiency Boost"
+      ],
+      "skill": [
+        "Assault",
+        "Crusher",
+        "Brutality",
+        "Medicant",
+        "Fracture",
+        "Detonate",
+        "Twilight",
+        "Flow"
+      ]
+    }
+  }
+}

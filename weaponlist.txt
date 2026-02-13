@@ -1,0 +1,422 @@
+6 star weapons
+
+Weapon	Type	ATK (Lv.90)	Weapon Skills (Max)
+Sundered PrinceSundered Prince	Arknights Endfield Greatsword IconGreatsword	490	
+Strength Boost (L):
+Strength +156
+Critical Rate Boost (L):
+Critical Rate +19.5%
+Crusher: Princely Deterrence:
+When the wielder performs a Final Strike on the enemy, ATK +28.0% for 8s.
+If the wielder is also the controlled operator, Final Strike deals Stagger +33.6% to the enemy.
+Effects of the same name cannot stack.
+Artzy TyrannicalArtzy Tyrannical	Arknights Endfield Handcannon IconHandcannon	505	
+Intellect Boost (L):
+Intellect +156
+Critical Rate Boost (L):
+Critical Rate +19.5%
+Fracture: Artzy Exaggeration:
+Cryo DMG Dealt +44.8%
+After the wielder scores a critical hit with a battle skill or combo skill, the wielder gains Cryo DMG Dealt +39.2% for 30s.
+Max stacks of the same name: 3. Duration of each stack is counted separately. Effect only triggers once every 0.1s.
+Delivery GuaranteedDelivery Guaranteed	Arknights Endfield Arts Unit IconArts Unit	500	
+Will Boost (L):
+Will +156
+Ultimate Gain Efficiency Boost (L):
+Ultimate Gain Efficiency +46.4%
+Pursuit: Duty Fulfilled:
+Nature DMG Dealt +44.8%
+After the wielder's combo skill applies Lifted, the team gains Arts DMG Dealt +28.0% for 15s. For every enemy Lifted, the team gains bonus Arts DMG Dealt +5.6%, up to a max of 22.4%.
+Effects of the same name cannot stack.
+Forgeborn ScatheForgeborn Scathe	Arknights Endfield Sword IconSword	510	
+Intellect Boost (L):
+Intellect +156
+Attack Boost (L):
+Attack +39.0%
+Twilight: Blazing Wail:
+Heat DMG Dealt +44.8%
+When the wielder casts an ultimate, the wielder gains Basic Attack DMG Dealt +210.0% for 20s.
+Effects of the same name cannot stack.
+Thermite CutterThermite Cutter	Arknights Endfield Sword IconSword	490	
+Will Boost (L):
+Will +156
+Attack Boost (L):
+Attack +39.0%
+Flow: Thermal Release:
+ATK+28.0%
+After the wielder's skill recovers SP or grants a Link state, the entire team gains ATK +14.0% for 20s.
+Max stacks for effects of the same name: 2. Duration of each stack is counted separately.
+Umbral TorchUmbral Torch	Arknights Endfield Sword IconSword	490	
+Intellect Boost (L):
+Intellect +156
+Heat DMG Boost (L):
+Heat DMG Dealt +43.3%
+Infliction: Covetous Buildup:
+ATK +19.6%
+Whenever Combustion or Corrosion is applied to an enemy, the wielder gains Heat DMG Dealt and Nature DMG Dealt +22.4%
+Max stacks for effects with the same name: 3.
+Former FineryFormer Finery	Arknights Endfield Greatsword IconGreatsword	495	
+Will Boost (L):
+Will +156
+HP Boost (L):
+Max HP +78.0%
+Efficacy: Mincing Therapy:
+Treatment Efficiency +28.0%
+After a Protected operator takes DMG, the wielder restores the said operator's HP by (235 + Will x 1.96)
+Effect only triggers once every 15s.
+ThunderbergeThunderberge	Arknights Endfield Greatsword IconGreatsword	495	
+Strength Boost (L):
+Strength +156
+HP Boost (L):
+Max HP +78.0%
+Medicant: Eye of Talos:
+Shield applied +67.2%
+After the wielder's combo skill provides HP treatment, the controlled operator gains an additional (19.6% x Wielder's Max HP) Shield for 15s.
+Effect only triggers once every 15s.
+Mountain BearerMountain Bearer	Arknights Endfield Polearm IconPolearm	500	
+Agility Boost (L):
+Agility +156
+Physical DMG Boost (L):
+Physical DMG Dealt +43.3%
+Efficacy: Weight of Mountain:
+Against Vulnerable enemies, the wielder gains DMG Dealt +56.0%
+When the wielder's battle skill applies Vulnerability, the wielder gains all attributes +22.4% for 15s. When the wielder's battle skill applies Physical Susceptibility, the wielder gains all attributes +22.4% for 15s.
+Max stacks of the same name: 2. Duration of each stack is counted separately. Effect only triggers once every 0.1s.
+ValiantValiant	Arknights Endfield Polearm IconPolearm	495	
+Agility Boost (L):
+Agility +156
+Physical DMG Boost (L):
+Physical DMG Dealt +43.3%
+Combative: Virtuous Gain:
+ATK +28.0%
+After the wielder applies a Physical Statuses, the wielder also deals another hit of Physical DMG equal to 336.0% of the wielder's ATK.
+WedgeWedge	Arknights Endfield Handcannon IconHandcannon	500	
+Main Attribute Boost (L):
+Main Attribute +132
+Critical Rate Boost (L):
+Critical Rate +19.5%
+Infliction: Wedge of Civilization:
+Arts DMG Dealt +33.6%
+When the wielder casts a battle skill, the wielder gains Arts DMG Dealt +22.4% for 15s. When the wielder's battle skill applies an Arts Reaction, the wielder gains Arts DMG Dealt +44.8% for 15s.
+The two effects apply separately and do not stack with themselves.
+Chivalric VirtuesChivalric Virtues	Arknights Endfield Arts Unit IconArts Unit	485	
+Will Boost (L):
+Will +156
+HP Boost (L):
+Max HP +78.0%
+Medicant: Blight Fervor:
+Treatment Efficiency +28.0%
+After the wielder gives HP treatment with their own skill, the entire team gains ATK +25.2% for 15s.
+Effects of the same name cannot stack.
+Detonation UnitDetonation Unit	Arknights Endfield Arts Unit IconArts Unit	490	
+Main Attribute Boost (L):
+Main Attribute +132
+Arts Intensity Boost (L):
+Arts Intensity +78
+Detonate: Imposing Champion:
+Secondary Attribute +28.0%
+When the wielder applies an Arts Burst, target enemy suffers Arts DMG Taken +25.2% for 15s.
+Effects of the same name cannot stack.
+OblivionOblivion	Arknights Endfield Arts Unit IconArts Unit	495	
+Intellect Boost (L):
+Intellect +156
+Arts Boost (L):
+Arts DMG Dealt +43.3%
+Twilight: Humiliation:
+Critical Rate +14.0%
+When the wielder casts an ultimate, the wielder gains Arts DMG Dealt +67.2% for 15s. When the wielder casts a combo skill, the wielder gains Arts DMG Dealt +33.6% for 15s.
+The two effects apply separately and do not stack with themselves.
+Opus: Etch FigureOpus: Etch Figure	Arknights Endfield Arts Unit IconArts Unit	485	
+Will Boost (L):
+Will +156
+Nature DMG Boost (L):
+Nature DMG Dealt+43.3%
+Suppression: Tillite Etchings:
+ATK +19.6%
+When the wielder's battle skill applies Nature Infliction, other operators in the team gain Arts DMG Dealt +14.0% for 15s. For every enemy suffering from Nature Infliction applied by the said battle skill, the team gains Arts DMG Dealt +5.6%, up to a max of 16.8%.
+Effects of the same name cannot stack.
+Grand VisionGrand Vision	Arknights Endfield Sword IconSword	500	
+Agility Boost (L):
+Agility +156
+Attack Boost (L):
+Attack +39.0%
+Infliction: Long Time Wish:
+Arts Intensity +84
+When the wielder applies Originium Crystals or Solidification, during the next battle skill or ultimate cast within 20s, the wielder gains Physical DMG Dealt +100.8%.
+Effects of the same name cannot stack.
+Never RestNever Rest	Arknights Endfield Sword IconSword	500	
+Will Boost (L):
+Will +156
+Attack Boost (L):
+Attack +39.0%
+Flow: Reincarnation:
+Physical DMG Dealt +44.8%
+After the wielder's skill recovers SP, the wielder gains Physical DMG Dealt +14.0% while the other operators in the team gain Physical DMG Dealt +7.0% for 30s.
+Max stacks for effects of the same name: 5. Duration of each stack is counted separately. Effect only triggers once every 0.1s.
+Rapid AscentRapid Ascent	Arknights Endfield Sword IconSword	495	
+Main Attribute Boost (L):
+Main Attribute +132
+Critical Rate Boost (L):
+Critical Rate +19.5%
+Twilight: Azure Clouds:
+Battle skills and ultimates gain Physical DMG Dealt +42.0%
+Against Staggered enemies, battle skills and ultimates also gain DMG Dealt +98.0%.
+Eminent ReputeEminent Repute	Arknights Endfield Sword IconSword	490	
+Main Attribute Boost (L):
+Main Attribute +132
+Physical DMG Boost (L):
+Physical DMG Dealt +43.3%
+Brutality: Disciplinarian:
+ATK +28.0%
+After the wielder consumes Vulnerable stack(s), ATK +(14.0% + 7.0% x Stacks Consumed) while other operators in the team gain half of this buff for 20s.
+Effects of the same name cannot stack.
+White Night NovaWhite Night Nova	Arknights Endfield Sword IconSword	505	
+Main Attribute Boost (L):
+Main Attribute +132
+Arts Intensity Boost (L):
+Arts Intensity +78
+Infliction: White Night Nova:
+Arts DMG Dealt +33.6%
+After the wielder applies Combustion or Electrification, the wielder gains Arts DMG Dealt +33.6% and Arts Intensity +70 for 15s.
+Effects of the same name cannot stack.
+KhravenggerKhravengger	Arknights Endfield Greatsword IconGreatsword	505	
+Strength Boost (L):
+Strength +156
+Attack Boost (L):
+Attack +39.0%
+Detonate: Bonechilling:
+Skill DMG Dealt +56.0% (for every skill).
+When the wielder's battle skill applies Cryo Infliction, the wielder gains Cryo DMG Dealt +28.0% for 15s. When the wielder deals combo skill DMG to an enemy with Cryo Infliction, the wielder gains Cryo DMG Dealt +56.0% for 15s.
+ExemplarExemplar	Arknights Endfield Greatsword IconGreatsword	500	
+Main Attribute Boost (L):
+Main Attribute +132
+Attack Boost (L):
+Attack +39.0%
+Suppression: Stacked Hew:
+Physical DMG Dealt +28.0%
+When the wielder's battle skill hits an enemy, the wielder gains Physical DMG Dealt +28.0% for 30s.
+Max stacks for the same name: 3. Duration of each stack is counted separately. Effect only triggers once every 0.1s.
+JETJET	Arknights Endfield Polearm IconPolearm	500	
+Main Attribute Boost (L):
+Main Attribute +132
+Attack Boost (L):
+Attack +39.0%
+Suppression: Astrophysics:
+Arts DMG Dealt +33.6%
+When the wielder casts a battle skill, the wielder gains Arts DMG Dealt +33.6% for 15s. When the wielder casts a combo skill, Arts DMG Dealt +33.6% for 15s.
+The two effects apply separately and do not stack with themselves.
+NavigatorNavigator	Arknights Endfield Handcannon IconHandcannon	490	
+Intellect Boost (L):
+Intellect +156
+Cryo DMG Boost (L):
+Cryo DMG Dealt +43.3%
+Infliction: Lone and Distant Sail:
+Critical Rate +9.8%
+When Solidification or Corrosion is applied to enemies, the wielder gains Cryo DMG Dealt and Nature DMG Dealt +9.8%, and Critical Rate +5.6% for 15s. If this effect is triggered by the wielder, double the increase gained.
+Effects of the same name cannot stack. Effect only triggers once every 20s.
+ClannibalClannibal	Arknights Endfield Handcannon IconHandcannon	490	
+Main Attribute Boost (L):
+Main Attribute +132
+Arts Boost (L):
+Arts DMG Dealt +43.3%
+Infliction: Vicious Purge:
+Arts DMG +33.6%
+After the wielder consumes an Arts Reaction, target enemy suffers Arts DMG Taken +28.0% (for the specified element) for 15s.
+Effect only triggers once every 25s.
+Dreams of the Starry BeachDreams of the Starry Beach	Arknights Endfield Arts Unit IconArts Unit	495	
+Intellect Boost (L):
+Intellect +156
+Treatment Efficiency Boost (L):
+Treatment Efficiency +46.4%
+Infliction: Tidal Murmurs:
+Secondary Attribute +44.8%
+After the wielder consumes Corrosion, target enemy suffers Arts DMG Taken +28.0% for 25s.
+Effects of the same name cannot stack.
+
+5 star weapons
+Weapon	Type	ATK (Lv.90)	Weapon Skills (Max)
+Sundering SteelSundering Steel	Arknights Endfield Sword IconSword	411	
+Agility Boost (M):
+Agility +124
+Physical DMG Boost (M):
+Physical DMG Dealt +34.7%
+Combative: Anthem of Cinder:
+ATK +14.0%
+When the wielder deals a Physical Status, ATK +21.0% for 20s.
+Max stacks of the same name: 2. Duration of each stack is counted separately. Effect only triggers once every 0.1s.
+Wild WandererWild Wanderer	Arknights Endfield Arts Unit IconArts Unit	411	
+Intellect Boost (M):
+Intellect +124
+Electric DMG Boost (M):
+Electric DMG Dealt +34.7%
+Infliction: Wilderness Cluster:
+Arts Intensity +28
+When the wielder applies Electrification, the team gains Physical DMG Dealt and Electric DMG Dealt +22.4% for 15s.
+Effects of the same name cannot stack.
+FortmakerFortmaker	Arknights Endfield Sword IconSword	411	
+Intellect Boost (M):
+Intellect +124
+Ultimate Gain Efficiency Boost (M):
+Ultimate Gain Efficiency +37.1%
+Inspiring: Back to the Broken City:
+ATK +14.0%
+Arts Intensity +70
+Finishing CallFinishing Call	Arknights Endfield Greatsword IconGreatsword	411	
+Strength Boost (M):
+Strength +124
+HP Boost (M):
+Max HP +62.4%
+Medicant: Glory of Knighthood:
+Secondary Attribute +14.0%
+Combo skill HP treatment effect +56.0%
+Chimeric JusticeChimeric Justice	Arknights Endfield Polearm IconPolearm	411	
+Strength Boost (M):
+Strength +124
+Ultimate Gain Efficiency Boost (M):
+Ultimate Gain Efficiency +37.1%
+Brutality: Cemented Fury:
+Critical Rate +8.4%
+When the wielder applies Vulnerable to an enemy with no Vulnerable stacks, ATK +42.0% for 15s.
+Effects of the same name cannot stack.
+Rational FarewellRational Farewell	Arknights Endfield Handcannon IconHandcannon	411	
+Strength Boost (M):
+Strength +124
+Heat DMG Boost (M):
+Heat DMG Dealt +34.7%
+Pursuit: Aid from the Past:
+Battle Skill DMG Dealt +28.0%
+When the wielder's combo skill applies Arts Burst or Combusted, ATK +44.8% for 15s.
+Effects of the same name cannot stack.
+MonaiheMonaihe	Arknights Endfield Arts Unit IconArts Unit	411	
+Will Boost (M):
+Will +124
+Ultimate Gain Efficiency Boost (M):
+Ultimate Gain Efficiency +37.1%
+Inspiring: Mortise-and-Tenon Analysis:
+Main Attribute +14.0%
+Arts Intensity +70
+Stanza of MemorialsStanza of Memorials	Arknights Endfield Arts Unit IconArts Unit	411	
+Intellect Boost (M):
+Intellect +124
+ATK Boost (M):
+Attack +31.2%
+Twilight: Lustrous Pyre:
+Max HP +28.0%
+When the wielder casts an ultimate, operators whose elements differ from the wielder gain ATK +22.4% for 20s.
+Effects of the same name cannot stack.
+Finchaser 3.0Finchaser 3.0	Arknights Endfield Sword IconSword	411	
+Strength Boost (M):
+Strength +124
+Cryo DMG Boost (M):
+Cryo DMG Dealt +34.7%
+Suppression: Fin Chaser's Intent:
+ATK +14.0%
+When the wielder's battle skill applies Solidification, target enemy suffers Cryo DMG Taken +19.6% for 15s.
+Effects of the same name cannot stack.
+Twelve QuestionsTwelve Questions	Arknights Endfield Sword IconSword	411	
+Agility Boost (M):
+Agility +124
+ATK Boost (M):
+Attack +31.2%
+Infliction: Sincere Interrogation:
+Secondary Attribute +14.0%%
+After the wielder consumes an Arts Reaction, ATK +21.0% for 20s.
+Max stacks for effects of the same name: 2. Duration of each stack is counted separately.
+OBJ Edge of LightnessOBJ Edge of Lightness	Arknights Endfield Sword IconSword	411	
+Agility Boost (M):
+Agility +124
+ATK Boost (M):
+Attack +31.2%
+Flow: Unbridled Edge:
+Secondary Attribute +14.0%
+After the wielder recovers SP by their own skill, the entire team gains Heat DMG Dealt and Electric DMG Dealt +8.4% for 20s.
+Max stacks for effects of the same name: 3. Duration of each stack is counted separately.
+AspirantAspirant	Arknights Endfield Sword IconSword	411	
+Agility Boost (M):
+Agility +124
+Physical DMG Boost (M):
+Physical DMG Dealt +34.7%
+Twilight: Imposing Peak:
+Ultimate DMG Dealt 44.8%
+After the wielder applies Lifted, during the next ultimate cast within 30s, the wielder gains Physical DMG Dealt +33.6%.
+Max stacks for effects of the same name: 3. Duration of each stack is counted separately. Effect only triggers once every 0.5s.
+Seeker of Dark LungSeeker of Dark Lung	Arknights Endfield Greatsword IconGreatsword	411	
+Strength Boost (M):
+Strength +124
+Ultimate Gain Efficiency Boost (M):
+Ultimate Gain Efficiency +37.1%
+Detonate: Seeker of the Esoteric:
+Main Attribute +14.0%
+When the wielder applies an Arts Burst, ATK +16.8% for 30s.
+Max stacks for the same name: 3. Duration of each stack is counted separately. Effect only triggers once every 0.1s.
+Ancient CanalAncient Canal	Arknights Endfield Greatsword IconGreatsword	411	
+Strength Boost (M):
+Strength +124
+Arts Intensity Boost (M):
+Arts Intensity +62
+Brutality: Lands of Yore:
+Arts Intensity +28
+After the wielder consumes Vulnerable stack(s), the wielder gains Physical DMG Dealt +(14.0% x Stacks Consumed) for 20s.
+Effects of the same name cannot stack.
+OBJ Heavy BurdenOBJ Heavy Burden	Arknights Endfield Greatsword IconGreatsword	411	
+Strength Boost (M):
+Strength +124
+HP Boost (M):
+Max HP +62.4%
+Efficacy: Tenacious Will:
+Secondary Attribute +14.0%
+When the wielder applies Knocked Down or Weakened, DEF +50.4% for 15s.
+Effects of the same name cannot stack.
+OBJ RazorhornOBJ Razorhorn	Arknights Endfield Polearm IconPolearm	411	
+Will Boost (M):
+Will +124
+Physical DMG Boost (M):
+Physical DMG Dealt +34.7%
+Infliction: Conquest of Icy Peaks:
+To enemies with Cryo Infliction or Solidification, the wielder gains DMG Dealt +22.4%. After consuming Solidification, ATK +33.6% for 15s.
+Effects of the same name cannot stack.
+Opus: The LivingOpus: The Living	Arknights Endfield Handcannon IconHandcannon	411	
+Agility Boost (M):
+Agility +124
+Arts Boost (M):
+Arts DMG Dealt +34.7%
+Infliction: Road Home for All Life:
+Critical Rate +8.4%
+When the wielder applies an Arts Reaction, the wielder gains ATK +21.0% for 20s.
+Max stacks of the same name: 2. Duration of each stack is counted separately. Effect only triggers once every 0.1s.
+OBJ VelocitousOBJ Velocitous	Arknights Endfield Handcannon IconHandcannon	411	
+Agility Boost (M):
+Agility +124
+Ultimate Gain Efficiency Boost (M):
+Ultimate Gain Efficiency +37.1%
+Detonate: Rapid Strike:
+ATK +14.0%
+After the wielder consumes an Arts Infliction, the wielder gains Nature DMG Dealt +(14.0% x Stacks Consumed) for 20s.
+Effects of the same name cannot stack.
+Freedom to ProselytizeFreedom to Proselytize	Arknights Endfield Arts Unit IconArts Unit	411	
+Will Boost (M):
+Will +124
+Treatment Efficiency Boost (M):
+Treatment Efficiency +37.1%
+Medicant: Redemption of Faith:
+Main Attribute +14.0%
+When the wielder's battle skill provides HP treatment, the controlled operator is restored for another (168 + Will x 1.40) HP.
+Effect only triggers once every 15s.
+OBJ Arts IdentifierOBJ Arts Identifier	Arknights Endfield Arts Unit IconArts Unit	411	
+Intellect Boost (M):
+Intellect +124
+Arts Intensity Boost (M):
+Arts Intensity +62
+Pursuit: Transcendent Arts:
+Max HP +28.0%
+When the wielder's combo skill applies Arts Burst or Physical Status, the entire team gains Heat DMG Dealt and Electric DMG Dealt +22.4% for 15s.
+Effects of the same name cannot stack.
+Cohesive TractionCohesive Traction	Arknights Endfield Polearm IconPolearm	411	
+Will Boost (M):
+Will +124
+Electric DMG Boost (M):
+Electric DMG Dealt +34.7%
+Suppression: Concentric Circles:
+Combo Skill DMG Dealt +28.0%
+When the wielder casts a combo skill, during the next battle skill cast within 30s, the wielder gains Electric DMG Dealt +28.0%.
+Max stacks of the same name: 3. Duration of each stack is counted separately.

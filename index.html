@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Endfield Essence Solver</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        body {
+            background-color: #0b0b0b;
+            color: #d0d0d0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+        
+        .weapon-img-container {
+            width: 64px;
+            height: 64px;
+            min-width: 64px;
+            border-radius: 4px;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .category-header {
+            background-color: #1a1a1a;
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin-top: 25px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #333;
+        }
+        
+        .category-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 12px;
+            opacity: 0.8;
+        }
+
+        .weapon-card {
+            background-color: #151515;
+            border: 1px solid #222;
+            border-radius: 6px;
+            padding: 12px;
+            cursor: pointer;
+            transition: transform 0.1s ease-out, border-color 0.1s;
+            user-select: none;
+            height: 100%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .weapon-card:hover {
+            transform: scale(1.01);
+            border-color: #444;
+            z-index: 10;
+        }
+
+        .card-accent {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            border-radius: 3px 3px 0 0;
+        }
+        
+        .accent-6 { background: rgb(255, 112, 0); }
+        .accent-5 { background: rgb(225, 186, 3); }
+
+        .img-bg-6 { background: linear-gradient(135deg, rgba(255,112,0,0.2) 0%, rgba(255,112,0,0.05) 100%); border: 1px solid rgba(255,112,0,0.3); }
+        .img-bg-5 { background: linear-gradient(135deg, rgba(225,186,3,0.2) 0%, rgba(225,186,3,0.05) 100%); border: 1px solid rgba(225,186,3,0.3); }
+
+        .priority-0 { opacity: 0.25; filter: grayscale(1); }
+        
+        .priority-2 { 
+            box-shadow: 0 0 0 2px #eef6ff; 
+            border-color: #eef6ff !important;
+        }
+
+        .star-icon {
+            position: absolute;
+            top: 8px;
+            right: 10px;
+            color: #3498db;
+            font-size: 1.2rem;
+        }
+
+        .sticky-results {
+            position: sticky;
+            top: 20px;
+            max-height: calc(100vh - 40px);
+            overflow-y: auto;
+            scrollbar-width: thin;
+        }
+        
+        .results-table { font-size: 0.9rem; }
+        .results-table tr { border-bottom: 1px solid #222; }
+        
+        .weapon-name-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #333;
+            padding: 2px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            white-space: nowrap;
+        }
+        
+        .weapon-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .stat-badge {
+            font-size: 0.65rem;
+            padding: 2px 6px;
+            background: #222;
+            color: #888;
+            border-radius: 3px;
+            margin-right: 5px;
+            border: 1px solid #333;
+            font-weight: normal;
+            display: inline-block;
+        }
+
+        .reset-btn { font-size: 0.75rem; }
+
+        .color-p2 { color: #eef6ff !important; border-color: #eef6ff !important; }
+        .color-p1 { color: #a0d8ef !important; border-color: #a0d8ef !important; }
+        .color-p0 { color: #555 !important; border-color: #333 !important; }
+
+        .color-6-rarity { color: rgb(255, 112, 0) !important; }
+        .color-5-rarity { color: rgb(225, 186, 3) !important; }
+
+        .outcome-row {
+            padding: 10px 0;
+            min-height: 2.5rem;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .outcome-row:last-child { border-bottom: none; }
+        
+        .match-count {
+            font-size: 1.2rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 40px;
+        }
+
+        .weapon-container-right {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            padding: 2px 0;
+            flex: 1;
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0b0b0b; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+        
+        .loading-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: #0b0b0b;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useMemo } = React;
+
+        const CATEGORY_ORDER = ['Greatsword', 'Handcannon', 'Arts Unit', 'Sword', 'Polearm'];
+
+        function App() {
+            const [data, setData] = useState(null);
+            const [priorities, setPriorities] = useState(() => {
+                const saved = localStorage.getItem('endfield_priorities_v5');
+                return saved ? JSON.parse(saved) : null;
+            });
+            const [filter, setFilter] = useState('');
+
+            useEffect(() => {
+                fetch('data.json')
+                    .then(res => res.json())
+                    .then(json => {
+                        setData(json);
+                        if (!priorities) {
+                            const initial = {};
+                            json.weapons.forEach(w => { initial[w.name] = 1; });
+                            setPriorities(initial);
+                        }
+                    });
+            }, []);
+
+            useEffect(() => {
+                if (priorities) {
+                    localStorage.setItem('endfield_priorities_v5', JSON.stringify(priorities));
+                }
+            }, [priorities]);
+
+            const resetPriorities = () => {
+                if (window.confirm('Reset all to default?')) {
+                    const initial = {};
+                    data.weapons.forEach(w => { initial[w.name] = 1; });
+                    setPriorities(initial);
+                }
+            };
+
+            const togglePriority = (name) => {
+                setPriorities(prev => {
+                    const curr = prev[name];
+                    const next = curr === 1 ? 2 : (curr === 2 ? 0 : 1);
+                    return { ...prev, [name]: next };
+                });
+            };
+
+            const combinations = (array, k) => {
+                const result = [];
+                const fn = (start, combo) => {
+                    if (combo.length === k) { result.push(combo); return; }
+                    for (let i = start; i < array.length; i++) { fn(i + 1, [...combo, array[i]]); }
+                };
+                fn(0, []);
+                return result;
+            };
+
+            const attributes = ['Strength', 'Agility', 'Will', 'Intellect', 'Main Attribute'];
+            const attrCombos = useMemo(() => combinations(attributes, 3), []);
+
+            const results = useMemo(() => {
+                if (!data || !priorities) return [];
+                const solverResults = [];
+                const locations = data.alluvium;
+
+                Object.entries(locations).forEach(([locName, locData]) => {
+                    const selections = [
+                        ...locData.secondary.map(s => ({ type: 'secondary', val: s })),
+                        ...locData.skill.map(s => ({ type: 'skill', val: s }))
+                    ];
+
+                    selections.forEach(sel => {
+                        attrCombos.forEach(attrSel => {
+                            const p2Outcomes = [];
+                            const p1Outcomes = [];
+                            const p0Outcomes = [];
+                            
+                            data.weapons.forEach(w => {
+                                if (!attrSel.includes(w.attr_stat)) return;
+
+                                const isMatch = sel.type === 'secondary' 
+                                    ? (w.sec_stat === sel.val && locData.skill.includes(w.skill_stat))
+                                    : (w.skill_stat === sel.val && locData.secondary.includes(w.sec_stat));
+
+                                if (isMatch) {
+                                    const p = priorities[w.name] ?? 1;
+                                    if (p === 2) p2Outcomes.push(w);
+                                    else if (p === 1) p1Outcomes.push(w);
+                                    else p0Outcomes.push(w);
+                                }
+                            });
+
+                            if (p2Outcomes.length > 0 || p1Outcomes.length > 0) {
+                                const score = (p2Outcomes.length * 1000) + (p1Outcomes.length * 1) + (p0Outcomes.length * 0.001);
+                                solverResults.push({
+                                    location: locName,
+                                    attrItems: attrSel,
+                                    selItem: sel.val,
+                                    score: score,
+                                    p2Count: p2Outcomes.length,
+                                    p1Count: p1Outcomes.length,
+                                    p0Count: p0Outcomes.length,
+                                    p2List: p2Outcomes,
+                                    p1List: p1Outcomes,
+                                    p0List: p0Outcomes
+                                });
+                            }
+                        });
+                    });
+                });
+
+                const anyP2Selected = Object.values(priorities).some(p => p === 2);
+                let filtered = solverResults;
+                
+                if (anyP2Selected) {
+                    filtered = solverResults.filter(r => r.p2Count > 0);
+                }
+                
+                // Always prune entirely untracked (only p0)
+                filtered = filtered.filter(r => r.p2Count > 0 || r.p1Count > 0);
+
+                return filtered.sort((a, b) => b.score - a.score).slice(0, 100);
+            }, [data, priorities]);
+
+            const groupedWeapons = useMemo(() => {
+                if (!data) return {};
+                const groups = {};
+                CATEGORY_ORDER.forEach(cat => groups[cat] = []);
+                data.weapons.forEach(w => {
+                    if (w.name.toLowerCase().includes(filter.toLowerCase())) groups[w.type]?.push(w);
+                });
+                Object.keys(groups).forEach(cat => {
+                    groups[cat].sort((a, b) => {
+                        if (a.rarity !== b.rarity) return b.rarity - a.rarity;
+                        return a.name.localeCompare(b.name);
+                    });
+                });
+                return groups;
+            }, [data, filter]);
+
+            if (!data || !priorities) return <div className="loading-overlay">Loading Data...</div>;
+
+            return (
+                <div className="container-fluid py-4">
+                    <div className="row g-4">
+                        <div className="col-lg-6">
+                            <div className="d-flex justify-content-between align-items-center mb-3">
+                                <h3 className="m-0 fw-bold">ESSENCE TARGETS</h3>
+                                <div className="d-flex gap-3">
+                                    <input type="text" className="form-control form-control-sm bg-dark text-light border-secondary" placeholder="Search..." value={filter} onChange={e => setFilter(e.target.value)} style={{width: '180px'}} />
+                                    <button className="btn btn-outline-secondary btn-sm" onClick={resetPriorities}>RESET</button>
+                                </div>
+                            </div>
+                            
+                            <div className="pe-2">
+                                {CATEGORY_ORDER.map(cat => (
+                                    groupedWeapons[cat].length > 0 && (
+                                        <div key={cat}>
+                                            <div className="category-header mb-3">
+                                                <img src={`images/weaponcategory_${cat.toLowerCase().replace(' ', '_')}.png`} className="category-icon" alt="" />
+                                                <span className="text-uppercase fw-bold" style={{letterSpacing: '2px', fontSize: '0.9rem'}}>{cat}S</span>
+                                            </div>
+                                            <div className="row g-3">
+                                                {groupedWeapons[cat].map(w => (
+                                                    <div key={w.name} className="col-xl-6">
+                                                        <div className={`weapon-card priority-${priorities[w.name]}`} onClick={() => togglePriority(w.name)}>
+                                                            <div className={`card-accent accent-${w.rarity}`}></div>
+                                                            {priorities[w.name] === 2 && <span className="star-icon">★</span>}
+                                                            
+                                                            <div className="d-flex align-items-center">
+                                                                <div className={`weapon-img-container img-bg-${w.rarity}`}>
+                                                                    <img src={`images/weapon_${w.name.toLowerCase().replace(/ /g, '_').replace(/:/g, '')}.png`} className="weapon-img" alt="" onError={(e) => { e.target.onerror = null; e.target.src = 'https://via.placeholder.com/64/111/444?text=' + w.name[0]; }} />
+                                                                </div>
+                                                                <div className="flex-grow-1 min-width-0">
+                                                                    <div className={`fw-bold text-truncate ${priorities[w.name] === 2 ? 'color-p2' : (priorities[w.name] === 1 ? 'color-p1' : 'color-p0')}`} style={{fontSize: '1rem'}}>{w.name}</div>
+                                                                    <div className="d-flex align-items-center mt-1">
+                                                                        <span className={`color-${w.rarity}-rarity`} style={{fontSize: '0.8rem', fontWeight: 'bold'}}>{w.rarity}★</span>
+                                                                        <span className="mx-2 text-muted">|</span>
+                                                                        <span className={`text-uppercase color-${w.rarity}-rarity`} style={{fontSize: '0.7rem'}}>{w.type}</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div className="mt-3 pt-2 border-top border-secondary border-opacity-25 d-flex flex-wrap gap-1">
+                                                                <span className="stat-badge">{w.attr_stat}</span>
+                                                                <span className="stat-badge">{w.sec_stat}</span>
+                                                                <span className="stat-badge">{w.skill_stat}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="col-lg-6">
+                            <div className="sticky-results">
+                                <div className="d-flex justify-content-between align-items-end mb-3">
+                                    <h3 className="m-0 fw-bold">ESSENCE MATCHES</h3>
+                                </div>
+                                <div className="card bg-dark border-secondary bg-opacity-50">
+                                    <div className="card-body p-0">
+                                        <div className="table-responsive">
+                                            <table className="table table-dark table-hover mb-0 results-table">
+                                                <thead className="text-uppercase text-muted" style={{fontSize: '0.75rem'}}>
+                                                    <tr>
+                                                        <th className="ps-3 py-3" style={{width: '35%'}}>Location / Selection</th>
+                                                        <th className="text-center py-3" style={{width: '10%'}}>Matches</th>
+                                                        <th className="py-3 pe-3">Weapon Essences</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {results.map((r, i) => (
+                                                        <tr key={i}>
+                                                            <td className="ps-3 py-3">
+                                                                <div className="text-info fw-bold mb-3" style={{fontSize: '1.1rem'}}>{r.location}</div>
+                                                                <div className="d-flex flex-wrap gap-1">
+                                                                    {r.attrItems.map((a, ai) => (
+                                                                        <span key={ai} className="stat-badge" style={{color: '#888'}}>{a}</span>
+                                                                    ))}
+                                                                    <span className="stat-badge" style={{color: '#888'}}>{r.selItem}</span>
+                                                                </div>
+                                                            </td>
+                                                            <td className="text-center align-middle">
+                                                                <div className="outcome-row color-p2 match-count">{r.p2Count}</div>
+                                                                <div className="outcome-row color-p1 match-count">{r.p1Count}</div>
+                                                                <div className="outcome-row color-p0 match-count">{r.p0Count}</div>
+                                                            </td>
+                                                            <td className="align-middle pe-3">
+                                                                <div className="outcome-row">
+                                                                    <div className="weapon-container-right">
+                                                                        {r.p2List.map(o => (
+                                                                            <span key={o.name} className="weapon-name-box color-p2">{o.name}</span>
+                                                                        ))}
+                                                                    </div>
+                                                                </div>
+                                                                <div className="outcome-row">
+                                                                    <div className="weapon-container-right">
+                                                                        {r.p1List.map(o => (
+                                                                            <span key={o.name} className="weapon-name-box color-p1">{o.name}</span>
+                                                                        ))}
+                                                                    </div>
+                                                                </div>
+                                                                <div className="outcome-row">
+                                                                    <div className="weapon-container-right">
+                                                                        {r.p0List.map(o => (
+                                                                            <span key={o.name} className="weapon-name-box color-p0">{o.name}</span>
+                                                                        ))}
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
