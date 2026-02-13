@@ -230,12 +230,12 @@
         .btn-confirm { background: #d9534f; border: 1px solid #d43f3a; color: white; }
         .btn-cancel { background: #333; border: 1px solid #444; color: #ccc; }
 
-        /* Tooltip Styles */
+        /* Tooltip Styles - Repositioned to the left */
         .stat-tooltip {
             position: absolute;
-            bottom: calc(100% + 10px);
-            left: 50%;
-            transform: translateX(-50%);
+            top: 50%;
+            right: calc(100% + 15px);
+            transform: translateY(-50%);
             background: #1a1a1a;
             border: 1px solid #444;
             padding: 8px;
@@ -252,12 +252,12 @@
         .stat-tooltip::after {
             content: '';
             position: absolute;
-            top: 100%;
-            left: 50%;
-            transform: translateX(-50%);
+            left: 100%;
+            top: 50%;
+            transform: translateY(-50%);
             border-width: 6px;
             border-style: solid;
-            border-color: #444 transparent transparent transparent;
+            border-color: transparent transparent transparent #444;
         }
     </style>
 </head>
@@ -405,8 +405,8 @@
                 return groups;
             }, [data, filter]);
 
-            const Tooltip = ({ weapon }) => (
-                <div className="stat-tooltip" style={{ display: activeTooltip === weapon.name ? 'block' : undefined }}>
+            const Tooltip = ({ weapon, uniqueId }) => (
+                <div className="stat-tooltip" style={{ display: activeTooltip === uniqueId ? 'block' : undefined }}>
                     <div className="d-flex flex-column gap-1">
                         <span className="stat-badge w-100 m-0">{weapon.attr_stat}</span>
                         <span className="stat-badge w-100 m-0">{weapon.sec_stat}</span>
@@ -422,8 +422,8 @@
                     {showResetModal && (
                         <div className="custom-modal-overlay">
                             <div className="custom-modal">
-                                <h4 className="mb-3">Reset Tracker</h4>
-                                <p style={{ color: '#eee' }}>Reset all weapons back to standard tracking?</p>
+                                <h4 className="mb-3">Reset Priorities</h4>
+                                <p style={{ color: '#fff', fontSize: '1rem' }}>Reset all weapons back to default priority?</p>
                                 <div className="modal-buttons">
                                     <button className="modal-btn btn-confirm" onClick={confirmReset}>RESET</button>
                                     <button className="modal-btn btn-cancel" onClick={() => setShowResetModal(false)}>CANCEL</button>
@@ -524,47 +524,56 @@
                                                             <td className="align-middle pe-3">
                                                                 <div className="outcome-row">
                                                                     <div className="weapon-container-right">
-                                                                        {r.p2List.map(o => (
-                                                                            <span key={o.name} 
-                                                                                className="weapon-name-box color-p2"
-                                                                                onMouseEnter={() => setActiveTooltip(o.name)}
-                                                                                onMouseLeave={() => setActiveTooltip(null)}
-                                                                                onClick={() => setActiveTooltip(activeTooltip === o.name ? null : o.name)}
-                                                                            >
-                                                                                {o.name}
-                                                                                <Tooltip weapon={o} />
-                                                                            </span>
-                                                                        ))}
+                                                                        {r.p2List.map(o => {
+                                                                            const uid = `p2-${i}-${o.name}`;
+                                                                            return (
+                                                                                <span key={uid} 
+                                                                                    className="weapon-name-box color-p2"
+                                                                                    onMouseEnter={() => setActiveTooltip(uid)}
+                                                                                    onMouseLeave={() => setActiveTooltip(null)}
+                                                                                    onClick={() => setActiveTooltip(activeTooltip === uid ? null : uid)}
+                                                                                >
+                                                                                    {o.name}
+                                                                                    <Tooltip weapon={o} uniqueId={uid} />
+                                                                                </span>
+                                                                            );
+                                                                        })}
                                                                     </div>
                                                                 </div>
                                                                 <div className="outcome-row">
                                                                     <div className="weapon-container-right">
-                                                                        {r.p1List.map(o => (
-                                                                            <span key={o.name} 
-                                                                                className="weapon-name-box color-p1"
-                                                                                onMouseEnter={() => setActiveTooltip(o.name)}
-                                                                                onMouseLeave={() => setActiveTooltip(null)}
-                                                                                onClick={() => setActiveTooltip(activeTooltip === o.name ? null : o.name)}
-                                                                            >
-                                                                                {o.name}
-                                                                                <Tooltip weapon={o} />
-                                                                            </span>
-                                                                        ))}
+                                                                        {r.p1List.map(o => {
+                                                                            const uid = `p1-${i}-${o.name}`;
+                                                                            return (
+                                                                                <span key={uid} 
+                                                                                    className="weapon-name-box color-p1"
+                                                                                    onMouseEnter={() => setActiveTooltip(uid)}
+                                                                                    onMouseLeave={() => setActiveTooltip(null)}
+                                                                                    onClick={() => setActiveTooltip(activeTooltip === uid ? null : uid)}
+                                                                                >
+                                                                                    {o.name}
+                                                                                    <Tooltip weapon={o} uniqueId={uid} />
+                                                                                </span>
+                                                                            );
+                                                                        })}
                                                                     </div>
                                                                 </div>
                                                                 <div className="outcome-row">
                                                                     <div className="weapon-container-right">
-                                                                        {r.p0List.map(o => (
-                                                                            <span key={o.name} 
-                                                                                className="weapon-name-box color-p0"
-                                                                                onMouseEnter={() => setActiveTooltip(o.name)}
-                                                                                onMouseLeave={() => setActiveTooltip(null)}
-                                                                                onClick={() => setActiveTooltip(activeTooltip === o.name ? null : o.name)}
-                                                                            >
-                                                                                {o.name}
-                                                                                <Tooltip weapon={o} />
-                                                                            </span>
-                                                                        ))}
+                                                                        {r.p0List.map(o => {
+                                                                            const uid = `p0-${i}-${o.name}`;
+                                                                            return (
+                                                                                <span key={uid} 
+                                                                                    className="weapon-name-box color-p0"
+                                                                                    onMouseEnter={() => setActiveTooltip(uid)}
+                                                                                    onMouseLeave={() => setActiveTooltip(null)}
+                                                                                    onClick={() => setActiveTooltip(activeTooltip === uid ? null : uid)}
+                                                                                >
+                                                                                    {o.name}
+                                                                                    <Tooltip weapon={o} uniqueId={uid} />
+                                                                                </span>
+                                                                            );
+                                                                        })}
                                                                     </div>
                                                                 </div>
                                                             </td>
