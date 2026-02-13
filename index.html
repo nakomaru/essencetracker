@@ -147,9 +147,7 @@
             min-height: 2.5rem;
             display: flex;
             align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
-        .outcome-row:last-child { border-bottom: none; }
         
         .match-count {
             font-size: 1.2rem;
@@ -393,7 +391,7 @@
                                     <div className="card-body p-0">
                                         <div className="table-responsive">
                                             <table className="table table-dark table-hover mb-0 results-table">
-                                                <thead className="text-uppercase text-muted" style={{fontSize: '0.75rem'}}>
+                                                <thead className="text-uppercase" style={{fontSize: '0.75rem', color: '#aaa'}}>
                                                     <tr>
                                                         <th className="ps-3 py-3" style={{width: '35%'}}>Location / Selection</th>
                                                         <th className="py-3 pe-3">Weapon Essences</th>
@@ -405,7 +403,7 @@
                                                             <td className="ps-3 py-3">
                                                                 <div className="fw-bold mb-1" style={{fontSize: '1.1rem', color: '#aaa'}}>{r.location}</div>
                                                                 <div className="mb-2" style={{fontSize: '0.75rem'}}>
-                                                                    <span className="text-muted text-uppercase" style={{letterSpacing: '0.5px'}}>Matches: </span>
+                                                                    <span className="text-uppercase" style={{letterSpacing: '0.5px', color: '#aaa'}}>Matches: </span>
                                                                     <span className="color-p2 fw-bold">{r.p2Count}</span>
                                                                     <span className="mx-1 text-muted opacity-50">|</span>
                                                                     <span className="color-p1 fw-bold">{r.p1Count}</span>
