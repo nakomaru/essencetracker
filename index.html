@@ -8,6 +8,7 @@
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         body {
             background-color: #0b0b0b;
@@ -103,7 +104,6 @@
             scrollbar-width: thin;
         }
         
-        /* Fixed corner issue by using overflow: hidden */
         .results-card {
             background-color: #151515;
             border: 1px solid #222;
@@ -219,11 +219,12 @@
             border: 1px solid #333;
             border-radius: 8px;
             padding: 24px;
-            max-width: 600px;
-            width: 90%;
+            max-width: 900px;
+            width: 95%;
             max-height: 90vh;
             overflow-y: auto;
             color: #fff;
+            position: relative;
         }
         .modal-buttons {
             display: flex;
@@ -249,7 +250,7 @@
             padding: 8px;
             display: flex;
             align-items: center;
-            margin-bottom: 8px;
+            height: 100%;
         }
         .compact-weapon-card .weapon-img-container {
             width: 40px;
@@ -287,13 +288,28 @@
             border-style: solid;
             border-color: transparent transparent #444 transparent;
         }
+
+        .png-btn {
+            font-size: 0.75rem;
+            background: #0d6efd;
+            border: 1px solid #0a58ca;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            margin-right: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .png-btn:hover {
+            background: #0b5ed7;
+        }
     </style>
 </head>
 <body>
     <div id="root"></div>
 
     <script type="text/babel">
-        const { useState, useEffect, useMemo } = React;
+        const { useState, useEffect, useMemo, useRef } = React;
 
         const CATEGORY_ORDER = ['Greatsword', 'Handcannon', 'Arts Unit', 'Sword', 'Polearm'];
 
@@ -307,6 +323,7 @@
             const [showResetModal, setShowResetModal] = useState(false);
             const [selectedResult, setSelectedResult] = useState(null);
             const [activeTooltip, setActiveTooltip] = useState(null);
+            const modalRef = useRef(null);
 
             useEffect(() => {
                 fetch('data.json')
@@ -434,6 +451,20 @@
                 return groups;
             }, [data, filter]);
 
+            const exportAsImage = async () => {
+                if (!modalRef.current) return;
+                const canvas = await html2canvas(modalRef.current, {
+                    backgroundColor: '#1a1a1a',
+                    scale: 2,
+                    useCORS: true,
+                    logging: false
+                });
+                const link = document.createElement('a');
+                link.download = `Endfield_Selection_${selectedResult.location.replace(/ /g, '_')}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            };
+
             const Tooltip = ({ weapon, uniqueId }) => (
                 <div className="stat-tooltip" style={{ display: activeTooltip === uniqueId ? 'block' : undefined }}>
                     <div className="d-flex flex-column gap-1">
@@ -448,16 +479,18 @@
                 const p = priorities[w.name];
                 const colorClass = p === 2 ? 'color-p2' : (p === 1 ? 'color-p1' : 'color-p0');
                 return (
-                    <div className="compact-weapon-card">
-                        <div className={`weapon-img-container img-bg-${w.rarity}`} style={{width: '40px', height: '40px', minWidth: '40px'}}>
-                            <img src={`images/weapon_${w.name.toLowerCase().replace(/ /g, '_').replace(/:/g, '')}.png`} className="weapon-img" alt="" onError={(e) => { e.target.onerror = null; e.target.src = 'https://via.placeholder.com/40/111/444?text=' + w.name[0]; }} />
-                        </div>
-                        <div className="flex-grow-1 min-width-0">
-                            <div className={`fw-bold text-truncate ${colorClass}`} style={{fontSize: '0.9rem'}}>{w.name}</div>
-                            <div className="d-flex flex-wrap gap-1 mt-1">
-                                <span className="stat-badge">{w.attr_stat}</span>
-                                <span className="stat-badge">{w.sec_stat}</span>
-                                <span className="stat-badge">{w.skill_stat}</span>
+                    <div className="col-md-6 col-12 mb-2">
+                        <div className="compact-weapon-card">
+                            <div className={`weapon-img-container img-bg-${w.rarity}`} style={{width: '40px', height: '40px', minWidth: '40px'}}>
+                                <img src={`images/weapon_${w.name.toLowerCase().replace(/ /g, '_').replace(/:/g, '')}.png`} className="weapon-img" alt="" onError={(e) => { e.target.onerror = null; e.target.src = 'https://via.placeholder.com/40/111/444?text=' + w.name[0]; }} />
+                            </div>
+                            <div className="flex-grow-1 min-width-0">
+                                <div className={`fw-bold text-truncate ${colorClass}`} style={{fontSize: '0.9rem'}}>{w.name}</div>
+                                <div className="d-flex flex-wrap gap-1 mt-1">
+                                    <span className="stat-badge">{w.attr_stat}</span>
+                                    <span className="stat-badge">{w.sec_stat}</span>
+                                    <span className="stat-badge">{w.skill_stat}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -483,7 +516,7 @@
 
                     {selectedResult && (
                         <div className="custom-modal-overlay" onClick={() => setSelectedResult(null)}>
-                            <div className="custom-modal" onClick={e => e.stopPropagation()}>
+                            <div className="custom-modal" ref={modalRef} onClick={e => e.stopPropagation()}>
                                 <div className="d-flex justify-content-between align-items-center mb-4 border-bottom border-secondary pb-2">
                                     <div>
                                         <h4 className="m-0 color-p1">{selectedResult.location}</h4>
@@ -494,20 +527,27 @@
                                             <span className="stat-badge" style={{color: '#888'}}>{selectedResult.selItem}</span>
                                         </div>
                                     </div>
-                                    <button className="btn-close btn-close-white" onClick={() => setSelectedResult(null)}></button>
+                                    <div className="d-flex align-items-center">
+                                        <button className="png-btn" onClick={exportAsImage}>SAVE PNG</button>
+                                        <button className="btn-close btn-close-white" onClick={() => setSelectedResult(null)}></button>
+                                    </div>
                                 </div>
                                 
                                 {selectedResult.p2List.length > 0 && (
                                     <div className="mb-4">
                                         <h6 className="text-uppercase color-p2 mb-3" style={{letterSpacing: '1px'}}>Priority Essences ({selectedResult.p2Count})</h6>
-                                        {selectedResult.p2List.map(w => <CompactWeapon key={w.name} w={w} />)}
+                                        <div className="row g-2">
+                                            {selectedResult.p2List.map(w => <CompactWeapon key={w.name} w={w} />)}
+                                        </div>
                                     </div>
                                 )}
                                 
                                 {selectedResult.p1List.length > 0 && (
                                     <div className="mb-4">
                                         <h6 className="text-uppercase color-p1 mb-3" style={{letterSpacing: '1px'}}>Tracked Essences ({selectedResult.p1Count})</h6>
-                                        {selectedResult.p1List.map(w => <CompactWeapon key={w.name} w={w} />)}
+                                        <div className="row g-2">
+                                            {selectedResult.p1List.map(w => <CompactWeapon key={w.name} w={w} />)}
+                                        </div>
                                     </div>
                                 )}
 
@@ -516,7 +556,7 @@
                                         <h6 className="text-uppercase color-p0 mb-3" style={{letterSpacing: '1px'}}>Untracked Essences ({selectedResult.p0Count})</h6>
                                         <div className="row g-2">
                                             {selectedResult.p0List.map(w => (
-                                                <div key={w.name} className="col-6">
+                                                <div key={w.name} className="col-md-4 col-6">
                                                     <div className="small color-p0 opacity-75">• {w.name}</div>
                                                 </div>
                                             ))}
