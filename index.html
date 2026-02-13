@@ -487,14 +487,19 @@
                                 <div className="d-flex justify-content-between align-items-center mb-4 border-bottom border-secondary pb-2">
                                     <div>
                                         <h4 className="m-0 color-p1">{selectedResult.location}</h4>
-                                        <div className="small text-muted mt-1">{selectedResult.attrItems.join(' / ')} + {selectedResult.selItem}</div>
+                                        <div className="d-flex flex-wrap gap-1 mt-2">
+                                            {selectedResult.attrItems.map((a, ai) => (
+                                                <span key={ai} className="stat-badge" style={{color: '#888'}}>{a}</span>
+                                            ))}
+                                            <span className="stat-badge" style={{color: '#888'}}>{selectedResult.selItem}</span>
+                                        </div>
                                     </div>
                                     <button className="btn-close btn-close-white" onClick={() => setSelectedResult(null)}></button>
                                 </div>
                                 
                                 {selectedResult.p2List.length > 0 && (
                                     <div className="mb-4">
-                                        <h6 className="text-uppercase color-p2 mb-3" style={{letterSpacing: '1px'}}>Priority Targets ({selectedResult.p2Count})</h6>
+                                        <h6 className="text-uppercase color-p2 mb-3" style={{letterSpacing: '1px'}}>Priority Essences ({selectedResult.p2Count})</h6>
                                         {selectedResult.p2List.map(w => <CompactWeapon key={w.name} w={w} />)}
                                     </div>
                                 )}
@@ -508,7 +513,7 @@
 
                                 {selectedResult.p0List.length > 0 && (
                                     <div>
-                                        <h6 className="text-uppercase color-p0 mb-3" style={{letterSpacing: '1px'}}>Untracked ({selectedResult.p0Count})</h6>
+                                        <h6 className="text-uppercase color-p0 mb-3" style={{letterSpacing: '1px'}}>Untracked Essences ({selectedResult.p0Count})</h6>
                                         <div className="row g-2">
                                             {selectedResult.p0List.map(w => (
                                                 <div key={w.name} className="col-6">
