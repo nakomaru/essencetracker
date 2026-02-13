@@ -113,6 +113,7 @@
             border-radius: 4px;
             display: inline-block;
             white-space: nowrap;
+            position: relative;
         }
         
         .weapon-img {
@@ -228,6 +229,36 @@
         }
         .btn-confirm { background: #d9534f; border: 1px solid #d43f3a; color: white; }
         .btn-cancel { background: #333; border: 1px solid #444; color: #ccc; }
+
+        /* Tooltip Styles */
+        .stat-tooltip {
+            position: absolute;
+            bottom: calc(100% + 10px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1a1a1a;
+            border: 1px solid #444;
+            padding: 8px;
+            border-radius: 6px;
+            z-index: 3000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            pointer-events: none;
+            display: none;
+            min-width: 180px;
+        }
+        .weapon-name-box:hover .stat-tooltip {
+            display: block;
+        }
+        .stat-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 6px;
+            border-style: solid;
+            border-color: #444 transparent transparent transparent;
+        }
     </style>
 </head>
 <body>
@@ -246,6 +277,7 @@
             });
             const [filter, setFilter] = useState('');
             const [showResetModal, setShowResetModal] = useState(false);
+            const [activeTooltip, setActiveTooltip] = useState(null);
 
             useEffect(() => {
                 fetch('data.json')
@@ -373,6 +405,16 @@
                 return groups;
             }, [data, filter]);
 
+            const Tooltip = ({ weapon }) => (
+                <div className="stat-tooltip" style={{ display: activeTooltip === weapon.name ? 'block' : undefined }}>
+                    <div className="d-flex flex-column gap-1">
+                        <span className="stat-badge w-100 m-0">{weapon.attr_stat}</span>
+                        <span className="stat-badge w-100 m-0">{weapon.sec_stat}</span>
+                        <span className="stat-badge w-100 m-0">{weapon.skill_stat}</span>
+                    </div>
+                </div>
+            );
+
             if (!data || !priorities) return <div className="loading-overlay">Loading Data...</div>;
 
             return (
@@ -380,8 +422,8 @@
                     {showResetModal && (
                         <div className="custom-modal-overlay">
                             <div className="custom-modal">
-                                <h4 className="mb-3">Reset Priorities</h4>
-                                <p className="text-muted">Restore all weapons to tracked status?</p>
+                                <h4 className="mb-3">Reset Tracker</h4>
+                                <p style={{ color: '#eee' }}>Reset all weapons back to standard tracking?</p>
                                 <div className="modal-buttons">
                                     <button className="modal-btn btn-confirm" onClick={confirmReset}>RESET</button>
                                     <button className="modal-btn btn-cancel" onClick={() => setShowResetModal(false)}>CANCEL</button>
@@ -453,10 +495,10 @@
                                     <div className="card-body p-0">
                                         <div className="table-responsive">
                                             <table className="table table-dark table-hover mb-0 results-table">
-                                                <thead className="text-uppercase" style={{fontSize: '0.75rem', color: '#aaa'}}>
+                                                <thead className="text-uppercase" style={{fontSize: '0.75rem'}}>
                                                     <tr>
-                                                        <th className="ps-3 py-3" style={{width: '35%'}}>Location / Selection</th>
-                                                        <th className="py-3 pe-3">Weapon Essences</th>
+                                                        <th className="ps-3 py-3" style={{width: '35%', color: '#aaa'}}>Location / Selection</th>
+                                                        <th className="py-3 pe-3" style={{color: '#aaa'}}>Weapon Essences</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -483,21 +525,45 @@
                                                                 <div className="outcome-row">
                                                                     <div className="weapon-container-right">
                                                                         {r.p2List.map(o => (
-                                                                            <span key={o.name} className="weapon-name-box color-p2">{o.name}</span>
+                                                                            <span key={o.name} 
+                                                                                className="weapon-name-box color-p2"
+                                                                                onMouseEnter={() => setActiveTooltip(o.name)}
+                                                                                onMouseLeave={() => setActiveTooltip(null)}
+                                                                                onClick={() => setActiveTooltip(activeTooltip === o.name ? null : o.name)}
+                                                                            >
+                                                                                {o.name}
+                                                                                <Tooltip weapon={o} />
+                                                                            </span>
                                                                         ))}
                                                                     </div>
                                                                 </div>
                                                                 <div className="outcome-row">
                                                                     <div className="weapon-container-right">
                                                                         {r.p1List.map(o => (
-                                                                            <span key={o.name} className="weapon-name-box color-p1">{o.name}</span>
+                                                                            <span key={o.name} 
+                                                                                className="weapon-name-box color-p1"
+                                                                                onMouseEnter={() => setActiveTooltip(o.name)}
+                                                                                onMouseLeave={() => setActiveTooltip(null)}
+                                                                                onClick={() => setActiveTooltip(activeTooltip === o.name ? null : o.name)}
+                                                                            >
+                                                                                {o.name}
+                                                                                <Tooltip weapon={o} />
+                                                                            </span>
                                                                         ))}
                                                                     </div>
                                                                 </div>
                                                                 <div className="outcome-row">
                                                                     <div className="weapon-container-right">
                                                                         {r.p0List.map(o => (
-                                                                            <span key={o.name} className="weapon-name-box color-p0">{o.name}</span>
+                                                                            <span key={o.name} 
+                                                                                className="weapon-name-box color-p0"
+                                                                                onMouseEnter={() => setActiveTooltip(o.name)}
+                                                                                onMouseLeave={() => setActiveTooltip(null)}
+                                                                                onClick={() => setActiveTooltip(activeTooltip === o.name ? null : o.name)}
+                                                                            >
+                                                                                {o.name}
+                                                                                <Tooltip weapon={o} />
+                                                                            </span>
                                                                         ))}
                                                                     </div>
                                                                 </div>
