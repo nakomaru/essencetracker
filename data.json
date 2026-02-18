@@ -516,6 +516,171 @@
       "sec_val": 34.7,
       "skill_stat": "Suppression",
       "skill_effect": "Concentric Circles: Combo Skill DMG Dealt +28.0% When the wielder casts a combo skill, during the next battle skill cast within 30s, the wielder gains Electric DMG Dealt +28.0%. Max stacks of the same name: 3. Duration of each stack is counted separately."
+    },
+    {
+      "name": "Pathfinder's Beacon",
+      "type": "Polearm",
+      "rarity": 4,
+      "attr_stat": "Agility",
+      "attr_val": 93.0,
+      "sec_stat": "Attack Boost",
+      "sec_val": 23.4,
+      "skill_stat": "Inspiring",
+      "skill_effect": "Start of a Saga: When the wielder's HP is above 80%, ATK +42.0%."
+    },
+    {
+      "name": "Industry 0.1",
+      "type": "Greatsword",
+      "rarity": 4,
+      "attr_stat": "Strength",
+      "attr_val": 93.0,
+      "sec_stat": "Attack Boost",
+      "sec_val": 23.4,
+      "skill_stat": "Suppression",
+      "skill_effect": "Emergency Boost: When the wielder's battle skill hits the enemy, ATK +33.6% for 20s. Effects of the same name cannot stack."
+    },
+    {
+      "name": "Howling Guard",
+      "type": "Handcannon",
+      "rarity": 4,
+      "attr_stat": "Intellect",
+      "attr_val": 93.0,
+      "sec_stat": "Attack Boost",
+      "sec_val": 23.4,
+      "skill_stat": "Suppression",
+      "skill_effect": "Emergency Boost: When the wielder's battle skill hits the enemy, ATK +33.6% for 20s. Effects of the same name cannot stack."
+    },
+    {
+      "name": "Contingent Measure",
+      "type": "Sword",
+      "rarity": 4,
+      "attr_stat": "Agility",
+      "attr_val": 93.0,
+      "sec_stat": "Physical DMG Boost",
+      "sec_val": 26.0,
+      "skill_stat": "Suppression",
+      "skill_effect": "Emergency Boost: When the wielder's battle skill hits the enemy, ATK +33.6% for 20s. Effects of the same name cannot stack."
+    },
+    {
+      "name": "Aggeloslayer",
+      "type": "Polearm",
+      "rarity": 4,
+      "attr_stat": "Will",
+      "attr_val": 93.0,
+      "sec_stat": "Arts DMG Boost",
+      "sec_val": 26.0,
+      "skill_stat": "Suppression",
+      "skill_effect": "Emergency Boost: When the wielder's battle skill hits the enemy, ATK +33.6% for 20s. Effects of the same name cannot stack."
+    },
+    {
+      "name": "Long Road",
+      "type": "Handcannon",
+      "rarity": 4,
+      "attr_stat": "Strength",
+      "attr_val": 93.0,
+      "sec_stat": "Arts DMG Boost",
+      "sec_val": 26.0,
+      "skill_stat": "Pursuit",
+      "skill_effect": "Unending Cycle: When the wielder casts a combo skill, the wielder gains ATK +33.6% for 20s. Effects of the same name cannot stack."
+    },
+    {
+      "name": "Hypernova Auto",
+      "type": "Arts Unit",
+      "rarity": 4,
+      "attr_stat": "Intellect",
+      "attr_val": 93.0,
+      "sec_stat": "Arts DMG Boost",
+      "sec_val": 26.0,
+      "skill_stat": "Inspiring",
+      "skill_effect": "Start of a Saga: When the wielder's HP is above 80%, ATK +42.0%."
+    },
+    {
+      "name": "Wave Tide",
+      "type": "Sword",
+      "rarity": 4,
+      "attr_stat": "Intellect",
+      "attr_val": 93.0,
+      "sec_stat": "Attack Boost",
+      "sec_val": 23.4,
+      "skill_stat": "Pursuit",
+      "skill_effect": "Unending Cycle: When the wielder casts a combo skill, the wielder gains ATK +33.6% for 20s. Effects of the same name cannot stack."
+    },
+    {
+      "name": "Quencher",
+      "type": "Greatsword",
+      "rarity": 4,
+      "attr_stat": "Will",
+      "attr_val": 93.0,
+      "sec_stat": "HP Boost",
+      "sec_val": 46.8,
+      "skill_stat": "Crusher",
+      "skill_effect": "Honed into Legion: When the wielder performs a Final Strike on the enemy, ATK +33.6% for 10s. Effects of the same name cannot stack."
+    },
+    {
+      "name": "Fluorescent Roc",
+      "type": "Arts Unit",
+      "rarity": 4,
+      "attr_stat": "Will",
+      "attr_val": 93.0,
+      "sec_stat": "Attack Boost",
+      "sec_val": 23.4,
+      "skill_stat": "Suppression",
+      "skill_effect": "Emergency Boost: When the wielder's battle skill hits the enemy, ATK +33.6% for 20s. Effects of the same name cannot stack."
+    },
+    {
+      "name": "Tarr 11",
+      "type": "Sword",
+      "rarity": 3,
+      "attr_stat": "Main Attribute",
+      "attr_val": 79.0,
+      "sec_stat": "None",
+      "sec_val": 0,
+      "skill_stat": "Assault",
+      "skill_effect": "Armament Prep: ATK +34"
+    },
+    {
+      "name": "Jiminy 12",
+      "type": "Arts Unit",
+      "rarity": 3,
+      "attr_stat": "Main Attribute",
+      "attr_val": 79.0,
+      "sec_stat": "None",
+      "sec_val": 0,
+      "skill_stat": "Assault",
+      "skill_effect": "Armament Prep: ATK +34"
+    },
+    {
+      "name": "Peco 5",
+      "type": "Handcannon",
+      "rarity": 3,
+      "attr_stat": "Main Attribute",
+      "attr_val": 79.0,
+      "sec_stat": "None",
+      "sec_val": 0,
+      "skill_stat": "Assault",
+      "skill_effect": "Armament Prep: ATK +34"
+    },
+    {
+      "name": "Darhoff 7",
+      "type": "Greatsword",
+      "rarity": 3,
+      "attr_stat": "Main Attribute",
+      "attr_val": 79.0,
+      "sec_stat": "None",
+      "sec_val": 0,
+      "skill_stat": "Assault",
+      "skill_effect": "Armament Prep: ATK +34"
+    },
+    {
+      "name": "Opero 77",
+      "type": "Polearm",
+      "rarity": 3,
+      "attr_stat": "Main Attribute",
+      "attr_val": 79.0,
+      "sec_stat": "None",
+      "sec_val": 0,
+      "skill_stat": "Assault",
+      "skill_effect": "Armament Prep: ATK +34"
     }
   ],
   "alluvium": {

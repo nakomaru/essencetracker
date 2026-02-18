@@ -76,9 +76,13 @@
         
         .accent-6 { background: rgb(255, 112, 0); }
         .accent-5 { background: rgb(225, 186, 3); }
+        .accent-4 { background: rgb(148, 81, 248); }
+        .accent-3 { background: rgb(38, 186, 251); }
 
         .img-bg-6 { background: linear-gradient(135deg, rgba(255,112,0,0.2) 0%, rgba(255,112,0,0.05) 100%); border: 1px solid rgba(255,112,0,0.3); }
         .img-bg-5 { background: linear-gradient(135deg, rgba(225,186,3,0.2) 0%, rgba(225,186,3,0.05) 100%); border: 1px solid rgba(225,186,3,0.3); }
+        .img-bg-4 { background: linear-gradient(135deg, rgba(148, 81, 248, 0.2) 0%, rgba(148, 81, 248, 0.05) 100%); border: 1px solid rgba(148, 81, 248, 0.3); }
+        .img-bg-3 { background: linear-gradient(135deg, rgba(38, 186, 251, 0.2) 0%, rgba(38, 186, 251, 0.05) 100%); border: 1px solid rgba(38, 186, 251, 0.3); }
 
         .priority-0 { opacity: 0.25; filter: grayscale(1); }
         
@@ -164,6 +168,8 @@
 
         .color-6-rarity { color: rgb(255, 112, 0) !important; }
         .color-5-rarity { color: rgb(225, 186, 3) !important; }
+        .color-4-rarity { color: rgb(148, 81, 248) !important; }
+        .color-3-rarity { color: rgb(38, 186, 251) !important; }
 
         .outcome-row {
             padding: 10px 0;
@@ -315,7 +321,7 @@
                         setData(json);
                         if (!priorities) {
                             const initial = {};
-                            json.weapons.forEach(w => { initial[w.name] = 1; });
+                            json.weapons.forEach(w => { initial[w.name] = w.rarity === 3 ? 0 : 1; });
                             setPriorities(initial);
                         }
                     });
@@ -359,7 +365,7 @@
 
             const confirmReset = () => {
                 const initial = {};
-                data.weapons.forEach(w => { initial[w.name] = 1; });
+                data.weapons.forEach(w => { initial[w.name] = w.rarity === 3 ? 0 : 1; });
                 setPriorities(initial);
                 closeModals();
             };
@@ -406,8 +412,8 @@
                                 if (!attrSel.includes(w.attr_stat)) return;
 
                                 const isMatch = sel.type === 'secondary' 
-                                    ? (w.sec_stat === sel.val && locData.skill.includes(w.skill_stat))
-                                    : (w.skill_stat === sel.val && locData.secondary.includes(w.sec_stat));
+                                    ? ((w.sec_stat === sel.val || w.rarity === 3) && locData.skill.includes(w.skill_stat))
+                                    : (w.skill_stat === sel.val && (w.rarity === 3 || locData.secondary.includes(w.sec_stat)));
 
                                 if (isMatch) {
                                     const p = priorities[w.name] ?? 1;
@@ -439,13 +445,15 @@
                 const anyP2Selected = Object.values(priorities).some(p => p === 2);
                 let filtered = solverResults;
                 
+                // CRITICAL: If any targets are marked P2, only show combinations that can produce at least one of them.
+                // This keeps the result list focused and manageable when specific targets are set.
                 if (anyP2Selected) {
                     filtered = solverResults.filter(r => r.p2Count > 0);
                 }
                 
                 filtered = filtered.filter(r => r.p2Count > 0 || r.p1Count > 0);
 
-                return filtered.sort((a, b) => b.score - a.score).slice(0, 100);
+                return filtered.sort((a, b) => b.score - a.score).slice(0, 50);
             }, [data, priorities]);
 
             const groupedWeapons = useMemo(() => {
@@ -481,7 +489,7 @@
                     <div className="col-md-6 col-12 mb-2">
                         <div className="compact-weapon-card">
                             <div className={`weapon-img-container img-bg-${w.rarity}`} style={{width: '40px', height: '40px', minWidth: '40px'}}>
-                                <img src={`images/weapon_${w.name.toLowerCase().replace(/ /g, '_').replace(/:/g, '')}.png`} className="weapon-img" alt="" onError={(e) => { e.target.onerror = null; e.target.src = 'https://via.placeholder.com/40/111/444?text=' + w.name[0]; }} />
+                                <img src={`images/weapon_${w.name.toLowerCase().replace(/ /g, '_').replace(/:/g, '').replace(/'/g, '')}.png`} className="weapon-img" alt="" onError={(e) => { e.target.onerror = null; e.target.src = 'https://via.placeholder.com/40/111/444?text=' + w.name[0]; }} />
                             </div>
                             <div className="flex-grow-1 min-width-0">
                                 <div className={`fw-bold text-truncate ${colorClass}`} style={{fontSize: '0.9rem'}}>{w.name}</div>
@@ -594,7 +602,7 @@
                                                             
                                                             <div className="d-flex align-items-center">
                                                                 <div className={`weapon-img-container img-bg-${w.rarity}`}>
-                                                                    <img src={`images/weapon_${w.name.toLowerCase().replace(/ /g, '_').replace(/:/g, '')}.png`} className="weapon-img" alt="" onError={(e) => { e.target.onerror = null; e.target.src = 'https://via.placeholder.com/64/111/444?text=' + w.name[0]; }} />
+                                                                    <img src={`images/weapon_${w.name.toLowerCase().replace(/ /g, '_').replace(/:/g, '').replace(/'/g, '')}.png`} className="weapon-img" alt="" onError={(e) => { e.target.onerror = null; e.target.src = 'https://via.placeholder.com/64/111/444?text=' + w.name[0]; }} />
                                                                 </div>
                                                                 <div className="flex-grow-1 min-width-0">
                                                                     <div className={`fw-bold text-truncate ${priorities[w.name] === 2 ? 'color-p2' : (priorities[w.name] === 1 ? 'color-p1' : 'color-p0')}`} style={{fontSize: '1rem'}}>{w.name}</div>
