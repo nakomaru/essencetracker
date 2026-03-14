@@ -681,6 +681,39 @@
       "sec_val": 0,
       "skill_stat": "Assault",
       "skill_effect": "Armament Prep: ATK +34"
+    },
+    {
+      "name": "Brigand's Calling",
+      "type": "Handcannon",
+      "rarity": 6,
+      "attr_stat": "Agility",
+      "attr_val": 156.0,
+      "sec_stat": "Attack Boost",
+      "sec_val": 39.0,
+      "skill_stat": "Detonate",
+      "skill_effect": "Brigand's Bane: Cryo DMG Dealt +44.8%. When the wielder applies skill or ultimate applies Cryo Infliction via battle skills or ultimates, the wielder gains Cryo DMG Dealt +56.0% for 20s. When the wielder's battle skill or ultimate applies Arts Susceptibility, the target enemy suffers Arts DMG Taken +16.8% for 20s. The two effects apply separately and do not stack with themselves."
+    },
+    {
+      "name": "Glorious Memory",
+      "type": "Sword",
+      "rarity": 6,
+      "attr_stat": "Agility",
+      "attr_val": 156.0,
+      "sec_stat": "Critical Rate Boost",
+      "sec_val": 19.5,
+      "skill_stat": "Twilight",
+      "skill_effect": "Lingering Glow: ATK +19.6%. When the wielder's skill applies Vulnerability, during the next ultimate cast within 30s, the wielder gains DMG Dealt +33.6%. Max stacks for effects of the same name: 3. Duration of each stack is counted separately. Effect is only triggered once every 0.5s."
+    },
+    {
+      "name": "Home Longing",
+      "type": "Handcannon",
+      "rarity": 6,
+      "attr_stat": "Agility",
+      "attr_val": 156.0,
+      "sec_stat": "Cryo DMG Boost",
+      "sec_val": 43.3,
+      "skill_stat": "Suppression",
+      "skill_effect": "Olden Moon: ATK +19.6%. For 20s after the wielder casts a combo skill, the wielder's next battle skill gains Cryo and Nature DMG Dealt +22.4%. Max stacks for effects of the same name: 2. Duration of each stack is counted separately."
     }
   ],
   "alluvium": {
