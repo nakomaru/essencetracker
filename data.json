@@ -714,6 +714,17 @@
       "sec_val": 43.3,
       "skill_stat": "Suppression",
       "skill_effect": "Olden Moon: ATK +19.6%. For 20s after the wielder casts a combo skill, the wielder's next battle skill gains Cryo and Nature DMG Dealt +22.4%. Max stacks for effects of the same name: 2. Duration of each stack is counted separately."
+    },
+    {
+      "name": "Lupine Scarlet",
+      "type": "Sword",
+      "rarity": 6,
+      "attr_stat": "Agility",
+      "attr_val": 156.0,
+      "sec_stat": "Critical Rate Boost",
+      "sec_val": 19.5,
+      "skill_stat": "Fracture",
+      "skill_effect": "Gnashing Wolves: ATK +44.8%. After the wielder's skill deals Critical DMG, the wielder gains 1 stack of Wolven Blood that grants Physical and Heat DMG Dealth +2.8%. Wolven Blood can reach 16 stacks. After reaching 16 stacks, the wielder gains another Physical and Heat DMG Dealt +67.2% for 20s. After the duration ends, all Wolven Blood stacks are removed."
     }
   ],
   "alluvium": {
