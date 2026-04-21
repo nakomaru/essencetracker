@@ -725,6 +725,28 @@
       "sec_val": 19.5,
       "skill_stat": "Fracture",
       "skill_effect": "Gnashing Wolves: ATK +44.8%. After the wielder's skill deals Critical DMG, the wielder gains 1 stack of Wolven Blood that grants Physical and Heat DMG Dealth +2.8%. Wolven Blood can reach 16 stacks. After reaching 16 stacks, the wielder gains another Physical and Heat DMG Dealt +67.2% for 20s. After the duration ends, all Wolven Blood stacks are removed."
+    },
+    {
+      "name": "Lone Barge",
+      "type": "Arts Unit",
+      "rarity": 6,
+      "attr_stat": "Will",
+      "attr_val": 156.0,
+      "sec_stat": "Attack Boost",
+      "sec_val": 39.0,
+      "skill_stat": "Suppression",
+      "skill_effect": "Streaming Blitz: Electric DMG Dealt +25.6%. When the wielder's battle skill consumes Arts Reactions, the wielder gains Battle Skill Electric DMG Dealt +32.0% for 20s. This effect can reach 2 stacks. Duration of each stack is counted separately. This effect only triggers once every 0.1s. After the wielder casts an ultimate, the wielder gains Battle Skill Electric DMG Dealt +64.0% for 25s. This effect cannot stack."
+    },
+     {
+      "name": "Flickers in the Mist",
+      "type": "Arts Unit",
+      "rarity": 6,
+      "attr_stat": "Will",
+      "attr_val": 156.0,
+      "sec_stat": "Electric DMG Boost",
+      "sec_val": 43.3,
+      "skill_stat": "Efficacy",
+      "skill_effect": "Overlapping Flickers: ATK +11.2%. When the wielder gains Electric Amp, the wielder also gains Electric DMG Dealt +8.8% for 30s. Max stacks for effects of the same name: 3. Duration of each stack is counted separately. This effect only triggers once every 0.1s."
     }
   ],
   "alluvium": {
@@ -836,6 +858,28 @@
         "Detonate",
         "Twilight",
         "Flow"
+      ]
+    },
+    "Qingbo Stockade": {
+      "secondary": [
+        "HP Boost",
+        "Physical DMG Boost",
+        "Electric DMG Boost",
+        "Cryo DMG Boost",
+        "Arts Intensity Boost",
+        "Ultimate Gain Boost",
+        "Arts DMG Boost",
+        "Treatment Efficiency Boost"
+      ],
+      "skill": [
+        "Suppression",
+        "Crusher",
+        "Inspiring",
+        "Combative",
+        "Medicant",
+        "Fracture",
+        "Detonate",
+        "Twilight"
       ]
     }
   }
