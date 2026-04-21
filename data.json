@@ -881,6 +881,28 @@
         "Detonate",
         "Twilight"
       ]
+    },
+    "Marker Stone": {
+      "secondary": [
+        "Attack Boost",
+        "Physical DMG Boost",
+        "Heat DMG Boost",
+        "Electric DMG Boost",
+        "Nature DMG Boost",
+        "Critical Rate Boost",
+        "Ultimate Gain Boost",
+        "Arts DMG Boost"
+      ],
+      "skill": [
+        "Assault",
+        "Pursuit",
+        "Inspiring",
+        "Brutality",
+        "Infliction",
+        "Twilight",
+        "Flow",
+        "Efficacy"
+      ]
     }
   }
 }
