@@ -903,6 +903,28 @@
         "Flow",
         "Efficacy"
       ]
+    },
+    "Test Area": {
+      "secondary": [
+        "HP Boost",
+        "Heat DMG Boost",
+        "Electric DMG Boost",
+        "Cryo DMG Boost",
+        "Nature DMG Boost",
+        "Arts Intensity Boost",
+        "Ultimate Gain Boost",
+        "Treatment Efficiency Boost"
+      ],
+      "skill": [
+        "Suppression",
+        "Crusher",
+        "Combative",
+        "Brutality",
+        "Infliction",
+        "Fracture",
+        "Twilight",
+        "Flow"
+      ]
     }
   }
 }
