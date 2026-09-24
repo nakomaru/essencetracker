@@ -1,743 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Endfield Weapon Essence Tracker</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone@7.29.7/babel.min.js"></script>
-    <style>
-        body {
-            background-color: #0b0b0b;
-            color: #d0d0d0;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        }
-        
-        .weapon-img-container {
-            width: 64px;
-            height: 64px;
-            min-width: 64px;
-            border-radius: 4px;
-            margin-right: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .category-header {
-            background-color: #1a1a1a;
-            padding: 12px 15px;
-            border-radius: 6px;
-            margin-top: 25px;
-            display: flex;
-            align-items: center;
-            border-bottom: 1px solid #333;
-        }
-        
-        .category-icon {
-            width: 24px;
-            height: 24px;
-            margin-right: 12px;
-            opacity: 0.8;
-        }
-
-        .weapon-card {
-            background-color: #151515;
-            border: 1px solid #222;
-            border-radius: 6px;
-            padding: 12px;
-            cursor: pointer;
-            transition: transform 0.1s ease-out, border-color 0.1s;
-            user-select: none;
-            height: 100%;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .weapon-card:hover {
-            transform: scale(1.01);
-            border-color: #444;
-            z-index: 10;
-        }
-
-        .card-accent {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            border-radius: 3px 3px 0 0;
-        }
-        
-        .accent-6 { background: rgb(255, 112, 0); }
-        .accent-5 { background: rgb(225, 186, 3); }
-        .accent-4 { background: rgb(148, 81, 248); }
-        .accent-3 { background: rgb(38, 186, 251); }
-
-        .img-bg-6 { background: linear-gradient(135deg, rgba(255,112,0,0.2) 0%, rgba(255,112,0,0.05) 100%); border: 1px solid rgba(255,112,0,0.3); }
-        .img-bg-5 { background: linear-gradient(135deg, rgba(225,186,3,0.2) 0%, rgba(225,186,3,0.05) 100%); border: 1px solid rgba(225,186,3,0.3); }
-        .img-bg-4 { background: linear-gradient(135deg, rgba(148, 81, 248, 0.2) 0%, rgba(148, 81, 248, 0.05) 100%); border: 1px solid rgba(148, 81, 248, 0.3); }
-        .img-bg-3 { background: linear-gradient(135deg, rgba(38, 186, 251, 0.2) 0%, rgba(38, 186, 251, 0.05) 100%); border: 1px solid rgba(38, 186, 251, 0.3); }
-
-        .priority-0 { opacity: 0.25; filter: grayscale(1); }
-        
-        .priority-2 { 
-            box-shadow: 0 0 0 2px #eef6ff; 
-            border-color: #eef6ff !important;
-        }
-
-        .star-icon {
-            position: absolute;
-            top: 8px;
-            right: 10px;
-            color: #fff;
-            font-size: 1.2rem;
-        }
-
-        .sticky-results {
-            position: sticky;
-            top: 20px;
-            max-height: calc(100vh - 40px);
-            overflow-y: auto;
-            scrollbar-width: thin;
-        }
-        
-        .results-card {
-            background-color: #151515;
-            border: 1px solid #222;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .results-table { font-size: 0.9rem; }
-        .results-table tr { border-bottom: 1px solid #222; cursor: pointer; }
-        .results-table tr:hover { background-color: rgba(255,255,255,0.03); }
-        
-        .weapon-name-box {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid #333;
-            padding: 2px 8px;
-            border-radius: 4px;
-            display: inline-block;
-            white-space: nowrap;
-            position: relative;
-        }
-        
-        .weapon-img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-        
-        .stat-badge {
-            font-size: 0.65rem;
-            padding: 2px 6px;
-            background: #222;
-            color: #888;
-            border-radius: 3px;
-            margin-right: 5px;
-            border: 1px solid #333;
-            font-weight: normal;
-            display: inline-block;
-        }
-
-        .reset-btn { 
-            font-size: 0.75rem; 
-            background: #222; 
-            border: 1px solid #444; 
-            color: #aaa;
-            padding: 4px 12px;
-            border-radius: 4px;
-            transition: all 0.2s;
-            cursor: pointer;
-        }
-        .reset-btn:hover {
-            background: #333;
-            border-color: #666;
-            color: #eee;
-        }
-
-        .color-p2 { color: #eef6ff !important; border-color: #eef6ff !important; }
-        .color-p1 { color: #a0d8ef !important; border-color: #a0d8ef !important; }
-        .color-p0 { color: #555 !important; border-color: #333 !important; }
-
-        .color-6-rarity { color: rgb(255, 112, 0) !important; }
-        .color-5-rarity { color: rgb(225, 186, 3) !important; }
-        .color-4-rarity { color: rgb(148, 81, 248) !important; }
-        .color-3-rarity { color: rgb(38, 186, 251) !important; }
-
-        .outcome-row {
-            padding: 10px 0;
-            min-height: 2.5rem;
-            display: flex;
-            align-items: center;
-        }
-        
-        .match-count {
-            font-size: 1.2rem;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 40px;
-        }
-
-        .weapon-container-right {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            padding: 2px 0;
-            flex: 1;
-        }
-
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #0b0b0b; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
-        
-        .loading-overlay {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: #0b0b0b;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        /* Modal Styles */
-        .custom-modal-overlay {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.85);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-        }
-        .custom-modal {
-            background: #1a1a1a;
-            border: 1px solid #333;
-            border-radius: 8px;
-            padding: 24px;
-            max-width: 900px;
-            width: 95%;
-            max-height: 90vh;
-            overflow-y: auto;
-            color: #fff;
-            position: relative;
-        }
-        .modal-buttons {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            margin-top: 20px;
-        }
-        .modal-btn {
-            padding: 6px 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: all 0.2s;
-        }
-        .btn-confirm { background: #d9534f; border: 1px solid #d43f3a; color: white; }
-        .btn-cancel { background: #333; border: 1px solid #444; color: #ccc; }
-
-        /* Detail Modal Styles */
-        .compact-weapon-card {
-            background: #222;
-            border: 1px solid #333;
-            border-radius: 4px;
-            padding: 8px;
-            display: flex;
-            align-items: center;
-            height: 100%;
-        }
-        .compact-weapon-card .weapon-img-container {
-            width: 40px;
-            height: 40px;
-            min-width: 40px;
-            margin-right: 10px;
-        }
-
-        /* Tooltip Styles */
-        .stat-tooltip {
-            position: absolute;
-            top: calc(100% + 8px);
-            left: 50%;
-            transform: translateX(-50%);
-            background: #1a1a1a;
-            border: 1px solid #444;
-            padding: 8px;
-            border-radius: 6px;
-            z-index: 3000;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            pointer-events: none;
-            display: none;
-            min-width: 180px;
-        }
-        .weapon-name-box:hover .stat-tooltip {
-            display: block;
-        }
-        .stat-tooltip::after {
-            content: '';
-            position: absolute;
-            bottom: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            border-width: 6px;
-            border-style: solid;
-            border-color: transparent transparent #444 transparent;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Endfield Essence Tracker</title>
+  <meta name="description" content="Pick the Arknights: Endfield weapons you want essences for and find the Severe Energy Alluvium engravings that can drop the most of them.">
+  <meta name="color-scheme" content="dark">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%230c0d0f'/%3E%3Cpath d='M5 2h6v9l-6 3z' fill='%23f4d51c'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&display=swap">
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="app.js"></script>
 </head>
 <body>
-    <div id="root"></div>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <div>
+        <h1>Essence Tracker</h1>
+        <p class="brand-sub">Arknights: Endfield &middot; Severe Energy Alluvium planner</p>
+      </div>
+    </div>
+    <div class="tally" id="tally" aria-live="polite"></div>
+  </header>
 
-    <script type="text/babel">
-        const { useState, useEffect, useMemo } = React;
+  <nav class="pane-tabs" aria-label="Sections">
+    <button type="button" data-pane="targets" aria-pressed="true">Weapons</button>
+    <button type="button" data-pane="matches" aria-pressed="false">Engravings <span id="tab-count"></span></button>
+  </nav>
 
-        const CATEGORY_ORDER = ['Greatsword', 'Handcannon', 'Arts Unit', 'Sword', 'Polearm'];
+  <main class="layout" data-pane="targets">
+    <section class="pane targets" aria-labelledby="targets-title">
+      <div class="pane-head">
+        <h2 id="targets-title">Weapons</h2>
+        <p class="hint">Click a weapon to cycle <b class="p1">Track</b> &rarr; <b class="p2">&#9733; Priority</b> &rarr; <b class="p0">Skip</b>. Once anything is starred, only engravings that can drop a starred weapon are shown.</p>
+        <div class="toolbar">
+          <input id="search" type="search" placeholder="Filter by name, stat or skill" autocomplete="off" aria-label="Filter weapons">
+          <div class="chip-group" id="rarity-filter" role="group" aria-label="Rarity"></div>
+          <div class="bulk">
+            <button type="button" class="btn" data-bulk="track">Track shown</button>
+            <button type="button" class="btn" data-bulk="skip">Skip shown</button>
+            <button type="button" class="btn" data-bulk="unstar">Clear stars</button>
+            <button type="button" class="btn btn-danger" data-bulk="reset">Reset</button>
+          </div>
+        </div>
+      </div>
+      <div id="weapon-groups"></div>
+    </section>
 
-        function App() {
-            const [data, setData] = useState(null);
-            const [priorities, setPriorities] = useState(() => {
-                const saved = localStorage.getItem('endfield_priorities_v5');
-                return saved ? JSON.parse(saved) : null;
-            });
-            const [filter, setFilter] = useState('');
-            const [showResetModal, setShowResetModal] = useState(false);
-            const [selectedResult, setSelectedResult] = useState(null);
-            const [activeTooltip, setActiveTooltip] = useState(null);
+    <section class="pane matches" aria-labelledby="matches-title">
+      <div class="pane-head">
+        <h2 id="matches-title">Engravings</h2>
+        <p class="hint">Each row is an engraving: 3 attributes plus one fixed stat. Weapons listed can drop if the remaining stat rolls right.</p>
+        <details class="locations">
+          <summary>Locations <span id="location-count"></span></summary>
+          <div id="location-filter"></div>
+        </details>
+      </div>
+      <ol id="results" class="results"></ol>
+      <button type="button" class="btn more" id="more" hidden>Show more</button>
+    </section>
+  </main>
 
-            useEffect(() => {
-                fetch('data.json')
-                    .then(res => res.json())
-                    .then(json => {
-                        setData(json);
-                        setPriorities(prev => {
-                            const merged = { ...(prev || {}) };
-                            json.weapons.forEach(w => {
-                                if (merged[w.name] === undefined) {
-                                    merged[w.name] = w.rarity === 3 ? 0 : 1;
-                                }
-                            });
-                            return merged;
-                        });
-                    });
-            }, []);
+  <footer class="foot">
+    Weapon data from the <a href="https://endfield.wiki.gg/wiki/Weapons">Endfield Talos Wiki</a>. Selections are saved in this browser.
+  </footer>
 
-            useEffect(() => {
-                if (priorities) {
-                    localStorage.setItem('endfield_priorities_v5', JSON.stringify(priorities));
-                }
-            }, [priorities]);
-
-            // Back button handling
-            useEffect(() => {
-                const handlePopState = (e) => {
-                    if (selectedResult || showResetModal) {
-                        setSelectedResult(null);
-                        setShowResetModal(false);
-                    }
-                };
-                window.addEventListener('popstate', handlePopState);
-                return () => window.removeEventListener('popstate', handlePopState);
-            }, [selectedResult, showResetModal]);
-
-            useEffect(() => {
-                if (selectedResult || showResetModal) {
-                    if (!window.history.state?.modal) {
-                        window.history.pushState({ modal: true }, '');
-                    }
-                }
-            }, [selectedResult, showResetModal]);
-
-            const closeModals = () => {
-                if (selectedResult || showResetModal) {
-                    setSelectedResult(null);
-                    setShowResetModal(false);
-                    if (window.history.state?.modal) {
-                        window.history.back();
-                    }
-                }
-            };
-
-            const confirmReset = () => {
-                const initial = {};
-                data.weapons.forEach(w => { initial[w.name] = w.rarity === 3 ? 0 : 1; });
-                setPriorities(initial);
-                closeModals();
-            };
-
-            const togglePriority = (name) => {
-                setPriorities(prev => {
-                    const curr = prev[name];
-                    const next = curr === 1 ? 2 : (curr === 2 ? 0 : 1);
-                    return { ...prev, [name]: next };
-                });
-            };
-
-            const combinations = (array, k) => {
-                const result = [];
-                const fn = (start, combo) => {
-                    if (combo.length === k) { result.push(combo); return; }
-                    for (let i = start; i < array.length; i++) { fn(i + 1, [...combo, array[i]]); }
-                };
-                fn(0, []);
-                return result;
-            };
-
-            const attributes = ['Strength', 'Agility', 'Will', 'Intellect', 'Main Attribute'];
-            const attrCombos = useMemo(() => combinations(attributes, 3), []);
-
-            const results = useMemo(() => {
-                if (!data || !priorities) return [];
-                const solverResults = [];
-                const locations = data.alluvium;
-
-                Object.entries(locations).forEach(([locName, locData]) => {
-                    const selections = [
-                        ...locData.secondary.map(s => ({ type: 'secondary', val: s })),
-                        ...locData.skill.map(s => ({ type: 'skill', val: s }))
-                    ];
-
-                    selections.forEach(sel => {
-                        attrCombos.forEach(attrSel => {
-                            const p2Outcomes = [];
-                            const p1Outcomes = [];
-                            const p0Outcomes = [];
-                            
-                            data.weapons.forEach(w => {
-                                if (!attrSel.includes(w.attr_stat)) return;
-
-                                const isMatch = sel.type === 'secondary' 
-                                    ? ((w.sec_stat === sel.val || w.rarity === 3) && locData.skill.includes(w.skill_stat))
-                                    : (w.skill_stat === sel.val && (w.rarity === 3 || locData.secondary.includes(w.sec_stat)));
-
-                                if (isMatch) {
-                                    const p = priorities[w.name] ?? 1;
-                                    if (p === 2) p2Outcomes.push(w);
-                                    else if (p === 1) p1Outcomes.push(w);
-                                    else p0Outcomes.push(w);
-                                }
-                            });
-
-                            if (p2Outcomes.length > 0 || p1Outcomes.length > 0) {
-                                const score = (p2Outcomes.length * 1000) + (p1Outcomes.length * 1) + (p0Outcomes.length * 0.001);
-                                solverResults.push({
-                                    location: locName,
-                                    attrItems: attrSel,
-                                    selItem: sel.val,
-                                    score: score,
-                                    p2Count: p2Outcomes.length,
-                                    p1Count: p1Outcomes.length,
-                                    p0Count: p0Outcomes.length,
-                                    p2List: p2Outcomes,
-                                    p1List: p1Outcomes,
-                                    p0List: p0Outcomes
-                                });
-                            }
-                        });
-                    });
-                });
-
-                const anyP2Selected = Object.values(priorities).some(p => p === 2);
-                let filtered = solverResults;
-                
-                // CRITICAL: If any targets are marked P2, only show combinations that can produce at least one of them.
-                // This keeps the result list focused and manageable when specific targets are set.
-                if (anyP2Selected) {
-                    filtered = solverResults.filter(r => r.p2Count > 0);
-                }
-                
-                filtered = filtered.filter(r => r.p2Count > 0 || r.p1Count > 0);
-
-                return filtered.sort((a, b) => b.score - a.score).slice(0, 100);
-            }, [data, priorities]);
-
-            const groupedWeapons = useMemo(() => {
-                if (!data) return {};
-                const groups = {};
-                CATEGORY_ORDER.forEach(cat => groups[cat] = []);
-                data.weapons.forEach(w => {
-                    if (w.name.toLowerCase().includes(filter.toLowerCase())) groups[w.type]?.push(w);
-                });
-                Object.keys(groups).forEach(cat => {
-                    groups[cat].sort((a, b) => {
-                        if (a.rarity !== b.rarity) return b.rarity - a.rarity;
-                        return a.name.localeCompare(b.name);
-                    });
-                });
-                return groups;
-            }, [data, filter]);
-
-            const Tooltip = ({ weapon, uniqueId }) => (
-                <div className="stat-tooltip" style={{ display: activeTooltip === uniqueId ? 'block' : undefined }}>
-                    <div className="d-flex flex-column gap-1">
-                        <span className="stat-badge w-100 m-0">{weapon.attr_stat}</span>
-                        <span className="stat-badge w-100 m-0">{weapon.sec_stat}</span>
-                        <span className="stat-badge w-100 m-0">{weapon.skill_stat}</span>
-                    </div>
-                </div>
-            );
-
-            const CompactWeapon = ({ w }) => {
-                const p = priorities[w.name];
-                const colorClass = p === 2 ? 'color-p2' : (p === 1 ? 'color-p1' : 'color-p0');
-                return (
-                    <div className="col-md-6 col-12 mb-2">
-                        <div className="compact-weapon-card">
-                            <div className={`weapon-img-container img-bg-${w.rarity}`} style={{width: '40px', height: '40px', minWidth: '40px'}}>
-                                <img src={`images/weapon_${w.name.toLowerCase().replace(/ /g, '_').replace(/:/g, '').replace(/'/g, '')}.png`} className="weapon-img" alt="" onError={(e) => { e.target.onerror = null; e.target.src = 'https://via.placeholder.com/40/111/444?text=' + w.name[0]; }} />
-                            </div>
-                            <div className="flex-grow-1 min-width-0">
-                                <div className={`fw-bold text-truncate ${colorClass}`} style={{fontSize: '0.9rem'}}>{w.name}</div>
-                                <div className="d-flex flex-wrap gap-1 mt-1">
-                                    <span className="stat-badge">{w.attr_stat}</span>
-                                    <span className="stat-badge">{w.sec_stat}</span>
-                                    <span className="stat-badge">{w.skill_stat}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                );
-            };
-
-            if (!data || !priorities) return <div className="loading-overlay">Loading Data...</div>;
-
-            return (
-                <div className="container-fluid py-4">
-                    {showResetModal && (
-                        <div className="custom-modal-overlay">
-                            <div className="custom-modal" style={{maxWidth: '400px'}}>
-                                <h4 className="mb-3">Reset Priorities</h4>
-                                <p style={{ color: '#fff', fontSize: '1rem' }}>Reset all weapons back to default priority?</p>
-                                <div className="modal-buttons">
-                                    <button className="modal-btn btn-confirm" onClick={confirmReset}>RESET</button>
-                                    <button className="modal-btn btn-cancel" onClick={closeModals}>CANCEL</button>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-
-                    {selectedResult && (
-                        <div className="custom-modal-overlay" onClick={closeModals}>
-                            <div className="custom-modal" onClick={e => e.stopPropagation()}>
-                                <div className="d-flex justify-content-between align-items-center mb-4 border-bottom border-secondary pb-2">
-                                    <div>
-                                        <h4 className="m-0 color-p1">{selectedResult.location}</h4>
-                                        <div className="d-flex flex-wrap gap-1 mt-2 align-items-center">
-                                            <span style={{fontSize: '0.7rem', color: '#666', fontWeight: 'bold'}}>ENGRAVINGS:</span>
-                                            {selectedResult.attrItems.map((a, ai) => (
-                                                <span key={ai} className="stat-badge" style={{color: '#888'}}>{a}</span>
-                                            ))}
-                                            <span className="stat-badge" style={{color: '#888'}}>{selectedResult.selItem}</span>
-                                        </div>
-                                    </div>
-                                    <button className="btn-close btn-close-white" onClick={closeModals}></button>
-                                </div>
-                                
-                                {selectedResult.p2List.length > 0 && (
-                                    <div className="mb-4">
-                                        <h6 className="text-uppercase color-p2 mb-3" style={{letterSpacing: '1px'}}>Priority Essences ({selectedResult.p2Count})</h6>
-                                        <div className="row g-2">
-                                            {selectedResult.p2List.map(w => <CompactWeapon key={w.name} w={w} />)}
-                                        </div>
-                                    </div>
-                                )}
-                                
-                                {selectedResult.p1List.length > 0 && (
-                                    <div className="mb-4">
-                                        <h6 className="text-uppercase color-p1 mb-3" style={{letterSpacing: '1px'}}>Matched Essences ({selectedResult.p1Count})</h6>
-                                        <div className="row g-2">
-                                            {selectedResult.p1List.map(w => <CompactWeapon key={w.name} w={w} />)}
-                                        </div>
-                                    </div>
-                                )}
-
-                                {selectedResult.p0List.length > 0 && (
-                                    <div>
-                                        <h6 className="text-uppercase color-p0 mb-3" style={{letterSpacing: '1px'}}>Untracked Essences ({selectedResult.p0Count})</h6>
-                                        <div className="row g-2">
-                                            {selectedResult.p0List.map(w => (
-                                                <div key={w.name} className="col-md-4 col-6">
-                                                    <div className="small color-p0 opacity-75">• {w.name}</div>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                    )}
-
-                    <div className="row g-4">
-                        <div className="col-lg-6">
-                            <div className="mb-3">
-                                <div className="d-flex justify-content-between align-items-center mb-2">
-                                    <h3 className="m-0 fw-bold">ESSENCE TARGETS</h3>
-                                    <button className="reset-btn" onClick={() => setShowResetModal(true)}>RESET</button>
-                                </div>
-                                <div className="d-flex gap-2 align-items-center">
-                                    <span style={{fontSize: '0.8rem', color: '#666', fontWeight: 'bold'}}>SEARCH:</span>
-                                    <input type="text" className="form-control form-control-sm bg-dark text-light border-secondary" placeholder="..." value={filter} onChange={e => setFilter(e.target.value)} style={{flex: 1}} />
-                                </div>
-                            </div>
-                            
-                            <div className="pe-2">
-                                {CATEGORY_ORDER.map(cat => (
-                                    groupedWeapons[cat].length > 0 && (
-                                        <div key={cat}>
-                                            <div className="category-header mb-3">
-                                                <img src={`images/weaponcategory_${cat.toLowerCase().replace(' ', '_')}.png`} className="category-icon" alt="" />
-                                                <span className="text-uppercase fw-bold" style={{letterSpacing: '2px', fontSize: '0.9rem'}}>{cat}S</span>
-                                            </div>
-                                            <div className="row g-3">
-                                                {groupedWeapons[cat].map(w => (
-                                                    <div key={w.name} className="col-xl-6">
-                                                        <div className={`weapon-card priority-${priorities[w.name]}`} onClick={() => togglePriority(w.name)}>
-                                                            <div className={`card-accent accent-${w.rarity}`}></div>
-                                                            {priorities[w.name] === 2 && <span className="star-icon">★</span>}
-                                                            
-                                                            <div className="d-flex align-items-center">
-                                                                <div className={`weapon-img-container img-bg-${w.rarity}`}>
-                                                                    <img src={`images/weapon_${w.name.toLowerCase().replace(/ /g, '_').replace(/:/g, '').replace(/'/g, '')}.png`} className="weapon-img" alt="" onError={(e) => { e.target.onerror = null; e.target.src = 'https://via.placeholder.com/64/111/444?text=' + w.name[0]; }} />
-                                                                </div>
-                                                                <div className="flex-grow-1 min-width-0">
-                                                                    <div className={`fw-bold text-truncate ${priorities[w.name] === 2 ? 'color-p2' : (priorities[w.name] === 1 ? 'color-p1' : 'color-p0')}`} style={{fontSize: '1rem'}}>{w.name}</div>
-                                                                    <div className="d-flex align-items-center mt-1">
-                                                                        <span className={`color-${w.rarity}-rarity`} style={{fontSize: '0.8rem', fontWeight: 'bold'}}>{w.rarity}★</span>
-                                                                        <span className="mx-2 text-muted">|</span>
-                                                                        <span className={`text-uppercase color-${w.rarity}-rarity`} style={{fontSize: '0.7rem'}}>{w.type}</span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div className="mt-3 pt-2 border-top border-secondary border-opacity-25 d-flex flex-wrap gap-1">
-                                                                <span className="stat-badge">{w.attr_stat}</span>
-                                                                <span className="stat-badge">{w.sec_stat}</span>
-                                                                <span className="stat-badge">{w.skill_stat}</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    )
-                                ))}
-                            </div>
-                        </div>
-
-                        <div className="col-lg-6">
-                            <div className="sticky-results">
-                                <div className="d-flex justify-content-between align-items-end mb-3">
-                                    <h3 className="m-0 fw-bold">ESSENCE MATCHES</h3>
-                                </div>
-                                <div className="results-card bg-opacity-50">
-                                    <div className="table-responsive">
-                                        <table className="table table-dark table-hover mb-0 results-table">
-                                            <thead className="text-uppercase" style={{fontSize: '0.75rem', color: '#aaa'}}>
-                                                <tr>
-                                                    <th className="ps-3 py-3" style={{width: '35%'}}>Location / Engravings</th>
-                                                    <th className="py-3 pe-3">Weapon Essences</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {results.map((r, i) => (
-                                                    <tr key={i} onClick={() => setSelectedResult(r)}>
-                                                        <td className="ps-3 py-3">
-                                                            <div className="fw-bold mb-1" style={{fontSize: '1.1rem', color: '#a0d8ef'}}>{r.location}</div>
-                                                            <div className="mb-2" style={{fontSize: '0.75rem'}}>
-                                                                <span className="text-uppercase" style={{letterSpacing: '0.5px', color: '#aaa'}}>Matches: </span>
-                                                                <span className="color-p2 fw-bold">{r.p2Count}</span>
-                                                                <span className="mx-1 text-muted opacity-50">|</span>
-                                                                <span className="color-p1 fw-bold">{r.p1Count}</span>
-                                                                <span className="mx-1 text-muted opacity-50">|</span>
-                                                                <span className="color-p0 fw-bold">{r.p0Count}</span>
-                                                            </div>
-                                                                                                                            <div className="d-flex flex-wrap gap-1 align-items-center">
-                                                                                                                                {r.attrItems.map((a, ai) => (
-                                                                                                                                    <span key={ai} className="stat-badge" style={{color: '#888'}}>{a}</span>
-                                                                                                                                ))}
-                                                                                                                                <span className="stat-badge" style={{color: '#888'}}>{r.selItem}</span>
-                                                                                                                            </div>
-                                                            
-                                                        </td>
-                                                        <td className="align-middle pe-3">
-                                                            <div className="outcome-row">
-                                                                <div className="weapon-container-right">
-                                                                    {r.p2List.map(o => {
-                                                                        const uid = `p2-${i}-${o.name}`;
-                                                                        return (
-                                                                            <span key={uid} 
-                                                                                className="weapon-name-box color-p2"
-                                                                                onMouseEnter={(e) => { e.stopPropagation(); setActiveTooltip(uid); }}
-                                                                                onMouseLeave={(e) => { e.stopPropagation(); setActiveTooltip(null); }}
-                                                                                onClick={(e) => { e.stopPropagation(); setActiveTooltip(activeTooltip === uid ? null : uid); }}
-                                                                            >
-                                                                                {o.name}
-                                                                                <Tooltip weapon={o} uniqueId={uid} />
-                                                                            </span>
-                                                                        );
-                                                                    })}
-                                                                </div>
-                                                            </div>
-                                                            <div className="outcome-row">
-                                                                <div className="weapon-container-right">
-                                                                    {r.p1List.map(o => {
-                                                                        const uid = `p1-${i}-${o.name}`;
-                                                                        return (
-                                                                            <span key={uid} 
-                                                                                className="weapon-name-box color-p1"
-                                                                                onMouseEnter={(e) => { e.stopPropagation(); setActiveTooltip(uid); }}
-                                                                                onMouseLeave={(e) => { e.stopPropagation(); setActiveTooltip(null); }}
-                                                                                onClick={(e) => { e.stopPropagation(); setActiveTooltip(activeTooltip === uid ? null : uid); }}
-                                                                            >
-                                                                                {o.name}
-                                                                                <Tooltip weapon={o} uniqueId={uid} />
-                                                                            </span>
-                                                                        );
-                                                                    })}
-                                                                </div>
-                                                            </div>
-                                                            <div className="outcome-row">
-                                                                <div className="weapon-container-right">
-                                                                    {r.p0List.map(o => {
-                                                                        const uid = `p0-${i}-${o.name}`;
-                                                                        return (
-                                                                            <span key={uid} 
-                                                                                className="weapon-name-box color-p0"
-                                                                                onMouseEnter={(e) => { e.stopPropagation(); setActiveTooltip(uid); }}
-                                                                                onMouseLeave={(e) => { e.stopPropagation(); setActiveTooltip(null); }}
-                                                                                onClick={(e) => { e.stopPropagation(); setActiveTooltip(activeTooltip === uid ? null : uid); }}
-                                                                            >
-                                                                                {o.name}
-                                                                                <Tooltip weapon={o} uniqueId={uid} />
-                                                                            </span>
-                                                                        );
-                                                                    })}
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                ))}
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            );
-        }
-
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
-    </script>
+  <dialog id="detail" aria-labelledby="detail-title"></dialog>
+  <dialog id="confirm" aria-labelledby="confirm-title">
+    <form method="dialog">
+      <h3 id="confirm-title"></h3>
+      <p id="confirm-text"></p>
+      <p id="confirm-count" class="confirm-count"></p>
+      <ul id="confirm-list" class="confirm-list"></ul>
+      <div class="dialog-actions">
+        <button class="btn" value="cancel" id="confirm-cancel" autofocus>Cancel</button>
+        <button class="btn" value="confirm" id="confirm-ok"></button>
+      </div>
+    </form>
+  </dialog>
 </body>
 </html>
