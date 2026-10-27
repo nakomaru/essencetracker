@@ -11,7 +11,7 @@ const PAGE_SIZE = 50;
 const HITS_PREVIEW = 14;
 const RARITIES = [6, 5, 4, 3];
 const ANNOUNCED_NOTE = 'Announced, not yet released. Its stats come from preview game data and can change before release.';
-const DEDUCED_LABELS = { skillName: 'Skill name', operator: 'Signature operator' };
+const DEDUCED_LABELS = { skillName: 'Skill name', operators: 'Signature operator' };
 
 const $ = (sel) => document.querySelector(sel);
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
@@ -99,11 +99,13 @@ function statChips(w) {
 const fixedChip = (option) => statChip(option.kind, option.stat, ' fixed');
 const announcedTag = (w) => (w.announced ? `<span class="tag-announced" title="${esc(ANNOUNCED_NOTE)}">Announced</span>` : '');
 
-// The skill effect first. Announced weapons can predate their skill text;
-// their caveats and any reviewed deductions follow, each with its basis.
+// The skill effect first, then the signature operator. Announced weapons can
+// predate their skill text; their caveats and any reviewed deductions follow,
+// each with its basis.
 function weaponTitle(w) {
   const skillName = w.deduced?.skillName?.value;
   const lines = [w.effect ?? (skillName ? `${skillName} (deduced name): skill text not published yet.` : 'Skill text not published yet.')];
+  if (w.operators) lines.push('', `Signature operator: ${w.operators.join(', ')}`);
   if (w.announced) lines.push('', ANNOUNCED_NOTE);
   const deduced = Object.entries(w.deduced ?? {});
   if (deduced.length) {
@@ -120,7 +122,8 @@ function priorityLabel(p) {
 function matchesQuery(w, q) {
   if (!q) return true;
   const stats = [w.attribute, w.secondary, w.skill].filter(Boolean).map(statName);
-  return [w.name, w.type, ...stats, ...(w.formerly ?? [])].some((s) => s.toLowerCase().includes(q));
+  const operators = [...(w.operators ?? []), w.deduced?.operators?.value].filter(Boolean);
+  return [w.name, w.type, ...stats, ...operators, ...(w.formerly ?? [])].some((s) => s.toLowerCase().includes(q));
 }
 
 // Each filter chip toggles one bucket: rarity chips cover released weapons,

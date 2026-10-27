@@ -471,6 +471,9 @@
       "attribute": "gat_passive_attr_str",
       "secondary": "gat_passive_attr_atk",
       "skill": "gst_passive_phyabn",
+      "operators": [
+        "Mi Fu"
+      ],
       "effect": "Amaranthine Cleave: Physical DMG Dealt +44.8%. When the wielder applies Physical Susceptibility, the wielder gains Arts Intensity +84 for 20s. When the wielder applies Crush, the wielder gains Physical DMG Dealt +[25.2% + (8.4% × Max number of Vulnerability stacks consumed from one enemy)] for 30s. The two effects apply separately and do not stack with themselves."
     },
     {
@@ -481,6 +484,9 @@
       "attribute": "gat_passive_attr_main",
       "secondary": "gat_passive_attr_atk",
       "skill": "gst_passive_tactic",
+      "operators": [
+        "Da Pan"
+      ],
       "effect": "Stacked Hew: Physical DMG Dealt +28%. When the wielder's battle skill or ultimate hits the enemy, the wielder gains Physical DMG Dealt +28% for 30s. Max stacks for effects of the same name: 3. Duration of each stack is counted separately. Effect only triggers once every 0.1s."
     },
     {
@@ -501,6 +507,9 @@
       "attribute": "gat_passive_attr_wisd",
       "secondary": "gat_passive_attr_icedam",
       "skill": "gst_passive_keyword",
+      "operators": [
+        "Si"
+      ],
       "effect": "Dabbles of Ink: ATK +44.8%. When the wielder applies Immobilization on the enemy, the target enemy suffers DMG Taken +21% for 30s. When the wielder applies Immobilization on the enemy or after the wielder casts an ultimate, the next combo skill cast within 20s gains DMG Dealt +70%. The two effects apply separately and do not stack with themselves."
     },
     {
@@ -511,6 +520,9 @@
       "attribute": "gat_passive_attr_str",
       "secondary": "gat_passive_attr_atk",
       "skill": "gst_passive_burst",
+      "operators": [
+        "Last Rite"
+      ],
       "effect": "Bonechilling: Skill DMG Dealt +56% (for every skill). When the wielder's battle skill applies Cryo Infliction, the wielder gains Cryo DMG Dealt +28% for 15s. When the wielder deals combo skill DMG to an enemy with Cryo Infliction, the wielder gains Cryo DMG Dealt +56% for 15s. The two effects apply separately and do not stack with themselves."
     },
     {
@@ -551,6 +563,9 @@
       "attribute": "gat_passive_attr_str",
       "secondary": "gat_passive_attr_hp",
       "skill": "gst_passive_heal",
+      "operators": [
+        "Ember"
+      ],
       "effect": "Eye of Talos: Shield applied +67.2%. After the wielder's combo skill provides HP treatment, the controlled operator gains an additional [19.6% × Wielder's Max HP] Shield for 15s. Effect only triggers once every 15s."
     },
     {
@@ -571,6 +586,9 @@
       "attribute": "gat_passive_attr_str",
       "secondary": "gat_passive_attr_hp",
       "skill": "gst_passive_heal",
+      "operators": [
+        "Snowshine"
+      ],
       "effect": "Glory of Knighthood: Secondary Attribute +14%. Combo skill HP treatment effect +56%."
     },
     {
@@ -630,6 +648,9 @@
       "attribute": "gat_passive_attr_wisd",
       "secondary": "gat_passive_attr_crirate",
       "skill": "gst_passive_crit",
+      "operators": [
+        "Yvonne"
+      ],
       "effect": "Artzy Exaggeration: Cryo DMG Dealt +44.8%. After the wielder scores a critical hit with a battle skill or combo skill, the wielder gains Cryo DMG Dealt +39.2% for 30s. Max stacks for effects of the same name: 3. Duration of each stack is counted separately. Effect only triggers once every 0.1s."
     },
     {
@@ -640,6 +661,9 @@
       "attribute": "gat_passive_attr_agi",
       "secondary": "gat_passive_attr_atk",
       "skill": "gst_passive_burst",
+      "operators": [
+        "Tangtang"
+      ],
       "effect": "Brigand's Bane: Cryo DMG Dealt +44.8%. When the wielder applies Cryo Infliction via battle skills or ultimates, the wielder gains Cryo DMG Dealt +56% for 20s. When the wielder's battle skill or ultimate applies Arts Susceptibility, the target enemy suffers Arts DMG Taken +16.8% for 20s. The two effects apply separately and do not stack with themselves."
     },
     {
@@ -650,6 +674,9 @@
       "attribute": "gat_passive_attr_main",
       "secondary": "gat_passive_attr_magicdam",
       "skill": "gst_passive_magabn",
+      "operators": [
+        "Wulfgard"
+      ],
       "effect": "Vicious Purge: Arts DMG +33.6%. After the wielder consumes an Arts Reaction, target enemy suffers Arts DMG Taken +28% (for the specified element) for 15s. Each effect applies separately and does not stack with itself. Effect only triggers once every 25s."
     },
     {
@@ -759,6 +786,9 @@
       "attribute": "gat_passive_attr_will",
       "secondary": "gat_passive_attr_usp",
       "skill": "gst_passive_combo",
+      "operators": [
+        "Gilberta"
+      ],
       "effect": "Duty Fulfilled: Nature DMG Dealt +44.8%. After the wielder's combo skill applies Lifted, the team gains Arts DMG Dealt +33.6% for 15s. For every enemy Lifted, the team gains bonus Arts DMG Dealt +9.8%, up to a max of +29.4%. Effects of the same name cannot stack."
     },
     {
@@ -779,6 +809,9 @@
       "attribute": "gat_passive_attr_wisd",
       "secondary": "gat_passive_attr_heal",
       "skill": "gst_passive_magabn",
+      "operators": [
+        "Ardelia"
+      ],
       "effect": "Tidal Murmurs: Secondary attribute +44.8%. After the wielder consumes Corrosion, target enemy suffers Arts DMG Taken +28% for 25s. Effects of the same name cannot stack."
     },
     {
@@ -809,6 +842,9 @@
       "attribute": "gat_passive_attr_will",
       "secondary": "gat_passive_attr_atk",
       "skill": "gst_passive_tactic",
+      "operators": [
+        "Zhuang Fangyi"
+      ],
       "effect": "Streaming Blitz: Electric DMG Dealt +44.8%. When the wielder's battle skill consumes Arts Reactions, the wielder gains Battle Skill Electric DMG Dealt +56% for 20s. This effect can reach a max of 2 stacks and can only trigger once every 0.1s. Duration of each stack is counted separately. After the wielder casts an ultimate, the wielder gains Battle Skill Electric DMG Dealt +112% for 25s. This effect cannot stack."
     },
     {
@@ -849,6 +885,9 @@
       "attribute": "gat_passive_attr_wisd",
       "secondary": "gat_passive_attr_usp",
       "skill": "gst_passive_burst",
+      "operators": [
+        "Arcane"
+      ],
       "effect": "Debilitating Assault: ATK +44.8%. Wielder's Intellect ≥ Will: When the wielder applies Arts Infliction with their own skill, the wielder gains Arts DMG Dealt +56% for 20s; when the wielder applies Arts Susceptibility with their own skill, the wielder gains ATK +56% for 20s; Wielder's Will > Intellect: When the wielder applies Arts Burst with their own skill, the target enemy suffers Arts DMG Taken +16.8% for 25s; when the wielder applies Arts Susceptibility with their own skill, the target enemy suffers Arts DMG Taken +16.8% for 25s. Effects of the same name cannot stack. The aforementioned attributes only include effects from the wielder's level, talents, potentials, and attribute bonuses provided by equipped gear and weapons."
     },
     {
@@ -859,6 +898,9 @@
       "attribute": "gat_passive_attr_agi",
       "secondary": "gat_passive_attr_atk",
       "skill": "gst_passive_burst",
+      "operators": [
+        "Typhoeus"
+      ],
       "effect": "Hunter Instinct: Arts DMG Dealt +44.8%. After the wielder casts a battle skill, the wielder gains Arts Intensity +98 and 4 stacks of Windform for 15s. This entire effect cannot stack. Max Windform stacks: 4. When the wielder applies an Arts Burst, consume 1 stack of Windform to grant the wielder Arts DMG Dealt +11.2% for 30s. This effect can reach 4 stacks. Duration of each stack is counted separately. Effect only triggers once every 0.1s."
     },
     {
@@ -978,6 +1020,9 @@
       "attribute": "gat_passive_attr_wisd",
       "secondary": "gat_passive_attr_atk",
       "skill": "gst_passive_ult",
+      "operators": [
+        "Laevatain"
+      ],
       "effect": "Blazing Wail: Heat DMG Dealt +44.8%. When the wielder casts an ultimate, the wielder gains Basic Attack DMG Dealt +210% for 20s. Effects of the same name cannot stack."
     },
     {
@@ -998,6 +1043,9 @@
       "attribute": "gat_passive_attr_agi",
       "secondary": "gat_passive_attr_atk",
       "skill": "gst_passive_magabn",
+      "operators": [
+        "Endministrator"
+      ],
       "effect": "Long Time Wish: Arts Intensity +84. When the wielder applies Originium Crystals or Solidification, during the next battle skill or ultimate cast within 20s, the wielder gains Physical DMG Dealt +100.8%. Effects of the same name cannot stack."
     },
     {
@@ -1014,9 +1062,9 @@
           "value": "Coursing Stars",
           "basis": "It is the only Infliction weapon skill name in the game text that no weapon uses, and Lunar Calling is the only Infliction weapon without skill text. A weapon not yet in the data could still own it."
         },
-        "operator": {
+        "operators": {
           "value": "Argent Flow",
-          "basis": "cep links Lunar Calling to the operator 明河, which the game text renders in English as Argent Flow."
+          "basis": "cep links Lunar Calling to the operator 明河, whom the game text and the English community wikis name Argent Flow."
         }
       }
     },
@@ -1028,6 +1076,9 @@
       "attribute": "gat_passive_attr_agi",
       "secondary": "gat_passive_attr_crirate",
       "skill": "gst_passive_crit",
+      "operators": [
+        "Rossi"
+      ],
       "effect": "Gnashing Wolves: ATK +44.8%. After the wielder's skill deals Critical DMG, the wielder gains 1 stack of Wolven Blood that grants Physical and Heat DMG Dealt +2.8%. Wolven Blood can reach 16 stacks. After reaching 16 stacks, the wielder gains another Physical and Heat DMG Dealt +67.2% for 20s. After the duration ends, all Wolven Blood stacks are removed."
     },
     {
@@ -1038,6 +1089,9 @@
       "attribute": "gat_passive_attr_will",
       "secondary": "gat_passive_attr_atk",
       "skill": "gst_passive_tacafter",
+      "operators": [
+        "Pogranichnik"
+      ],
       "effect": "Reincarnation: Physical DMG Dealt +44.8%. After the wielder's skill recovers SP, the wielder gains Physical DMG Dealt +14% while other operators in the team gain Physical DMG Dealt +7% for 30s. Max stacks for effects of the same name: 5. Duration of each stack is counted separately. Effect only triggers once every 0.1s."
     },
     {
@@ -1048,6 +1102,9 @@
       "attribute": "gat_passive_attr_main",
       "secondary": "gat_passive_attr_crirate",
       "skill": "gst_passive_ult",
+      "operators": [
+        "Chen Qianyu"
+      ],
       "effect": "Azure Clouds: Battle skills and ultimates gain Physical DMG Dealt +42%. Against Staggered enemies, battle skills and ultimates also gain DMG Dealt +98%."
     },
     {
@@ -1098,6 +1155,9 @@
       "attribute": "gat_passive_attr_str",
       "secondary": "gat_passive_attr_heal",
       "skill": "gst_passive_heal",
+      "operators": [
+        "Purrchena"
+      ],
       "effect": "Sweetness and Dreams: Max HP +28%. When the wielder's combo skill grants HP treatment, the operator receiving this HP treatment gains Arts Intensity +14 and Arts DMG Dealt +9.8% for 20s. Effects of the same name cannot stack."
     },
     {
@@ -1200,6 +1260,9 @@
       "attribute": "gat_passive_attr_will",
       "secondary": "gat_passive_attr_heal",
       "skill": "gst_passive_heal",
+      "operators": [
+        "Liino"
+      ],
       "effect": "Shimmering Curtain: Main attribute +44.8%. When the wielder's skill grants HP Treatment to other operators in the team, the operator receiving the wielder's treatment also gains ATK +9.8% for 20s. Max stacks for effects of the same name: 4. Duration of each stack is counted separately. Each operator can gain this effect at most once every 0.1s."
     },
     {
@@ -1210,6 +1273,9 @@
       "attribute": "gat_passive_attr_agi",
       "secondary": "gat_passive_attr_firedam",
       "skill": "gst_passive_tacafter",
+      "operators": [
+        "Camille"
+      ],
       "effect": "Absolver of Guilt: Ultimate Gain Efficiency +50.4%. When the wielder's skill recovers SP, the entire team gains ATK +16.8% for 20s. When the wielder's skill applies Heat Infliction, the entire team gains Heat DMG Dealt +16.8% for 20s. The two effects apply separately and do not stack with themselves."
     },
     {
@@ -1240,6 +1306,9 @@
       "attribute": "gat_passive_attr_agi",
       "secondary": "gat_passive_attr_phydam",
       "skill": "gst_passive_keyword",
+      "operators": [
+        "Lifeng"
+      ],
       "effect": "Weight of Mountain: Against Vulnerable enemies, the wielder gains DMG Dealt +56%. When the wielder's battle skill applies Vulnerability, the wielder gains All Attributes +22.4% for 15s. When the wielder's battle skill applies Physical Susceptibility, the wielder gains All Attributes +22.4% for 15s. The two effects apply separately and do not stack with themselves."
     },
     {

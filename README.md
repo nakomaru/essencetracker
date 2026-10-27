@@ -42,12 +42,13 @@ npm run sync         # update data.json and icons from game data
 
 - Weapons, locations and stats are keyed by game id (`wpn_sword_0025`, `world_energy_point_group13`, `gat_passive_attr_atk`), and `stats` maps each stat id to its in-game name. Saved selections are keyed by id, so renames don't lose them.
 - `npm run sync` reads every file from one cep commit, recorded under `source`, and prints what changed. `node tools/sync.js --dry-run` previews the changes without writing.
+- Weapons cep links to a signature operator (most limited 6★ weapons and a few 5★) list the operator's English name under `operators`, from cep's character name tables. Search matches operator names.
 - A weapon cep marks as preview gets `announced: true`; the next sync after its release removes it. A weapon or location whose English name changes keeps its old name under `formerly`, which search and older saved selections still match.
 - Nothing in `data.json` is edited by hand. A sync that finds an unknown weapon type or a stat without an English name stops instead of guessing.
 
 ### Deductions
 
-Announced weapons often arrive before their skill text. The game's full text table, published by [cmyyx/cep-assets](https://github.com/cmyyx/cep-assets), can still hold the answer without linking it to the weapon, such as a weapon skill name that no released weapon uses. `tools/deduce.js` holds the rules that find these, and the sync fetches the text table only while some data is missing.
+Announced weapons often arrive before their skill text. The game's full text table, published by [cmyyx/cep-assets](https://github.com/cmyyx/cep-assets), can still hold the answer without linking it to the weapon, such as a weapon skill name that no released weapon uses, or the English name of an operator cep's character tables don't cover yet. `tools/deduce.js` holds the rules that find these, and the sync fetches the text table only while some data is missing.
 
 The rules only propose. A reviewer weighs each proposal and records a verdict in `tools/deductions.json`: `accepted` or `rejected`, the `basis` shown to users, and `review` notes on the evidence and residual risk. The sync then prints:
 

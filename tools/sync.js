@@ -5,7 +5,8 @@
 // Weapons and locations are keyed by game id. A weapon or location whose
 // English name changes keeps its old name under `formerly`, so saved
 // selections and searches by the old name still find it. Weapons that cep
-// marks as preview (announced, not yet released) get `announced: true`.
+// marks as preview (announced, not yet released) get `announced: true`, and
+// weapons cep links to operators list their English names under `operators`.
 // Stats are stored as game ids; `stats` maps each id in use to its English name.
 //
 // When some data is still missing, deduce.js proposes deductions from the game
@@ -85,6 +86,21 @@ export function skillEffect(texts, id) {
   return name ? `${name.replace(/^[^:]+:\s*/, '')}: ${text}` : text;
 }
 
+// Resolves the Chinese operator names cep links to a weapon through cep's
+// character name tables. cep lists the Endministrator's variants as
+// 管理员(女) and 管理员(男); a parenthesized suffix names a variant of one operator.
+export function resolveOperators(chars, namesZh, namesEn) {
+  const idByZh = new Map(Object.entries(namesZh).map(([id, zh]) => [zh, id]));
+  const resolved = new Set();
+  const unresolved = [];
+  for (const zh of chars) {
+    const en = namesEn[idByZh.get(zh.replace(/\([^)]*\)$/, ''))];
+    if (en) resolved.add(en);
+    else unresolved.push(zh);
+  }
+  return { resolved: [...resolved], unresolved };
+}
+
 function translate(table, id, what) {
   const name = table[id];
   if (!name) throw new Error(`no English name for ${what} ${id}`);
@@ -109,6 +125,7 @@ export function build(src, previous) {
   const oldLocations = new Map((previous?.locations ?? []).map((l) => [l.id, l]));
   const skipped = [];
   const icons = new Map();
+  const unresolvedOperators = new Map();
 
   const weapons = [];
   for (const w of parseWeapons(src.weaponsTs)) {
@@ -120,6 +137,8 @@ export function build(src, previous) {
     const type = TYPE_NAMES[w.type];
     if (!type) throw new Error(`unknown weapon type ${w.type} for ${w.id}`);
     const effect = skillEffect(src.texts, w.id);
+    const operators = resolveOperators(w.chars, src.charNamesZh, src.charNamesEn);
+    if (operators.unresolved.length) unresolvedOperators.set(w.id, operators.unresolved);
     const entry = {
       id: w.id,
       name: src.weaponNames[w.id],
@@ -128,6 +147,7 @@ export function build(src, previous) {
       attribute: stat(w.attribute),
       ...(w.secondary ? { secondary: stat(w.secondary) } : {}),
       skill: stat(w.skill),
+      ...(operators.resolved.length ? { operators: operators.resolved } : {}),
       ...(effect ? { effect } : {}),
       ...(w.preview ? { announced: true } : {}),
     };
@@ -150,7 +170,7 @@ export function build(src, previous) {
   });
 
   const sortedStats = Object.fromEntries(Object.entries(stats).sort(([a], [b]) => a.localeCompare(b)));
-  return { data: { source: src.source, stats: sortedStats, locations, weapons }, icons, skipped };
+  return { data: { source: src.source, stats: sortedStats, locations, weapons }, icons, skipped, unresolvedOperators };
 }
 
 // Lines describing what changed between two data sets.
@@ -176,7 +196,7 @@ export function changes(before, after) {
     }
     for (const o of byId.values()) out.push(`REMOVED   ${kind} ${o.name}`);
   };
-  diff('weapon', before?.weapons ?? [], after.weapons, ['type', 'rarity', 'attribute', 'secondary', 'skill', 'effect']);
+  diff('weapon', before?.weapons ?? [], after.weapons, ['type', 'rarity', 'attribute', 'secondary', 'skill', 'operators', 'effect']);
   diff('location', before?.locations ?? [], after.locations, ['region', 'attribute', 'secondary', 'skill']);
   for (const [id, name] of Object.entries(after.stats)) {
     const old = before?.stats?.[id];
@@ -196,16 +216,18 @@ const latestCommit = (repo) => get(`https://api.github.com/repos/${repo}/commits
 export async function fetchSources() {
   const commit = await latestCommit(REPO);
   const raw = (path, as) => get(`https://raw.githubusercontent.com/${REPO}/${commit.sha}/${path}`, as);
-  const [weaponsTs, dungeonsTs, weaponNames, stats, dungeonNames, texts] = await Promise.all([
+  const [weaponsTs, dungeonsTs, weaponNames, stats, dungeonNames, texts, charNamesZh, charNamesEn] = await Promise.all([
     raw('src/data/weapons.ts'),
     raw('src/data/dungeons.ts'),
     raw('src/generated/i18n/weapons/en.json', 'json'),
     raw('src/generated/i18n/gemStats/en.json', 'json'),
     raw('src/generated/i18n/dungeons/en.json', 'json'),
     raw('src/generated/i18n/wikiData/en.json', 'json'),
+    raw('src/generated/i18n/characters/zh-CN.json', 'json'),
+    raw('src/generated/i18n/characters/en.json', 'json'),
   ]);
   const source = { repo: REPO, commit: commit.sha, date: commit.commit.committer.date.slice(0, 10) };
-  return { source, weaponsTs, dungeonsTs, weaponNames, stats, dungeonNames, texts, raw };
+  return { source, weaponsTs, dungeonsTs, weaponNames, stats, dungeonNames, texts, charNamesZh, charNamesEn, raw };
 }
 
 // The game's full text tables, split into chunks listed in the repo's manifest.
@@ -218,13 +240,12 @@ async function fetchGameText(locales) {
   return { commit: commit.sha, tables };
 }
 
-// Facts the logical pass reasons from; see deduce.js.
-export function deductionFacts(src, en, zh) {
+// Facts the deduction rules reason from; see deduce.js.
+export function deductionFacts(src, en, zh, unresolvedOperators) {
   const knownSkillNames = Object.entries(src.texts)
     .filter(([key]) => /^weapon\|[^|]+\|skill\|sk_[^|]+\|name$/.test(key))
     .map(([, name]) => name);
-  const chars = new Map(parseWeapons(src.weaponsTs).map((w) => [w.id, w.chars]));
-  return { en, zh, knownSkillNames, chars };
+  return { en, zh, knownSkillNames, unresolvedOperators };
 }
 
 const exists = (url) => access(url).then(() => true, () => false);
@@ -233,17 +254,19 @@ async function main() {
   const dryRun = process.argv.includes('--dry-run');
   const previous = (await exists(DATA)) ? JSON.parse(await readFile(DATA, 'utf8')) : null;
   const src = await fetchSources();
-  let { data: next, icons, skipped } = build(src, previous);
+  let { data: next, icons, skipped, unresolvedOperators } = build(src, previous);
+  const gaps = { unresolvedOperators };
   console.log(`cep ${next.source.commit.slice(0, 7)} (${next.source.date})`);
   let report = [];
   const verdicts = JSON.parse(await readFile(VERDICTS, 'utf8'));
-  if (hasGaps(next)) {
+  if (hasGaps(next, gaps)) {
     const text = await fetchGameText(['en', 'zh-CN']);
     console.log(`cep-assets ${text.commit.slice(0, 7)} (game text, for deductions)`);
-    ({ data: next, report } = applyVerdicts(next, candidates(next, deductionFacts(src, ...text.tables)), verdicts));
+    const facts = deductionFacts(src, ...text.tables, unresolvedOperators);
+    ({ data: next, report } = applyVerdicts(next, candidates(next, facts), verdicts, gaps));
     next.source = { ...next.source, text: { repo: TEXT_REPO, commit: text.commit } };
   } else {
-    ({ data: next, report } = applyVerdicts(next, [], verdicts));
+    ({ data: next, report } = applyVerdicts(next, [], verdicts, gaps));
   }
   for (const line of changes(previous, next)) console.log(line);
   for (const line of report) console.log(line);

@@ -6,9 +6,11 @@
 // propose the same value.
 //
 // `facts` holds:
-//   en, zh             game text tables (text id -> string) in English and Chinese
-//   knownSkillNames    every weapon skill name cep links to a weapon, as "Stat: Name"
-//   chars              weapon id -> Chinese names of the operators cep links to it
+//   en, zh               game text tables (text id -> string) in English and Chinese
+//   knownSkillNames      every weapon skill name cep links to a weapon, as "Stat: Name"
+//   unresolvedOperators  weapon id -> Chinese names of linked operators that cep's
+//                        character tables do not name in English
+// `gaps` holds unresolvedOperators alone, for checking gaps without the text tables.
 
 // Weapons without skill text: a weapon skill name in the game text that no
 // weapon claims, under the same skill stat as exactly one such weapon.
@@ -31,12 +33,12 @@ function skillName(data, facts) {
   return out;
 }
 
-// Announced weapons: the English names of the operators cep links to them,
-// read from the English text under the text ids holding each Chinese name.
-function operator(data, facts) {
+// Linked operators cep's character tables do not name yet: the English text
+// under the text ids holding each Chinese name.
+function operators(data, facts) {
   const out = [];
-  for (const w of data.weapons.filter((x) => x.announced)) {
-    const names = (facts.chars.get(w.id) ?? []).map((zh) => {
+  for (const w of data.weapons.filter((x) => facts.unresolvedOperators.has(x.id))) {
+    const names = facts.unresolvedOperators.get(w.id).map((zh) => {
       const english = new Set(Object.keys(facts.zh).filter((id) => facts.zh[id] === zh && facts.en[id]).map((id) => facts.en[id]));
       return english.size === 1 ? { zh, en: [...english][0] } : null;
     });
@@ -53,11 +55,11 @@ function operator(data, facts) {
 // Each rule, and whether its gap is still open for a weapon.
 const RULES = {
   skillName: { propose: skillName, open: (w) => !w.effect },
-  operator: { propose: operator, open: (w) => w.announced },
+  operators: { propose: operators, open: (w, gaps) => gaps.unresolvedOperators.has(w.id) },
 };
 
 // Whether any rule has a gap to work on, so the text tables are only fetched when needed.
-export const hasGaps = (data) => data.weapons.some((w) => Object.values(RULES).some((r) => r.open(w)));
+export const hasGaps = (data, gaps) => data.weapons.some((w) => Object.values(RULES).some((r) => r.open(w, gaps)));
 
 export function candidates(data, facts) {
   return Object.entries(RULES).flatMap(([key, rule]) => rule.propose(data, facts).map((c) => ({ key, ...c })));
@@ -66,7 +68,7 @@ export function candidates(data, facts) {
 // Publishes accepted verdicts that the rules still support. Returns the data
 // and report lines for candidates without a verdict, verdicts the rules no
 // longer support, and deductions whose gap the game data has since filled.
-export function applyVerdicts(data, proposed, verdicts) {
+export function applyVerdicts(data, proposed, verdicts, gaps) {
   const report = [];
   const byKey = new Map(proposed.map((c) => [`${c.id}|${c.key}`, c]));
   const weapons = data.weapons.map(({ deduced, ...w }) => {
@@ -74,7 +76,7 @@ export function applyVerdicts(data, proposed, verdicts) {
     for (const [key, rule] of Object.entries(RULES)) {
       const verdict = verdicts[w.id]?.[key];
       const candidate = byKey.get(`${w.id}|${key}`);
-      if (!rule.open(w)) {
+      if (!rule.open(w, gaps)) {
         if (verdict) report.push(`RESOLVED  weapon ${w.name}: ${key} has game data now (deduced ${verdict.value}); retire the verdict`);
         continue;
       }

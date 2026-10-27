@@ -184,6 +184,14 @@ test('rarity filter hides weapons', async ({ page }) => {
   await expect(page.locator('.card.r3')).toHaveCount(0);
 });
 
+test('weapons show and match their signature operator', async ({ page }) => {
+  const w = data.weapons.find((x) => x.operators?.length === 1);
+  await open(page);
+  await expect(card(page, w.name)).toHaveAttribute('title', new RegExp(`Signature operator: ${w.operators[0]}`));
+  await page.fill('#search', w.operators[0]);
+  await expect(card(page, w.name)).toBeVisible();
+});
+
 test('rarity and announced filters persist', async ({ page }) => {
   await open(page);
   await page.click('[data-rarity="3"]');
