@@ -104,17 +104,19 @@ function matchesQuery(w, q) {
   return [w.name, w.type, ...stats, ...(w.formerly ?? [])].some((s) => s.toLowerCase().includes(q));
 }
 
+// Each filter chip toggles one bucket: rarity chips cover released weapons,
+// the Announced chip covers announced weapons of any rarity.
 function visibleWeapons() {
   const q = state.query.trim().toLowerCase();
   return state.data.weapons.filter((w) =>
-    state.rarities.has(w.rarity) && (state.showAnnounced || !w.announced) && matchesQuery(w, q));
+    (w.announced ? state.showAnnounced : state.rarities.has(w.rarity)) && matchesQuery(w, q));
 }
 
 /* Weapons pane */
 
 function renderFilters() {
   $('#rarity-filter').innerHTML = RARITIES.map((r) =>
-    `<button type="button" class="chip-toggle r${r}" data-rarity="${r}" aria-pressed="${state.rarities.has(r)}">${r}&#9733;</button>`).join('');
+    `<button type="button" class="chip-toggle r${r}" data-rarity="${r}" aria-pressed="${state.rarities.has(r)}" title="Released ${r}&#9733; weapons">${r}&#9733;</button>`).join('');
   const announced = state.data.weapons.filter((w) => w.announced).length;
   $('#announced-filter').hidden = announced === 0;
   $('#announced-filter').innerHTML =

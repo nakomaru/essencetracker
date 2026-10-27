@@ -21,7 +21,7 @@ Pick the weapons you want Flawless Essences for, and the tracker lists the Sever
 
 Engravings that only differ in untracked outcomes are merged into one row, and rows that are strictly worse than another row at the same location are dropped.
 
-Weapons that are announced but not yet released are tracked like the rest, so their essences can be farmed ahead of time. They carry an **Announced** tag, a striped rarity edge and a dashed outline, and their stats come from preview game data that can change before release. Toggle **Announced** to hide them, then **Skip shown** to drop them from the results.
+Weapons that are announced but not yet released are tracked like the rest, so their essences can be farmed ahead of time. They carry an **Announced** tag, a striped rarity edge and a dashed outline, and their stats come from preview game data that can change before release. The rarity filters cover released weapons and the **Announced** filter covers announced ones, so turning off every rarity shows only announced weapons; **Skip shown** then drops them from the results.
 
 ## Development
 

@@ -81,6 +81,24 @@ test('announced weapons are marked and can be filtered out', async ({ page }) =>
   await expect(page.locator('.card')).toHaveCount(data.weapons.length - announced.length);
 });
 
+test('rarity chips cover released weapons and the Announced chip covers announced ones', async ({ page }) => {
+  test.skip(announced.length === 0, 'no announced weapons in the data');
+  await open(page);
+  for (const r of [6, 5, 4, 3]) await page.click(`[data-rarity="${r}"]`);
+  await expect(page.locator('.card')).toHaveCount(announced.length);
+  await expect(page.locator('.card:not(.announced)')).toHaveCount(0);
+
+  // Skip shown then touches exactly the announced weapons.
+  await page.click('[data-bulk="skip"]');
+  await expect(page.locator('.confirm-list li')).toHaveCount(announced.length);
+  await page.click('#confirm-cancel');
+
+  const rarity = announced[0].rarity;
+  await page.click(`[data-rarity="${rarity}"]`);
+  const released = data.weapons.filter((w) => !w.announced && w.rarity === rarity).length;
+  await expect(page.locator('.card')).toHaveCount(released + announced.length);
+});
+
 test('footer names the game data source and its date', async ({ page }) => {
   await open(page);
   await expect(page.locator('#source')).toContainText(`as of ${data.source.date}`);
