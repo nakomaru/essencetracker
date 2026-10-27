@@ -3,14 +3,8 @@
     "skillName": {
       "value": "Coursing Stars",
       "verdict": "accepted",
-      "basis": "It is the only Infliction weapon skill name in the game text that no weapon uses, and Lunar Calling is the only Infliction weapon without skill text. A weapon not yet in the data could still own it.",
-      "review": "2026-10-28: Unique in both languages: the only unclaimed English 'Infliction:' name and the only unclaimed Chinese 附术 name (附术·垂星渡野), and 附术 is the prefix of every known Infliction skill. Lunar Calling's own name is in the same text table, so its skill name is expected there. The starry name fits the moon-named weapon. Residual risk: an unannounced weapon or cut content owning the name."
-    },
-    "operators": {
-      "value": "Argent Flow",
-      "verdict": "accepted",
-      "basis": "cep links Lunar Calling to the operator 明河, whom the game text and the English community wikis name Argent Flow.",
-      "review": "2026-10-28: One text id holds 明河 and its English is Argent Flow; Japanese and Korean romanize it (ミンホ, 명하). The English text uses Argent Flow as an operator: a Combat Drills event, dialogue referring to him, a gift item. Externally confirmed: the Endfield Talos Wiki and Game8 list Argent Flow (明河, full name Ye Minghe) as a 6-star Electric Guard releasing in 1.6 phase 2 on 2026-11-05; early leaks called him Ye Minghui. Residual risk: cep's weapon-to-operator link."
+      "basis": "the only unclaimed Infliction skill name in the game text.",
+      "review": "2026-10-28: Unique in English and Chinese (附术·垂星渡野; 附术 prefixes every Infliction skill). Lunar Calling is the only Infliction weapon without a skill name. Risk: an unannounced weapon owning it."
     }
   }
 }

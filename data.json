@@ -472,9 +472,16 @@
       "secondary": "gat_passive_attr_atk",
       "skill": "gst_passive_phyabn",
       "operators": [
-        "Mi Fu"
+        {
+          "id": "chr_0031_mifu",
+          "name": "Mi Fu",
+          "avatars": [
+            "chr_0031_mifu"
+          ]
+        }
       ],
-      "effect": "Amaranthine Cleave: Physical DMG Dealt +44.8%. When the wielder applies Physical Susceptibility, the wielder gains Arts Intensity +84 for 20s. When the wielder applies Crush, the wielder gains Physical DMG Dealt +[25.2% + (8.4% × Max number of Vulnerability stacks consumed from one enemy)] for 30s. The two effects apply separately and do not stack with themselves."
+      "skillName": "Amaranthine Cleave",
+      "effect": "Physical DMG Dealt +44.8%.\nWhen the wielder applies Physical Susceptibility, the wielder gains Arts Intensity +84 for 20s. When the wielder applies Crush, the wielder gains Physical DMG Dealt +[25.2% + (8.4% × Max number of Vulnerability stacks consumed from one enemy)] for 30s.\nThe two effects apply separately and do not stack with themselves."
     },
     {
       "id": "wpn_claym_0004",
@@ -485,9 +492,16 @@
       "secondary": "gat_passive_attr_atk",
       "skill": "gst_passive_tactic",
       "operators": [
-        "Da Pan"
+        {
+          "id": "chr_0018_dapan",
+          "name": "Da Pan",
+          "avatars": [
+            "chr_0018_dapan"
+          ]
+        }
       ],
-      "effect": "Stacked Hew: Physical DMG Dealt +28%. When the wielder's battle skill or ultimate hits the enemy, the wielder gains Physical DMG Dealt +28% for 30s. Max stacks for effects of the same name: 3. Duration of each stack is counted separately. Effect only triggers once every 0.1s."
+      "skillName": "Stacked Hew",
+      "effect": "Physical DMG Dealt +28%.\nWhen the wielder's battle skill or ultimate hits the enemy, the wielder gains Physical DMG Dealt +28% for 30s.\nMax stacks for effects of the same name: 3. Duration of each stack is counted separately. Effect only triggers once every 0.1s."
     },
     {
       "id": "wpn_claym_0006",
@@ -497,7 +511,8 @@
       "attribute": "gat_passive_attr_will",
       "secondary": "gat_passive_attr_hp",
       "skill": "gst_passive_keyword",
-      "effect": "Mincing Therapy: Treatment Efficiency +28%. After a Protected operator takes DMG, the wielder restores the said operator's HP by [235 + Will×1.96]. Effect only triggers once every 15s."
+      "skillName": "Mincing Therapy",
+      "effect": "Treatment Efficiency +28%.\nAfter a Protected operator takes DMG, the wielder restores the said operator's HP by [235 + Will×1.96].\nEffect only triggers once every 15s."
     },
     {
       "id": "wpn_claym_0018",
@@ -508,9 +523,16 @@
       "secondary": "gat_passive_attr_icedam",
       "skill": "gst_passive_keyword",
       "operators": [
-        "Si"
+        {
+          "id": "chr_0036_jsspsi",
+          "name": "Si",
+          "avatars": [
+            "chr_0036_jsspsi"
+          ]
+        }
       ],
-      "effect": "Dabbles of Ink: ATK +44.8%. When the wielder applies Immobilization on the enemy, the target enemy suffers DMG Taken +21% for 30s. When the wielder applies Immobilization on the enemy or after the wielder casts an ultimate, the next combo skill cast within 20s gains DMG Dealt +70%. The two effects apply separately and do not stack with themselves."
+      "skillName": "Dabbles of Ink",
+      "effect": "ATK +44.8%.\nWhen the wielder applies Immobilization on the enemy, the target enemy suffers DMG Taken +21% for 30s.\nWhen the wielder applies Immobilization on the enemy or after the wielder casts an ultimate, the next combo skill cast within 20s gains DMG Dealt +70%.\nThe two effects apply separately and do not stack with themselves."
     },
     {
       "id": "wpn_claym_0013",
@@ -521,9 +543,16 @@
       "secondary": "gat_passive_attr_atk",
       "skill": "gst_passive_burst",
       "operators": [
-        "Last Rite"
+        {
+          "id": "chr_0026_lastrite",
+          "name": "Last Rite",
+          "avatars": [
+            "chr_0026_lastrite"
+          ]
+        }
       ],
-      "effect": "Bonechilling: Skill DMG Dealt +56% (for every skill). When the wielder's battle skill applies Cryo Infliction, the wielder gains Cryo DMG Dealt +28% for 15s. When the wielder deals combo skill DMG to an enemy with Cryo Infliction, the wielder gains Cryo DMG Dealt +56% for 15s. The two effects apply separately and do not stack with themselves."
+      "skillName": "Bonechilling",
+      "effect": "Skill DMG Dealt +56% (for every skill).\nWhen the wielder's battle skill applies Cryo Infliction, the wielder gains Cryo DMG Dealt +28% for 15s. When the wielder deals combo skill DMG to an enemy with Cryo Infliction, the wielder gains Cryo DMG Dealt +56% for 15s.\nThe two effects apply separately and do not stack with themselves."
     },
     {
       "id": "wpn_claym_0019",
@@ -533,7 +562,8 @@
       "attribute": "gat_passive_attr_wisd",
       "secondary": "gat_passive_attr_icedam",
       "skill": "gst_passive_keyword",
-      "effect": "Secret History: Main attribute +19.6%. When the wielder's battle skill applies Cryo Infliction or Heat Infliction, the wielder gains Cryo DMG Dealt +16.8% for 20s. When the wielder grants Arts Amp to another operator in the team, the entire team gains Arts DMG Dealt +11.2% for 20s. The two effects apply separately and do not stack with themselves."
+      "skillName": "Secret History",
+      "effect": "Main attribute +19.6%.\nWhen the wielder's battle skill applies Cryo Infliction or Heat Infliction, the wielder gains Cryo DMG Dealt +16.8% for 20s.\nWhen the wielder grants Arts Amp to another operator in the team, the entire team gains Arts DMG Dealt +11.2% for 20s.\nThe two effects apply separately and do not stack with themselves."
     },
     {
       "id": "wpn_claym_0016",
@@ -543,7 +573,8 @@
       "attribute": "gat_passive_attr_str",
       "secondary": "gat_passive_attr_physpell",
       "skill": "gst_passive_tactic",
-      "effect": "Layered Suffering: Physical DMG Dealt +19.6%. When the wielder casts battle skills or combo skills, the wielder gains Physical DMG Dealt +15.4% for 20s. Max stacks for effects of the same name: 3. Duration of each stack is counted separately. Effect only triggers once every 0.1s."
+      "skillName": "Layered Suffering",
+      "effect": "Physical DMG Dealt +19.6%.\nWhen the wielder casts battle skills or combo skills, the wielder gains Physical DMG Dealt +15.4% for 20s.\nMax stacks for effects of the same name: 3. Duration of each stack is counted separately. Effect only triggers once every 0.1s."
     },
     {
       "id": "wpn_claym_0008",
@@ -553,7 +584,8 @@
       "attribute": "gat_passive_attr_str",
       "secondary": "gat_passive_attr_crirate",
       "skill": "gst_passive_smash",
-      "effect": "Princely Deterrence: When the wielder performs a Final Strike on the enemy, the wielder gains ATK +28% for 8s. If the wielder is also the controlled operator, double the ATK increase gained and buff the Final Strike so that it deals Stagger +33.6% to the enemy. Effects of the same name cannot stack."
+      "skillName": "Princely Deterrence",
+      "effect": "When the wielder performs a Final Strike on the enemy, the wielder gains ATK +28% for 8s.\nIf the wielder is also the controlled operator, double the ATK increase gained and buff the Final Strike so that it deals Stagger +33.6% to the enemy.\nEffects of the same name cannot stack."
     },
     {
       "id": "wpn_claym_0007",
@@ -564,9 +596,16 @@
       "secondary": "gat_passive_attr_hp",
       "skill": "gst_passive_heal",
       "operators": [
-        "Ember"
+        {
+          "id": "chr_0009_azrila",
+          "name": "Ember",
+          "avatars": [
+            "chr_0009_azrila"
+          ]
+        }
       ],
-      "effect": "Eye of Talos: Shield applied +67.2%. After the wielder's combo skill provides HP treatment, the controlled operator gains an additional [19.6% × Wielder's Max HP] Shield for 15s. Effect only triggers once every 15s."
+      "skillName": "Eye of Talos",
+      "effect": "Shield applied +67.2%.\nAfter the wielder's combo skill provides HP treatment, the controlled operator gains an additional [19.6% × Wielder's Max HP] Shield for 15s.\nEffect only triggers once every 15s."
     },
     {
       "id": "wpn_claym_0014",
@@ -576,7 +615,8 @@
       "attribute": "gat_passive_attr_str",
       "secondary": "gat_passive_attr_physpell",
       "skill": "gst_passive_break",
-      "effect": "Lands of Yore: Arts Intensity +28. After the wielder consumes Vulnerability stack(s), the wielder gains Physical DMG Dealt +[14%×Stacks Consumed] for 20s. Effects of the same name cannot stack."
+      "skillName": "Lands of Yore",
+      "effect": "Arts Intensity +28.\nAfter the wielder consumes Vulnerability stack(s), the wielder gains Physical DMG Dealt +[14%×Stacks Consumed] for 20s.\nEffects of the same name cannot stack."
     },
     {
       "id": "wpn_claym_0012",
@@ -587,9 +627,16 @@
       "secondary": "gat_passive_attr_hp",
       "skill": "gst_passive_heal",
       "operators": [
-        "Snowshine"
+        {
+          "id": "chr_0014_aurora",
+          "name": "Snowshine",
+          "avatars": [
+            "chr_0014_aurora"
+          ]
+        }
       ],
-      "effect": "Glory of Knighthood: Secondary Attribute +14%. Combo skill HP treatment effect +56%."
+      "skillName": "Glory of Knighthood",
+      "effect": "Secondary Attribute +14%.\nCombo skill HP treatment effect +56%."
     },
     {
       "id": "wpn_claym_0015",
@@ -599,7 +646,8 @@
       "attribute": "gat_passive_attr_str",
       "secondary": "gat_passive_attr_hp",
       "skill": "gst_passive_keyword",
-      "effect": "Tenacious Will: Secondary Attribute +14%. When the wielder applies Knocked Down or Weakness, the wielder gains DEF +50.4% for 15s. Effects of the same name cannot stack."
+      "skillName": "Tenacious Will",
+      "effect": "Secondary Attribute +14%.\nWhen the wielder applies Knocked Down or Weakness, the wielder gains DEF +50.4% for 15s.\nEffects of the same name cannot stack."
     },
     {
       "id": "wpn_claym_0011",
@@ -609,7 +657,8 @@
       "attribute": "gat_passive_attr_str",
       "secondary": "gat_passive_attr_usp",
       "skill": "gst_passive_burst",
-      "effect": "Seeker of the Esoteric: Main Attribute +14%. When the wielder applies an Arts Burst, the wielder gains ATK +16.8% for 30s. Max stacks for effects of the same name: 3. Duration of each stack is counted separately. Effect only triggers once every 0.1s."
+      "skillName": "Seeker of the Esoteric",
+      "effect": "Main Attribute +14%.\nWhen the wielder applies an Arts Burst, the wielder gains ATK +16.8% for 30s.\nMax stacks for effects of the same name: 3. Duration of each stack is counted separately. Effect only triggers once every 0.1s."
     },
     {
       "id": "wpn_claym_0003",
@@ -619,7 +668,8 @@
       "attribute": "gat_passive_attr_str",
       "secondary": "gat_passive_attr_atk",
       "skill": "gst_passive_tactic",
-      "effect": "Emergency Boost: When the wielder's battle skill hits the enemy, the wielder gains ATK +33.6% for 20s. Effects of the same name cannot stack."
+      "skillName": "Emergency Boost",
+      "effect": "When the wielder's battle skill hits the enemy, the wielder gains ATK +33.6% for 20s.\nEffects of the same name cannot stack."
     },
     {
       "id": "wpn_claym_0009",
@@ -629,7 +679,8 @@
       "attribute": "gat_passive_attr_will",
       "secondary": "gat_passive_attr_hp",
       "skill": "gst_passive_smash",
-      "effect": "Honed into Legion: When the wielder performs a Final Strike on the enemy, the wielder gains ATK +33.6% for 10s. Effects of the same name cannot stack."
+      "skillName": "Honed into Legion",
+      "effect": "When the wielder performs a Final Strike on the enemy, the wielder gains ATK +33.6% for 10s.\nEffects of the same name cannot stack."
     },
     {
       "id": "wpn_claym_0010",
@@ -638,7 +689,8 @@
       "rarity": 3,
       "attribute": "gat_passive_attr_main",
       "skill": "gst_passive_force",
-      "effect": "Armament Prep: ATK +34."
+      "skillName": "Armament Prep",
+      "effect": "ATK +34."
     },
     {
       "id": "wpn_pistol_0010",
@@ -649,9 +701,16 @@
       "secondary": "gat_passive_attr_crirate",
       "skill": "gst_passive_crit",
       "operators": [
-        "Yvonne"
+        {
+          "id": "chr_0017_yvonne",
+          "name": "Yvonne",
+          "avatars": [
+            "chr_0017_yvonne"
+          ]
+        }
       ],
-      "effect": "Artzy Exaggeration: Cryo DMG Dealt +44.8%. After the wielder scores a critical hit with a battle skill or combo skill, the wielder gains Cryo DMG Dealt +39.2% for 30s. Max stacks for effects of the same name: 3. Duration of each stack is counted separately. Effect only triggers once every 0.1s."
+      "skillName": "Artzy Exaggeration",
+      "effect": "Cryo DMG Dealt +44.8%.\nAfter the wielder scores a critical hit with a battle skill or combo skill, the wielder gains Cryo DMG Dealt +39.2% for 30s.\nMax stacks for effects of the same name: 3. Duration of each stack is counted separately. Effect only triggers once every 0.1s."
     },
     {
       "id": "wpn_pistol_0011",
@@ -662,9 +721,16 @@
       "secondary": "gat_passive_attr_atk",
       "skill": "gst_passive_burst",
       "operators": [
-        "Tangtang"
+        {
+          "id": "chr_0027_tangtang",
+          "name": "Tangtang",
+          "avatars": [
+            "chr_0027_tangtang"
+          ]
+        }
       ],
-      "effect": "Brigand's Bane: Cryo DMG Dealt +44.8%. When the wielder applies Cryo Infliction via battle skills or ultimates, the wielder gains Cryo DMG Dealt +56% for 20s. When the wielder's battle skill or ultimate applies Arts Susceptibility, the target enemy suffers Arts DMG Taken +16.8% for 20s. The two effects apply separately and do not stack with themselves."
+      "skillName": "Brigand's Bane",
+      "effect": "Cryo DMG Dealt +44.8%.\nWhen the wielder applies Cryo Infliction via battle skills or ultimates, the wielder gains Cryo DMG Dealt +56% for 20s. When the wielder's battle skill or ultimate applies Arts Susceptibility, the target enemy suffers Arts DMG Taken +16.8% for 20s.\nThe two effects apply separately and do not stack with themselves."
     },
     {
       "id": "wpn_pistol_0009",
@@ -675,9 +741,16 @@
       "secondary": "gat_passive_attr_magicdam",
       "skill": "gst_passive_magabn",
       "operators": [
-        "Wulfgard"
+        {
+          "id": "chr_0006_wolfgd",
+          "name": "Wulfgard",
+          "avatars": [
+            "chr_0006_wolfgd"
+          ]
+        }
       ],
-      "effect": "Vicious Purge: Arts DMG +33.6%. After the wielder consumes an Arts Reaction, target enemy suffers Arts DMG Taken +28% (for the specified element) for 15s. Each effect applies separately and does not stack with itself. Effect only triggers once every 25s."
+      "skillName": "Vicious Purge",
+      "effect": "Arts DMG +33.6%.\nAfter the wielder consumes an Arts Reaction, target enemy suffers Arts DMG Taken +28% (for the specified element) for 15s.\nEach effect applies separately and does not stack with itself. Effect only triggers once every 25s."
     },
     {
       "id": "wpn_pistol_0007",
@@ -687,7 +760,8 @@
       "attribute": "gat_passive_attr_agi",
       "secondary": "gat_passive_attr_icedam",
       "skill": "gst_passive_tactic",
-      "effect": "Olden Moon: ATK +19.6%. For 20s after the wielder casts a combo skill, the wielder's next battle skill gains Cryo and Nature DMG Dealt +22.4%. Max stacks for effects of the same name: 2. Duration of each stack is counted separately."
+      "skillName": "Olden Moon",
+      "effect": "ATK +19.6%.\nFor 20s after the wielder casts a combo skill, the wielder's next battle skill gains Cryo and Nature DMG Dealt +22.4%.\nMax stacks for effects of the same name: 2. Duration of each stack is counted separately."
     },
     {
       "id": "wpn_pistol_0005",
@@ -697,7 +771,8 @@
       "attribute": "gat_passive_attr_wisd",
       "secondary": "gat_passive_attr_icedam",
       "skill": "gst_passive_magabn",
-      "effect": "Lone and Distant Sail: Critical Rate +9.8%. When Solidification or Corrosion is applied to enemies, the wielder gains Cryo DMG Dealt and Nature DMG Dealt +9.8%, and Critical Rate +5.6% for 15s. If this effect is triggered by the wielder, double the increase gained. Effects of the same name cannot stack."
+      "skillName": "Lone and Distant Sail",
+      "effect": "Critical Rate +9.8%.\nWhen Solidification or Corrosion is applied to enemies, the wielder gains Cryo DMG Dealt and Nature DMG Dealt +9.8%, and Critical Rate +5.6% for 15s. If this effect is triggered by the wielder, double the increase gained.\nEffects of the same name cannot stack."
     },
     {
       "id": "wpn_pistol_0008",
@@ -707,7 +782,8 @@
       "attribute": "gat_passive_attr_main",
       "secondary": "gat_passive_attr_crirate",
       "skill": "gst_passive_magabn",
-      "effect": "Wedge of Civilization: Arts DMG Dealt +33.6%. When the wielder casts a battle skill, the wielder gains Arts DMG Dealt +22.4% for 15s. When the wielder's battle skill applies an Arts Reaction, the wielder gains Arts DMG Dealt +44.8% for 15s. The two effects apply separately and do not stack with themselves."
+      "skillName": "Wedge of Civilization",
+      "effect": "Arts DMG Dealt +33.6%.\nWhen the wielder casts a battle skill, the wielder gains Arts DMG Dealt +22.4% for 15s. When the wielder's battle skill applies an Arts Reaction, the wielder gains Arts DMG Dealt +44.8% for 15s.\nThe two effects apply separately and do not stack with themselves."
     },
     {
       "id": "wpn_pistol_0012",
@@ -717,7 +793,8 @@
       "attribute": "gat_passive_attr_agi",
       "secondary": "gat_passive_attr_usp",
       "skill": "gst_passive_burst",
-      "effect": "Rapid Strike: ATK +14%. After the wielder consumes an Arts Infliction, the wielder gains Nature DMG Dealt +[14%×Stacks Consumed] for 20s.  Effects of the same name cannot stack."
+      "skillName": "Rapid Strike",
+      "effect": "ATK +14%.\nAfter the wielder consumes an Arts Infliction, the wielder gains Nature DMG Dealt +[14%×Stacks Consumed] for 20s.\nEffects of the same name cannot stack."
     },
     {
       "id": "wpn_pistol_0006",
@@ -727,7 +804,8 @@
       "attribute": "gat_passive_attr_agi",
       "secondary": "gat_passive_attr_magicdam",
       "skill": "gst_passive_magabn",
-      "effect": "Road Home for All Life: Critical Rate +8.4%. When the wielder applies an Arts Reaction, the wielder gains ATK +21% for 20s. Max stacks for effects of the same name: 2. Duration of each stack is counted separately. Effect only triggers once every 0.1s."
+      "skillName": "Road Home for All Life",
+      "effect": "Critical Rate +8.4%.\nWhen the wielder applies an Arts Reaction, the wielder gains ATK +21% for 20s.\nMax stacks for effects of the same name: 2. Duration of each stack is counted separately. Effect only triggers once every 0.1s."
     },
     {
       "id": "wpn_pistol_0004",
@@ -737,7 +815,8 @@
       "attribute": "gat_passive_attr_str",
       "secondary": "gat_passive_attr_firedam",
       "skill": "gst_passive_combo",
-      "effect": "Aid from the Past: Battle Skill DMG +28%. When the wielder's combo skill applies Arts Burst or Combusted, the wielder gains ATK +44.8% for 15s. Effects of the same name cannot stack."
+      "skillName": "Aid from the Past",
+      "effect": "Battle Skill DMG +28%.\nWhen the wielder's combo skill applies Arts Burst or Combusted, the wielder gains ATK +44.8% for 15s.\nEffects of the same name cannot stack."
     },
     {
       "id": "wpn_pistol_0002",
@@ -747,7 +826,8 @@
       "attribute": "gat_passive_attr_wisd",
       "secondary": "gat_passive_attr_atk",
       "skill": "gst_passive_tactic",
-      "effect": "Emergency Boost: When the wielder's battle skill hits the enemy, the wielder gains ATK +33.6% for 20s. Effects of the same name cannot stack."
+      "skillName": "Emergency Boost",
+      "effect": "When the wielder's battle skill hits the enemy, the wielder gains ATK +33.6% for 20s.\nEffects of the same name cannot stack."
     },
     {
       "id": "wpn_pistol_0003",
@@ -757,7 +837,8 @@
       "attribute": "gat_passive_attr_str",
       "secondary": "gat_passive_attr_magicdam",
       "skill": "gst_passive_combo",
-      "effect": "Unending Cycle: When the wielder casts a combo skill, the wielder gains ATK +33.6% for 20s. Effects of the same name cannot stack."
+      "skillName": "Unending Cycle",
+      "effect": "When the wielder casts a combo skill, the wielder gains ATK +33.6% for 20s.\nEffects of the same name cannot stack."
     },
     {
       "id": "wpn_pistol_0001",
@@ -766,7 +847,8 @@
       "rarity": 3,
       "attribute": "gat_passive_attr_main",
       "skill": "gst_passive_force",
-      "effect": "Armament Prep: ATK +34."
+      "skillName": "Armament Prep",
+      "effect": "ATK +34."
     },
     {
       "id": "wpn_funnel_0010",
@@ -776,7 +858,8 @@
       "attribute": "gat_passive_attr_will",
       "secondary": "gat_passive_attr_hp",
       "skill": "gst_passive_heal",
-      "effect": "Blight Fervor: Treatment Efficiency +28%. After the wielder's skill provides HP treatment, the entire team gains ATK +25.2% for 15s. Effects of the same name cannot stack."
+      "skillName": "Blight Fervor",
+      "effect": "Treatment Efficiency +28%.\nAfter the wielder's skill provides HP treatment, the entire team gains ATK +25.2% for 15s.\nEffects of the same name cannot stack."
     },
     {
       "id": "wpn_funnel_0011",
@@ -787,9 +870,16 @@
       "secondary": "gat_passive_attr_usp",
       "skill": "gst_passive_combo",
       "operators": [
-        "Gilberta"
+        {
+          "id": "chr_0013_aglina",
+          "name": "Gilberta",
+          "avatars": [
+            "chr_0013_aglina"
+          ]
+        }
       ],
-      "effect": "Duty Fulfilled: Nature DMG Dealt +44.8%. After the wielder's combo skill applies Lifted, the team gains Arts DMG Dealt +33.6% for 15s. For every enemy Lifted, the team gains bonus Arts DMG Dealt +9.8%, up to a max of +29.4%. Effects of the same name cannot stack."
+      "skillName": "Duty Fulfilled",
+      "effect": "Nature DMG Dealt +44.8%.\nAfter the wielder's combo skill applies Lifted, the team gains Arts DMG Dealt +33.6% for 15s. For every enemy Lifted, the team gains bonus Arts DMG Dealt +9.8%, up to a max of +29.4%.\nEffects of the same name cannot stack."
     },
     {
       "id": "wpn_funnel_0008",
@@ -799,7 +889,8 @@
       "attribute": "gat_passive_attr_main",
       "secondary": "gat_passive_attr_physpell",
       "skill": "gst_passive_burst",
-      "effect": "Imposing Champion: Secondary Attribute +28%. When the wielder applies an Arts Burst, target enemy suffers Arts DMG Taken +25.2% for 15s. Effects of the same name cannot stack."
+      "skillName": "Imposing Champion",
+      "effect": "Secondary Attribute +28%.\nWhen the wielder applies an Arts Burst, target enemy suffers Arts DMG Taken +25.2% for 15s.\nEffects of the same name cannot stack."
     },
     {
       "id": "wpn_funnel_0013",
@@ -810,9 +901,16 @@
       "secondary": "gat_passive_attr_heal",
       "skill": "gst_passive_magabn",
       "operators": [
-        "Ardelia"
+        {
+          "id": "chr_0025_ardelia",
+          "name": "Ardelia",
+          "avatars": [
+            "chr_0025_ardelia"
+          ]
+        }
       ],
-      "effect": "Tidal Murmurs: Secondary attribute +44.8%. After the wielder consumes Corrosion, target enemy suffers Arts DMG Taken +28% for 25s. Effects of the same name cannot stack."
+      "skillName": "Tidal Murmurs",
+      "effect": "Secondary attribute +44.8%.\nAfter the wielder consumes Corrosion, target enemy suffers Arts DMG Taken +28% for 25s.\nEffects of the same name cannot stack."
     },
     {
       "id": "wpn_funnel_0017",
@@ -822,7 +920,8 @@
       "attribute": "gat_passive_attr_will",
       "secondary": "gat_passive_attr_pulsedam",
       "skill": "gst_passive_keyword",
-      "effect": "Overlapping Flickers: ATK +19.6%. When the wielder gains Electric Amp, the wielder also gains Electric DMG Dealt +15.4% for 30s.  Max stacks for effects of the same name: 3. Duration of each stack is counted separately. Effect only triggers once every 0.1s."
+      "skillName": "Overlapping Flickers",
+      "effect": "ATK +19.6%.\nWhen the wielder gains Electric Amp, the wielder also gains Electric DMG Dealt +15.4% for 30s.\nMax stacks for effects of the same name: 3. Duration of each stack is counted separately. Effect only triggers once every 0.1s."
     },
     {
       "id": "wpn_funnel_0018",
@@ -832,7 +931,8 @@
       "attribute": "gat_passive_attr_wisd",
       "secondary": "gat_passive_attr_usp",
       "skill": "gst_passive_keyword",
-      "effect": "Feedback Loop: Nature DMG Dealt +19.6%. When the wielder applies Arts Susceptibility or Arts Infliction with a combo skill, the wielder gains ATK +16.8% while other operators in the team gain ATK +4.2%. Duration: 20s. Max stacks for effects of the same name: 2. Duration of each stack is counted separately."
+      "skillName": "Feedback Loop",
+      "effect": "Nature DMG Dealt +19.6%.\nWhen the wielder applies Arts Susceptibility or Arts Infliction with a combo skill, the wielder gains ATK +16.8% while other operators in the team gain ATK +4.2%. Duration: 20s.\nMax stacks for effects of the same name: 2. Duration of each stack is counted separately."
     },
     {
       "id": "wpn_funnel_0015",
@@ -843,9 +943,16 @@
       "secondary": "gat_passive_attr_atk",
       "skill": "gst_passive_tactic",
       "operators": [
-        "Zhuang Fangyi"
+        {
+          "id": "chr_0030_zhuangfy",
+          "name": "Zhuang Fangyi",
+          "avatars": [
+            "chr_0030_zhuangfy"
+          ]
+        }
       ],
-      "effect": "Streaming Blitz: Electric DMG Dealt +44.8%. When the wielder's battle skill consumes Arts Reactions, the wielder gains Battle Skill Electric DMG Dealt +56% for 20s. This effect can reach a max of 2 stacks and can only trigger once every 0.1s. Duration of each stack is counted separately. After the wielder casts an ultimate, the wielder gains Battle Skill Electric DMG Dealt +112% for 25s. This effect cannot stack."
+      "skillName": "Streaming Blitz",
+      "effect": "Electric DMG Dealt +44.8%.\nWhen the wielder's battle skill consumes Arts Reactions, the wielder gains Battle Skill Electric DMG Dealt +56% for 20s.\nThis effect can reach a max of 2 stacks and can only trigger once every 0.1s. Duration of each stack is counted separately.\nAfter the wielder casts an ultimate, the wielder gains Battle Skill Electric DMG Dealt +112% for 25s.\nThis effect cannot stack."
     },
     {
       "id": "wpn_funnel_0009",
@@ -855,7 +962,8 @@
       "attribute": "gat_passive_attr_wisd",
       "secondary": "gat_passive_attr_magicdam",
       "skill": "gst_passive_ult",
-      "effect": "Humiliation: Critical Rate +14%. When the wielder casts an ultimate, the wielder gains Arts DMG Dealt +67.2% for 15s. When the wielder casts a combo skill, the wielder gains Arts DMG Dealt +33.6% for 15s. The two effects apply separately and do not stack with themselves."
+      "skillName": "Humiliation",
+      "effect": "Critical Rate +14%.\nWhen the wielder casts an ultimate, the wielder gains Arts DMG Dealt +67.2% for 15s. When the wielder casts a combo skill, the wielder gains Arts DMG Dealt +33.6% for 15s.\nThe two effects apply separately and do not stack with themselves."
     },
     {
       "id": "wpn_funnel_0006",
@@ -865,7 +973,8 @@
       "attribute": "gat_passive_attr_will",
       "secondary": "gat_passive_attr_naturaldam",
       "skill": "gst_passive_tactic",
-      "effect": "Tillite Etchings: ATK +19.6%. When the wielder's battle skill applies Nature Infliction, other operators in the team gain Arts DMG Dealt +14% for 15s. For every enemy suffering from Nature Infliction applied by the said battle skill, other operators in the team gain bonus Arts DMG Dealt +5.6%, up to a max of +16.8%. Effects of the same name cannot stack."
+      "skillName": "Tillite Etchings",
+      "effect": "ATK +19.6%.\nWhen the wielder's battle skill applies Nature Infliction, other operators in the team gain Arts DMG Dealt +14% for 15s. For every enemy suffering from Nature Infliction applied by the said battle skill, other operators in the team gain bonus Arts DMG Dealt +5.6%, up to a max of +16.8%.\nEffects of the same name cannot stack."
     },
     {
       "id": "wpn_funnel_0020",
@@ -875,7 +984,8 @@
       "attribute": "gat_passive_attr_agi",
       "secondary": "gat_passive_attr_naturaldam",
       "skill": "gst_passive_burst",
-      "effect": "Dawn of the Long Night: Arts Intensity +42. When the wielder applies an Arts Burst, the wielder gains Nature DMG Dealt +5.6% for 25s. Max stacks for this effect: 4. Duration of each stack is counted separately. Effect only triggers once every 0.1s. At 4 stacks, the aforementioned effect grants an additional Nature DMG Dealt +16.8%. This effect cannot stack."
+      "skillName": "Dawn of the Long Night",
+      "effect": "Arts Intensity +42.\nWhen the wielder applies an Arts Burst, the wielder gains Nature DMG Dealt +5.6% for 25s.\nMax stacks for this effect: 4. Duration of each stack is counted separately. Effect only triggers once every 0.1s.\nAt 4 stacks, the aforementioned effect grants an additional Nature DMG Dealt +16.8%.\nThis effect cannot stack."
     },
     {
       "id": "wpn_funnel_0016",
@@ -886,9 +996,16 @@
       "secondary": "gat_passive_attr_usp",
       "skill": "gst_passive_burst",
       "operators": [
-        "Arcane"
+        {
+          "id": "chr_0032_lizhiyan",
+          "name": "Arcane",
+          "avatars": [
+            "chr_0032_lizhiyan"
+          ]
+        }
       ],
-      "effect": "Debilitating Assault: ATK +44.8%. Wielder's Intellect ≥ Will: When the wielder applies Arts Infliction with their own skill, the wielder gains Arts DMG Dealt +56% for 20s; when the wielder applies Arts Susceptibility with their own skill, the wielder gains ATK +56% for 20s; Wielder's Will > Intellect: When the wielder applies Arts Burst with their own skill, the target enemy suffers Arts DMG Taken +16.8% for 25s; when the wielder applies Arts Susceptibility with their own skill, the target enemy suffers Arts DMG Taken +16.8% for 25s. Effects of the same name cannot stack. The aforementioned attributes only include effects from the wielder's level, talents, potentials, and attribute bonuses provided by equipped gear and weapons."
+      "skillName": "Debilitating Assault",
+      "effect": "ATK +44.8%.\nWielder's Intellect ≥ Will: When the wielder applies Arts Infliction with their own skill, the wielder gains Arts DMG Dealt +56% for 20s; when the wielder applies Arts Susceptibility with their own skill, the wielder gains ATK +56% for 20s;\nWielder's Will > Intellect: When the wielder applies Arts Burst with their own skill, the target enemy suffers Arts DMG Taken +16.8% for 25s; when the wielder applies Arts Susceptibility with their own skill, the target enemy suffers Arts DMG Taken +16.8% for 25s.\nEffects of the same name cannot stack. The aforementioned attributes only include effects from the wielder's level, talents, potentials, and attribute bonuses provided by equipped gear and weapons."
     },
     {
       "id": "wpn_funnel_0019",
@@ -899,9 +1016,16 @@
       "secondary": "gat_passive_attr_atk",
       "skill": "gst_passive_burst",
       "operators": [
-        "Typhoeus"
+        {
+          "id": "chr_0034_typhoea",
+          "name": "Typhoeus",
+          "avatars": [
+            "chr_0034_typhoea"
+          ]
+        }
       ],
-      "effect": "Hunter Instinct: Arts DMG Dealt +44.8%. After the wielder casts a battle skill, the wielder gains Arts Intensity +98 and 4 stacks of Windform for 15s. This entire effect cannot stack. Max Windform stacks: 4. When the wielder applies an Arts Burst, consume 1 stack of Windform to grant the wielder Arts DMG Dealt +11.2% for 30s. This effect can reach 4 stacks. Duration of each stack is counted separately. Effect only triggers once every 0.1s."
+      "skillName": "Hunter Instinct",
+      "effect": "Arts DMG Dealt +44.8%.\nAfter the wielder casts a battle skill, the wielder gains Arts Intensity +98 and 4 stacks of Windform for 15s.\nThis entire effect cannot stack. Max Windform stacks: 4.\nWhen the wielder applies an Arts Burst, consume 1 stack of Windform to grant the wielder Arts DMG Dealt +11.2% for 30s.\nThis effect can reach 4 stacks. Duration of each stack is counted separately. Effect only triggers once every 0.1s."
     },
     {
       "id": "wpn_funnel_0012",
@@ -911,7 +1035,8 @@
       "attribute": "gat_passive_attr_will",
       "secondary": "gat_passive_attr_heal",
       "skill": "gst_passive_heal",
-      "effect": "Redemption of Faith: Main Attribute +14%. When the wielder's battle skill provides HP treatment, the controlled operator is restored for another [168 + Will×1.4] HP. Effect only triggers once every 15s."
+      "skillName": "Redemption of Faith",
+      "effect": "Main Attribute +14%.\nWhen the wielder's battle skill provides HP treatment, the controlled operator is restored for another [168 + Will×1.4] HP.\nEffect only triggers once every 15s."
     },
     {
       "id": "wpn_funnel_0007",
@@ -921,7 +1046,8 @@
       "attribute": "gat_passive_attr_will",
       "secondary": "gat_passive_attr_usp",
       "skill": "gst_passive_spirit",
-      "effect": "Mortise-and-Tenon Analysis: Main Attribute +14%. Arts Intensity +70."
+      "skillName": "Mortise-and-Tenon Analysis",
+      "effect": "Main Attribute +14%.\nArts Intensity +70."
     },
     {
       "id": "wpn_funnel_0014",
@@ -931,7 +1057,8 @@
       "attribute": "gat_passive_attr_wisd",
       "secondary": "gat_passive_attr_physpell",
       "skill": "gst_passive_combo",
-      "effect": "Transcendent Arts: Max HP +28%. When the wielder's combo skill applies Arts Burst or Physical Status, the entire team gains Heat DMG Dealt and Electric DMG Dealt +22.4% for 15s. Effects of the same name cannot stack."
+      "skillName": "Transcendent Arts",
+      "effect": "Max HP +28%.\nWhen the wielder's combo skill applies Arts Burst or Physical Status, the entire team gains Heat DMG Dealt and Electric DMG Dealt +22.4% for 15s.\nEffects of the same name cannot stack."
     },
     {
       "id": "wpn_funnel_0005",
@@ -941,7 +1068,8 @@
       "attribute": "gat_passive_attr_wisd",
       "secondary": "gat_passive_attr_atk",
       "skill": "gst_passive_ult",
-      "effect": "Lustrous Pyre: Max HP +28%. When the wielder casts an ultimate, operators whose elements differ from the wielder gain ATK +22.4% for 20s. Effects of the same name cannot stack."
+      "skillName": "Lustrous Pyre",
+      "effect": "Max HP +28%.\nWhen the wielder casts an ultimate, operators whose elements differ from the wielder gain ATK +22.4% for 20s.\nEffects of the same name cannot stack."
     },
     {
       "id": "wpn_funnel_0004",
@@ -951,7 +1079,8 @@
       "attribute": "gat_passive_attr_wisd",
       "secondary": "gat_passive_attr_pulsedam",
       "skill": "gst_passive_magabn",
-      "effect": "Wilderness Cluster: Arts Intensity +28. When the wielder applies Electrification, the team gains Physical DMG Dealt and Electric DMG Dealt +22.4% for 15s. Effects of the same name cannot stack."
+      "skillName": "Wilderness Cluster",
+      "effect": "Arts Intensity +28.\nWhen the wielder applies Electrification, the team gains Physical DMG Dealt and Electric DMG Dealt +22.4% for 15s.\nEffects of the same name cannot stack."
     },
     {
       "id": "wpn_funnel_0003",
@@ -961,7 +1090,8 @@
       "attribute": "gat_passive_attr_will",
       "secondary": "gat_passive_attr_atk",
       "skill": "gst_passive_tactic",
-      "effect": "Emergency Boost: When the wielder's battle skill hits the enemy, the wielder gains ATK +33.6% for 20s. Effects of the same name cannot stack."
+      "skillName": "Emergency Boost",
+      "effect": "When the wielder's battle skill hits the enemy, the wielder gains ATK +33.6% for 20s.\nEffects of the same name cannot stack."
     },
     {
       "id": "wpn_funnel_0001",
@@ -971,7 +1101,8 @@
       "attribute": "gat_passive_attr_wisd",
       "secondary": "gat_passive_attr_magicdam",
       "skill": "gst_passive_spirit",
-      "effect": "Start of a Saga: When the wielder's HP is above 80%, ATK +42%."
+      "skillName": "Start of a Saga",
+      "effect": "When the wielder's HP is above 80%, ATK +42%."
     },
     {
       "id": "wpn_funnel_0002",
@@ -980,7 +1111,8 @@
       "rarity": 3,
       "attribute": "gat_passive_attr_main",
       "skill": "gst_passive_force",
-      "effect": "Armament Prep: ATK +34."
+      "skillName": "Armament Prep",
+      "effect": "ATK +34."
     },
     {
       "id": "wpn_sword_0024",
@@ -990,7 +1122,8 @@
       "attribute": "gat_passive_attr_will",
       "secondary": "gat_passive_attr_pulsedam",
       "skill": "gst_passive_burst",
-      "effect": "Complexed Advantage: ATK +19.6%. When the wielder's combo skill applies Electric Infliction, the wielder gains Arts Intensity +42 and Electric DMG Dealt +22.4% for 15s. Effects of the same name cannot stack."
+      "skillName": "Complexed Advantage",
+      "effect": "ATK +19.6%.\nWhen the wielder's combo skill applies Electric Infliction, the wielder gains Arts Intensity +42 and Electric DMG Dealt +22.4% for 15s.\nEffects of the same name cannot stack."
     },
     {
       "id": "wpn_sword_0013",
@@ -1000,7 +1133,8 @@
       "attribute": "gat_passive_attr_main",
       "secondary": "gat_passive_attr_phydam",
       "skill": "gst_passive_break",
-      "effect": "Disciplinarian: ATK +28%. After the wielder consumes Vulnerability stack(s), the wielder gains ATK +[14% + 7%×Stacks Consumed] while other operators in the team gain half of this buff for 20s. Effects of the same name cannot stack."
+      "skillName": "Disciplinarian",
+      "effect": "ATK +28%.\nAfter the wielder consumes Vulnerability stack(s), the wielder gains ATK +[14% + 7%×Stacks Consumed] while other operators in the team gain half of this buff for 20s.\nEffects of the same name cannot stack."
     },
     {
       "id": "wpn_sword_0026",
@@ -1010,7 +1144,8 @@
       "attribute": "gat_passive_attr_main",
       "secondary": "gat_passive_attr_physpell",
       "skill": "gst_passive_force",
-      "effect": "Vision for Tomorrow: When entering battle, the entire team gains the Dream Striving buff that grants DMG Dealt +14%, Arts Intensity +28, and DEF +8.4% for 20s. When Dream Striving ends, the wielder restores the entire team for 122 HP. Effects of the same name cannot stack."
+      "skillName": "Vision for Tomorrow",
+      "effect": "When entering battle, the entire team gains the Dream Striving buff that grants DMG Dealt +14%, Arts Intensity +28, and DEF +8.4% for 20s. When Dream Striving ends, the wielder restores the entire team for 122 HP.\nEffects of the same name cannot stack."
     },
     {
       "id": "wpn_sword_0006",
@@ -1021,9 +1156,16 @@
       "secondary": "gat_passive_attr_atk",
       "skill": "gst_passive_ult",
       "operators": [
-        "Laevatain"
+        {
+          "id": "chr_0016_laevat",
+          "name": "Laevatain",
+          "avatars": [
+            "chr_0016_laevat"
+          ]
+        }
       ],
-      "effect": "Blazing Wail: Heat DMG Dealt +44.8%. When the wielder casts an ultimate, the wielder gains Basic Attack DMG Dealt +210% for 20s. Effects of the same name cannot stack."
+      "skillName": "Blazing Wail",
+      "effect": "Heat DMG Dealt +44.8%.\nWhen the wielder casts an ultimate, the wielder gains Basic Attack DMG Dealt +210% for 20s.\nEffects of the same name cannot stack."
     },
     {
       "id": "wpn_sword_0017",
@@ -1033,7 +1175,8 @@
       "attribute": "gat_passive_attr_agi",
       "secondary": "gat_passive_attr_crirate",
       "skill": "gst_passive_ult",
-      "effect": "Lingering Glow: ATK +19.6%. When the wielder's skill applies Vulnerability, during the next ultimate cast within 30s, the wielder gains DMG Dealt +33.6%. Max stacks for effects of the same name: 3. Duration of each stack is counted separately. Effect only triggers once every 0.5s."
+      "skillName": "Lingering Glow",
+      "effect": "ATK +19.6%.\nWhen the wielder's skill applies Vulnerability, during the next ultimate cast within 30s, the wielder gains DMG Dealt +33.6%.\nMax stacks for effects of the same name: 3. Duration of each stack is counted separately. Effect only triggers once every 0.5s."
     },
     {
       "id": "wpn_sword_0021",
@@ -1044,9 +1187,17 @@
       "secondary": "gat_passive_attr_atk",
       "skill": "gst_passive_magabn",
       "operators": [
-        "Endministrator"
+        {
+          "id": "chr_9000_endmin",
+          "name": "Endministrator",
+          "avatars": [
+            "chr_9000_endmin-female",
+            "chr_9000_endmin-male"
+          ]
+        }
       ],
-      "effect": "Long Time Wish: Arts Intensity +84. When the wielder applies Originium Crystals or Solidification, during the next battle skill or ultimate cast within 20s, the wielder gains Physical DMG Dealt +100.8%. Effects of the same name cannot stack."
+      "skillName": "Long Time Wish",
+      "effect": "Arts Intensity +84.\nWhen the wielder applies Originium Crystals or Solidification, during the next battle skill or ultimate cast within 20s, the wielder gains Physical DMG Dealt +100.8%.\nEffects of the same name cannot stack."
     },
     {
       "id": "wpn_sword_0025",
@@ -1056,15 +1207,19 @@
       "attribute": "gat_passive_attr_will",
       "secondary": "gat_passive_attr_atk",
       "skill": "gst_passive_magabn",
+      "operators": [
+        {
+          "name": "Argent Flow",
+          "avatars": [
+            "preview-2503"
+          ]
+        }
+      ],
       "announced": true,
       "deduced": {
         "skillName": {
           "value": "Coursing Stars",
-          "basis": "It is the only Infliction weapon skill name in the game text that no weapon uses, and Lunar Calling is the only Infliction weapon without skill text. A weapon not yet in the data could still own it."
-        },
-        "operators": {
-          "value": "Argent Flow",
-          "basis": "cep links Lunar Calling to the operator 明河, whom the game text and the English community wikis name Argent Flow."
+          "basis": "the only unclaimed Infliction skill name in the game text."
         }
       }
     },
@@ -1077,9 +1232,16 @@
       "secondary": "gat_passive_attr_crirate",
       "skill": "gst_passive_crit",
       "operators": [
-        "Rossi"
+        {
+          "id": "chr_0028_wulfa",
+          "name": "Rossi",
+          "avatars": [
+            "chr_0028_wulfa"
+          ]
+        }
       ],
-      "effect": "Gnashing Wolves: ATK +44.8%. After the wielder's skill deals Critical DMG, the wielder gains 1 stack of Wolven Blood that grants Physical and Heat DMG Dealt +2.8%. Wolven Blood can reach 16 stacks. After reaching 16 stacks, the wielder gains another Physical and Heat DMG Dealt +67.2% for 20s. After the duration ends, all Wolven Blood stacks are removed."
+      "skillName": "Gnashing Wolves",
+      "effect": "ATK +44.8%.\nAfter the wielder's skill deals Critical DMG, the wielder gains 1 stack of Wolven Blood that grants Physical and Heat DMG Dealt +2.8%. Wolven Blood can reach 16 stacks. After reaching 16 stacks, the wielder gains another Physical and Heat DMG Dealt +67.2% for 20s. After the duration ends, all Wolven Blood stacks are removed."
     },
     {
       "id": "wpn_sword_0016",
@@ -1090,9 +1252,16 @@
       "secondary": "gat_passive_attr_atk",
       "skill": "gst_passive_tacafter",
       "operators": [
-        "Pogranichnik"
+        {
+          "id": "chr_0029_pograni",
+          "name": "Pogranichnik",
+          "avatars": [
+            "chr_0029_pograni"
+          ]
+        }
       ],
-      "effect": "Reincarnation: Physical DMG Dealt +44.8%. After the wielder's skill recovers SP, the wielder gains Physical DMG Dealt +14% while other operators in the team gain Physical DMG Dealt +7% for 30s. Max stacks for effects of the same name: 5. Duration of each stack is counted separately. Effect only triggers once every 0.1s."
+      "skillName": "Reincarnation",
+      "effect": "Physical DMG Dealt +44.8%.\nAfter the wielder's skill recovers SP, the wielder gains Physical DMG Dealt +14% while other operators in the team gain Physical DMG Dealt +7% for 30s.\nMax stacks for effects of the same name: 5. Duration of each stack is counted separately. Effect only triggers once every 0.1s."
     },
     {
       "id": "wpn_sword_0011",
@@ -1103,9 +1272,16 @@
       "secondary": "gat_passive_attr_crirate",
       "skill": "gst_passive_ult",
       "operators": [
-        "Chen Qianyu"
+        {
+          "id": "chr_0005_chen",
+          "name": "Chen Qianyu",
+          "avatars": [
+            "chr_0005_chen"
+          ]
+        }
       ],
-      "effect": "Azure Clouds: Battle skills and ultimates gain Physical DMG Dealt +42%. Against Staggered enemies, battle skills and ultimates also gain DMG Dealt +98%."
+      "skillName": "Azure Clouds",
+      "effect": "Battle skills and ultimates gain Physical DMG Dealt +42%.\nAgainst Staggered enemies, battle skills and ultimates also gain DMG Dealt +98%."
     },
     {
       "id": "wpn_sword_0012",
@@ -1115,7 +1291,8 @@
       "attribute": "gat_passive_attr_will",
       "secondary": "gat_passive_attr_atk",
       "skill": "gst_passive_tacafter",
-      "effect": "Thermal Release: ATK +28%. After the wielder's skill recovers SP or grants a Link state, the entire team gains ATK +14% for 20s. Max stacks for effects of the same name: 2. Duration of each stack is counted separately."
+      "skillName": "Thermal Release",
+      "effect": "ATK +28%.\nAfter the wielder's skill recovers SP or grants a Link state, the entire team gains ATK +14% for 20s.\nMax stacks for effects of the same name: 2. Duration of each stack is counted separately."
     },
     {
       "id": "wpn_sword_0010",
@@ -1125,7 +1302,8 @@
       "attribute": "gat_passive_attr_wisd",
       "secondary": "gat_passive_attr_firedam",
       "skill": "gst_passive_magabn",
-      "effect": "Covetous Buildup: ATK +19.6%. Whenever Combustion or Corrosion is applied to an enemy, the wielder gains Heat and Nature DMG Dealt +22.4% for 20s. Max stacks for effects of the same name: 2. Duration of each stack is counted separately. Effect only triggers once every 0.1s."
+      "skillName": "Covetous Buildup",
+      "effect": "ATK +19.6%.\nWhenever Combustion or Corrosion is applied to an enemy, the wielder gains Heat and Nature DMG Dealt +22.4% for 20s.\nMax stacks for effects of the same name: 2. Duration of each stack is counted separately. Effect only triggers once every 0.1s."
     },
     {
       "id": "wpn_sword_0014",
@@ -1135,7 +1313,8 @@
       "attribute": "gat_passive_attr_main",
       "secondary": "gat_passive_attr_physpell",
       "skill": "gst_passive_magabn",
-      "effect": "White Night Nova: Arts DMG Dealt +33.6%. After the wielder applies Combustion or Electrification, the wielder gains Arts DMG Dealt +33.6% and Arts Intensity +70 for 15s. Effects of the same name cannot stack."
+      "skillName": "White Night Nova",
+      "effect": "Arts DMG Dealt +33.6%.\nAfter the wielder applies Combustion or Electrification, the wielder gains Arts DMG Dealt +33.6% and Arts Intensity +70 for 15s.\nEffects of the same name cannot stack."
     },
     {
       "id": "wpn_sword_0015",
@@ -1145,7 +1324,8 @@
       "attribute": "gat_passive_attr_agi",
       "secondary": "gat_passive_attr_phydam",
       "skill": "gst_passive_ult",
-      "effect": "Imposing Peak: Ultimate DMG Dealt +44.8%. After the wielder applies Lift, during the next ultimate cast within 30s, the wielder gains Physical DMG Dealt +33.6%. Max stacks for effects of the same name: 3. Duration of each stack is counted separately. Effect only triggers once every 0.5s."
+      "skillName": "Imposing Peak",
+      "effect": "Ultimate DMG Dealt +44.8%.\nAfter the wielder applies Lift, during the next ultimate cast within 30s, the wielder gains Physical DMG Dealt +33.6%.\nMax stacks for effects of the same name: 3. Duration of each stack is counted separately. Effect only triggers once every 0.5s."
     },
     {
       "id": "wpn_sword_0023",
@@ -1156,9 +1336,16 @@
       "secondary": "gat_passive_attr_heal",
       "skill": "gst_passive_heal",
       "operators": [
-        "Purrchena"
+        {
+          "id": "chr_0038_purrche",
+          "name": "Purrchena",
+          "avatars": [
+            "chr_0038_purrche"
+          ]
+        }
       ],
-      "effect": "Sweetness and Dreams: Max HP +28%. When the wielder's combo skill grants HP treatment, the operator receiving this HP treatment gains Arts Intensity +14 and Arts DMG Dealt +9.8% for 20s. Effects of the same name cannot stack."
+      "skillName": "Sweetness and Dreams",
+      "effect": "Max HP +28%.\nWhen the wielder's combo skill grants HP treatment, the operator receiving this HP treatment gains Arts Intensity +14 and Arts DMG Dealt +9.8% for 20s.\nEffects of the same name cannot stack."
     },
     {
       "id": "wpn_sword_0020",
@@ -1168,7 +1355,8 @@
       "attribute": "gat_passive_attr_str",
       "secondary": "gat_passive_attr_icedam",
       "skill": "gst_passive_tactic",
-      "effect": "Fin Chaser's Intent: ATK +14%. When the wielder's battle skill applies Solidification, target enemy suffers Cryo DMG Taken +19.6% for 15s. Effects of the same name cannot stack."
+      "skillName": "Fin Chaser's Intent",
+      "effect": "ATK +14%.\nWhen the wielder's battle skill applies Solidification, target enemy suffers Cryo DMG Taken +19.6% for 15s.\nEffects of the same name cannot stack."
     },
     {
       "id": "wpn_sword_0007",
@@ -1178,7 +1366,8 @@
       "attribute": "gat_passive_attr_wisd",
       "secondary": "gat_passive_attr_usp",
       "skill": "gst_passive_spirit",
-      "effect": "Back to the Broken City: ATK +14%. Arts Intensity +70."
+      "skillName": "Back to the Broken City",
+      "effect": "ATK +14%.\nArts Intensity +70."
     },
     {
       "id": "wpn_sword_0019",
@@ -1188,7 +1377,8 @@
       "attribute": "gat_passive_attr_agi",
       "secondary": "gat_passive_attr_atk",
       "skill": "gst_passive_tacafter",
-      "effect": "Unbridled Edge: Secondary Attribute +14%. After the wielder's skill recovers SP, the entire team gains Heat DMG Dealt and Electric DMG Dealt +8.4% for 20s. Max stacks for effects of the same name: 3. Duration of each stack is counted separately."
+      "skillName": "Unbridled Edge",
+      "effect": "Secondary Attribute +14%.\nAfter the wielder's skill recovers SP, the entire team gains Heat DMG Dealt and Electric DMG Dealt +8.4% for 20s.\nMax stacks for effects of the same name: 3. Duration of each stack is counted separately."
     },
     {
       "id": "wpn_sword_0005",
@@ -1198,7 +1388,8 @@
       "attribute": "gat_passive_attr_agi",
       "secondary": "gat_passive_attr_phydam",
       "skill": "gst_passive_phyabn",
-      "effect": "Anthem of Cinder: ATK +14%. When the wielder deals a Physical Status, the wielder gains ATK +21% for 20s. Max stacks for effects of the same name: 2. Duration of each stack is counted separately. Effect only triggers once every 0.1s."
+      "skillName": "Anthem of Cinder",
+      "effect": "ATK +14%.\nWhen the wielder deals a Physical Status, the wielder gains ATK +21% for 20s.\nMax stacks for effects of the same name: 2. Duration of each stack is counted separately. Effect only triggers once every 0.1s."
     },
     {
       "id": "wpn_sword_0018",
@@ -1208,7 +1399,8 @@
       "attribute": "gat_passive_attr_agi",
       "secondary": "gat_passive_attr_atk",
       "skill": "gst_passive_magabn",
-      "effect": "Sincere Interrogation: Secondary Attribute +14%. After the wielder consumes an Arts Reaction, ATK +21% for 20s. Max stacks for effects of the same name: 2. Duration of each stack is counted separately."
+      "skillName": "Sincere Interrogation",
+      "effect": "Secondary Attribute +14%.\nAfter the wielder consumes an Arts Reaction, ATK +21% for 20s.\nMax stacks for effects of the same name: 2. Duration of each stack is counted separately."
     },
     {
       "id": "wpn_sword_0008",
@@ -1218,7 +1410,8 @@
       "attribute": "gat_passive_attr_agi",
       "secondary": "gat_passive_attr_phydam",
       "skill": "gst_passive_tactic",
-      "effect": "Emergency Boost: When the wielder's battle skill hits the enemy, the wielder gains ATK +33.6% for 20s. Effects of the same name cannot stack.",
+      "skillName": "Emergency Boost",
+      "effect": "When the wielder's battle skill hits the enemy, the wielder gains ATK +33.6% for 20s.\nEffects of the same name cannot stack.",
       "formerly": [
         "Contingent Measure"
       ]
@@ -1231,7 +1424,8 @@
       "attribute": "gat_passive_attr_wisd",
       "secondary": "gat_passive_attr_atk",
       "skill": "gst_passive_combo",
-      "effect": "Unending Cycle: When the wielder casts a combo skill, the wielder gains ATK +33.6% for 20s. Effects of the same name cannot stack."
+      "skillName": "Unending Cycle",
+      "effect": "When the wielder casts a combo skill, the wielder gains ATK +33.6% for 20s.\nEffects of the same name cannot stack."
     },
     {
       "id": "wpn_sword_0003",
@@ -1240,7 +1434,8 @@
       "rarity": 3,
       "attribute": "gat_passive_attr_main",
       "skill": "gst_passive_force",
-      "effect": "Armament Prep: ATK +34."
+      "skillName": "Armament Prep",
+      "effect": "ATK +34."
     },
     {
       "id": "wpn_lance_0007",
@@ -1250,7 +1445,8 @@
       "attribute": "gat_passive_attr_agi",
       "secondary": "gat_passive_attr_usp",
       "skill": "gst_passive_keyword",
-      "effect": "Fuel for the Torch: Heat DMG Dealt +19.6%. When the wielder's skill applies Heat Infliction, the wielder gains Physical and Heat DMG Dealt +22.4% for 20s. When the wielder's skill applies Heat Susceptibility, the entire team gains Physical and Heat DMG Dealt +11.2% for 30s. The two effects apply separately and do not stack with themselves."
+      "skillName": "Fuel for the Torch",
+      "effect": "Heat DMG Dealt +19.6%.\nWhen the wielder's skill applies Heat Infliction, the wielder gains Physical and Heat DMG Dealt +22.4% for 20s. When the wielder's skill applies Heat Susceptibility, the entire team gains Physical and Heat DMG Dealt +11.2% for 30s.\nThe two effects apply separately and do not stack with themselves."
     },
     {
       "id": "wpn_lance_0014",
@@ -1261,9 +1457,16 @@
       "secondary": "gat_passive_attr_heal",
       "skill": "gst_passive_heal",
       "operators": [
-        "Liino"
+        {
+          "id": "chr_0035_liino",
+          "name": "Liino",
+          "avatars": [
+            "chr_0035_liino"
+          ]
+        }
       ],
-      "effect": "Shimmering Curtain: Main attribute +44.8%. When the wielder's skill grants HP Treatment to other operators in the team, the operator receiving the wielder's treatment also gains ATK +9.8% for 20s. Max stacks for effects of the same name: 4. Duration of each stack is counted separately. Each operator can gain this effect at most once every 0.1s."
+      "skillName": "Shimmering Curtain",
+      "effect": "Main attribute +44.8%.\nWhen the wielder's skill grants HP Treatment to other operators in the team, the operator receiving the wielder's treatment also gains ATK +9.8% for 20s.\nMax stacks for effects of the same name: 4. Duration of each stack is counted separately. Each operator can gain this effect at most once every 0.1s."
     },
     {
       "id": "wpn_lance_0015",
@@ -1274,9 +1477,16 @@
       "secondary": "gat_passive_attr_firedam",
       "skill": "gst_passive_tacafter",
       "operators": [
-        "Camille"
+        {
+          "id": "chr_0033_camille",
+          "name": "Camille",
+          "avatars": [
+            "chr_0033_camille"
+          ]
+        }
       ],
-      "effect": "Absolver of Guilt: Ultimate Gain Efficiency +50.4%. When the wielder's skill recovers SP, the entire team gains ATK +16.8% for 20s. When the wielder's skill applies Heat Infliction, the entire team gains Heat DMG Dealt +16.8% for 20s. The two effects apply separately and do not stack with themselves."
+      "skillName": "Absolver of Guilt",
+      "effect": "Ultimate Gain Efficiency +50.4%.\nWhen the wielder's skill recovers SP, the entire team gains ATK +16.8% for 20s. When the wielder's skill applies Heat Infliction, the entire team gains Heat DMG Dealt +16.8% for 20s.\nThe two effects apply separately and do not stack with themselves."
     },
     {
       "id": "wpn_lance_0016",
@@ -1286,7 +1496,8 @@
       "attribute": "gat_passive_attr_will",
       "secondary": "gat_passive_attr_heal",
       "skill": "gst_passive_combo",
-      "effect": "Great Hero: Electric DMG Dealt +16.8%. When the wielder's combo skill deals DMG, the wielder gains Treatment Efficiency +11.2% for 15s. When the wielder's combo skill grants HP Treatment to other operators in the team, the entire team gains Arts DMG Dealt +14% for 20s. Effects of the same name cannot stack."
+      "skillName": "Great Hero",
+      "effect": "Electric DMG Dealt +16.8%.\nWhen the wielder's combo skill deals DMG, the wielder gains Treatment Efficiency +11.2% for 15s. When the wielder's combo skill grants HP Treatment to other operators in the team, the entire team gains Arts DMG Dealt +14% for 20s.\nEffects of the same name cannot stack."
     },
     {
       "id": "wpn_lance_0011",
@@ -1296,7 +1507,8 @@
       "attribute": "gat_passive_attr_main",
       "secondary": "gat_passive_attr_atk",
       "skill": "gst_passive_tactic",
-      "effect": "Astrophysics: Arts DMG Dealt +33.6%. When the wielder casts a battle skill, the wielder gains Arts DMG Dealt +33.6% for 15s. When the wielder casts a combo skill, Arts DMG Dealt +33.6% for 15s. The two effects apply separately and do not stack with themselves."
+      "skillName": "Astrophysics",
+      "effect": "Arts DMG Dealt +33.6%.\nWhen the wielder casts a battle skill, the wielder gains Arts DMG Dealt +33.6% for 15s. When the wielder casts a combo skill, Arts DMG Dealt +33.6% for 15s.\nThe two effects apply separately and do not stack with themselves."
     },
     {
       "id": "wpn_lance_0012",
@@ -1307,9 +1519,16 @@
       "secondary": "gat_passive_attr_phydam",
       "skill": "gst_passive_keyword",
       "operators": [
-        "Lifeng"
+        {
+          "id": "chr_0015_lifeng",
+          "name": "Lifeng",
+          "avatars": [
+            "chr_0015_lifeng"
+          ]
+        }
       ],
-      "effect": "Weight of Mountain: Against Vulnerable enemies, the wielder gains DMG Dealt +56%. When the wielder's battle skill applies Vulnerability, the wielder gains All Attributes +22.4% for 15s. When the wielder's battle skill applies Physical Susceptibility, the wielder gains All Attributes +22.4% for 15s. The two effects apply separately and do not stack with themselves."
+      "skillName": "Weight of Mountain",
+      "effect": "Against Vulnerable enemies, the wielder gains DMG Dealt +56%.\nWhen the wielder's battle skill applies Vulnerability, the wielder gains All Attributes +22.4% for 15s. When the wielder's battle skill applies Physical Susceptibility, the wielder gains All Attributes +22.4% for 15s.\nThe two effects apply separately and do not stack with themselves."
     },
     {
       "id": "wpn_lance_0010",
@@ -1319,7 +1538,8 @@
       "attribute": "gat_passive_attr_agi",
       "secondary": "gat_passive_attr_phydam",
       "skill": "gst_passive_phyabn",
-      "effect": "Virtuous Gain: ATK +28%. After the wielder applies Physical Statuses, the wielder also deals another hit of Physical DMG equal to 336% of the wielder's ATK."
+      "skillName": "Virtuous Gain",
+      "effect": "ATK +28%.\nAfter the wielder applies Physical Statuses, the wielder also deals another hit of Physical DMG equal to 336% of the wielder's ATK."
     },
     {
       "id": "wpn_lance_0004",
@@ -1329,7 +1549,8 @@
       "attribute": "gat_passive_attr_str",
       "secondary": "gat_passive_attr_usp",
       "skill": "gst_passive_break",
-      "effect": "Cemented Fury: Critical Rate +8.4%. When the wielder applies Vulnerability to an enemy with no Vulnerability stacks, the wielder gains ATK +42% for 15s. Effects of the same name cannot stack."
+      "skillName": "Cemented Fury",
+      "effect": "Critical Rate +8.4%.\nWhen the wielder applies Vulnerability to an enemy with no Vulnerability stacks, the wielder gains ATK +42% for 15s.\nEffects of the same name cannot stack."
     },
     {
       "id": "wpn_lance_0006",
@@ -1339,7 +1560,8 @@
       "attribute": "gat_passive_attr_will",
       "secondary": "gat_passive_attr_pulsedam",
       "skill": "gst_passive_tactic",
-      "effect": "Concentric Circles: Combo Skill DMG Dealt +28%. When the wielder casts a combo skill, during the next battle skill cast within 30s, the wielder gains Electric DMG Dealt +28%. Max stacks for effects of the same name: 3. Duration of each stack is counted separately."
+      "skillName": "Concentric Circles",
+      "effect": "Combo Skill DMG Dealt +28%.\nWhen the wielder casts a combo skill, during the next battle skill cast within 30s, the wielder gains Electric DMG Dealt +28%.\nMax stacks for effects of the same name: 3. Duration of each stack is counted separately."
     },
     {
       "id": "wpn_lance_0013",
@@ -1349,7 +1571,8 @@
       "attribute": "gat_passive_attr_will",
       "secondary": "gat_passive_attr_phydam",
       "skill": "gst_passive_magabn",
-      "effect": "Conquest of Icy Peaks: To enemies with Cryo Infliction or Solidification, the wielder gains DMG Dealt +22.4%. After consuming Solidification, ATK +33.6% for 15s. Effects of the same name cannot stack."
+      "skillName": "Conquest of Icy Peaks",
+      "effect": "To enemies with Cryo Infliction or Solidification, the wielder gains DMG Dealt +22.4%. After consuming Solidification, ATK +33.6% for 15s.\nEffects of the same name cannot stack."
     },
     {
       "id": "wpn_lance_0008",
@@ -1359,7 +1582,8 @@
       "attribute": "gat_passive_attr_will",
       "secondary": "gat_passive_attr_magicdam",
       "skill": "gst_passive_tactic",
-      "effect": "Emergency Boost: When the wielder's battle skill hits the enemy, the wielder gains ATK +33.6% for 20s. Effects of the same name cannot stack."
+      "skillName": "Emergency Boost",
+      "effect": "When the wielder's battle skill hits the enemy, the wielder gains ATK +33.6% for 20s.\nEffects of the same name cannot stack."
     },
     {
       "id": "wpn_lance_0003",
@@ -1369,7 +1593,8 @@
       "attribute": "gat_passive_attr_agi",
       "secondary": "gat_passive_attr_atk",
       "skill": "gst_passive_spirit",
-      "effect": "Start of a Saga: When the wielder's HP is above 80%, ATK +42%."
+      "skillName": "Start of a Saga",
+      "effect": "When the wielder's HP is above 80%, ATK +42%."
     },
     {
       "id": "wpn_lance_0009",
@@ -1378,7 +1603,8 @@
       "rarity": 3,
       "attribute": "gat_passive_attr_main",
       "skill": "gst_passive_force",
-      "effect": "Armament Prep: ATK +34."
+      "skillName": "Armament Prep",
+      "effect": "ATK +34."
     }
   ]
 }

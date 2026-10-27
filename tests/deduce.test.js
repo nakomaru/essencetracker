@@ -9,71 +9,62 @@ const weapon = (id, extra) => ({ id, name: id, skill: 'gst_passive_magabn', ...e
 const data = (...weapons) => ({ stats, weapons });
 
 const facts = (extra = {}) => ({
-  en: { 1: 'Infliction: Known Skill', 2: 'Infliction: Coursing Stars', 3: 'Argent Flow', 4: 'Assault: Other' },
-  zh: { 1: '附术·已知', 2: '附术·垂星渡野', 3: '明河' },
+  en: { 1: 'Infliction: Known Skill', 2: 'Infliction: Coursing Stars', 4: 'Assault: Other' },
+  zh: { 1: '附术·已知', 2: '附术·垂星渡野' },
   knownSkillNames: ['Infliction: Known Skill'],
-  unresolvedOperators: new Map([['new', ['明河']]]),
   ...extra,
 });
 
-test('proposes the one unclaimed skill name for the one weapon missing skill text', () => {
-  const found = candidates(data(weapon('old', { effect: 'Known Skill: ...' }), weapon('new', { announced: true })), facts());
-  const name = found.find((c) => c.key === 'skillName');
-  assert.equal(name.id, 'new');
-  assert.equal(name.value, 'Coursing Stars');
-  assert.match(name.evidence, /附术·垂星渡野/);
+test('proposes the one unclaimed skill name for the one weapon without a skill name', () => {
+  const found = candidates(data(weapon('old', { skillName: 'Known Skill' }), weapon('new', { announced: true })), facts());
+  assert.equal(found.length, 1);
+  assert.equal(found[0].id, 'new');
+  assert.equal(found[0].value, 'Coursing Stars');
+  assert.match(found[0].evidence, /附术·垂星渡野/);
 });
 
 test('proposes no skill name when the evidence is not unique', () => {
-  const twoWeapons = data(weapon('new', { announced: true }), weapon('other', { announced: true }));
-  assert.ok(!candidates(twoWeapons, facts()).some((c) => c.key === 'skillName'));
+  const twoWeapons = data(weapon('new'), weapon('other'));
+  assert.deepEqual(candidates(twoWeapons, facts()), []);
   const twoNames = facts({ en: { ...facts().en, 5: 'Infliction: Second Name' } });
-  assert.ok(!candidates(data(weapon('new', { announced: true })), twoNames).some((c) => c.key === 'skillName'));
-});
-
-test('proposes operator names only when the Chinese name has one English rendering', () => {
-  const one = candidates(data(weapon('new', { announced: true })), facts());
-  assert.equal(one.find((c) => c.key === 'operators').value, 'Argent Flow');
-  const ambiguous = facts({ zh: { ...facts().zh, 9: '明河' }, en: { ...facts().en, 9: 'Milky Way' } });
-  assert.ok(!candidates(data(weapon('new', { announced: true })), ambiguous).some((c) => c.key === 'operators'));
+  assert.deepEqual(candidates(data(weapon('new')), twoNames), []);
 });
 
 const proposed = [{ id: 'new', key: 'skillName', value: 'Coursing Stars', evidence: 'e' }];
 const accepted = { new: { skillName: { value: 'Coursing Stars', verdict: 'accepted', basis: 'b', review: 'r' } } };
-const noGaps = { unresolvedOperators: new Map() };
 
 test('publishes an accepted verdict the rules still support, without its review notes', () => {
-  const { data: out, report } = applyVerdicts(data(weapon('new', { announced: true })), proposed, accepted, noGaps);
+  const { data: out, report } = applyVerdicts(data(weapon('new')), proposed, accepted);
   assert.deepEqual(out.weapons[0].deduced, { skillName: { value: 'Coursing Stars', basis: 'b' } });
   assert.deepEqual(report, []);
 });
 
 test('reports candidates without a verdict and publishes nothing', () => {
-  const { data: out, report } = applyVerdicts(data(weapon('new', { announced: true })), proposed, {}, noGaps);
+  const { data: out, report } = applyVerdicts(data(weapon('new')), proposed, {});
   assert.equal(out.weapons[0].deduced, undefined);
   assert.match(report[0], /^CANDIDATE .*Coursing Stars.*needs a verdict/);
 });
 
 test('holds back a verdict the rules no longer support', () => {
-  const { data: out, report } = applyVerdicts(data(weapon('new', { announced: true })), [], accepted, noGaps);
+  const { data: out, report } = applyVerdicts(data(weapon('new')), [], accepted);
   assert.equal(out.weapons[0].deduced, undefined);
   assert.match(report[0], /^REVIEW .*rules now propose nothing/);
 });
 
 test('publishes nothing for a rejected verdict', () => {
   const rejected = { new: { skillName: { ...accepted.new.skillName, verdict: 'rejected' } } };
-  const { data: out, report } = applyVerdicts(data(weapon('new', { announced: true })), proposed, rejected, noGaps);
+  const { data: out, report } = applyVerdicts(data(weapon('new')), proposed, rejected);
   assert.equal(out.weapons[0].deduced, undefined);
   assert.deepEqual(report, []);
 });
 
 test('reports a deduction whose gap the game data has filled', () => {
-  const released = data(weapon('new', { effect: 'Coursing Stars: ...' }));
-  const { data: out, report } = applyVerdicts(released, [], accepted, noGaps);
+  const released = data(weapon('new', { skillName: 'Coursing Stars' }));
+  const { data: out, report } = applyVerdicts(released, [], accepted);
   assert.equal(out.weapons[0].deduced, undefined);
-  assert.match(report[0], /^RESOLVED .*retire the verdict/);
-  assert.equal(hasGaps(released, noGaps), false);
-  assert.equal(hasGaps(released, { unresolvedOperators: new Map([['new', ['明河']]]) }), true);
+  assert.match(report[0], /^RESOLVED .*is Coursing Stars in the game data.*retire the verdict/);
+  assert.equal(hasGaps(released), false);
+  assert.equal(hasGaps(data(weapon('new'))), true);
 });
 
 test('every verdict on file is complete', () => {

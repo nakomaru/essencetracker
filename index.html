@@ -34,7 +34,7 @@
     <section class="pane targets" aria-labelledby="targets-title">
       <div class="pane-head">
         <h2 id="targets-title">Weapons</h2>
-        <p class="hint">Click a weapon to cycle <b class="p1">Track</b> &rarr; <b class="p2">&#9733; Priority</b> &rarr; <b class="p0">Skip</b>. Once anything is starred, only engravings that can drop a starred weapon are shown.</p>
+        <p class="hint">Click a weapon to cycle <b class="p1">Track</b> &rarr; <b class="p2">&#9733; Priority</b> &rarr; <b class="p0">Skip</b>. Once anything is starred, only engravings that can drop a starred weapon are shown.<span class="touch-hint"> Long-press a weapon for details.</span></p>
         <div class="toolbar">
           <input id="search" type="search" placeholder="Filter by name, stat, skill or operator" autocomplete="off" aria-label="Filter weapons">
           <div class="chip-group" id="rarity-filter" role="group" aria-label="Rarity"></div>
@@ -68,6 +68,7 @@
     <span id="source"></span> Selections are saved in this browser.
   </footer>
 
+  <div id="tip" popover="manual" role="tooltip"></div>
   <dialog id="detail" aria-labelledby="detail-title"></dialog>
   <dialog id="confirm" aria-labelledby="confirm-title">
     <form method="dialog">

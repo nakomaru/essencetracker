@@ -1,7 +1,7 @@
 // Run with: npm test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { parseWeapons, parseDungeons, plainText, skillEffect, resolveOperators, build, changes } from '../tools/sync.js';
+import { parseWeapons, parseDungeons, plainText, skillText, resolveOperators, indexGameText, build, changes } from '../tools/sync.js';
 
 const WEAPONS_TS = `export const weapons: Weapon[] = [
   // ===== 六星 =====
@@ -40,6 +40,7 @@ const SOURCES = {
   },
   charNamesZh: { chr_0036_jsspsi: '祀', chr_9000_endmin: '管理员' },
   charNamesEn: { chr_0036_jsspsi: 'Si', chr_9000_endmin: 'Endministrator' },
+  previewAvatars: { 明河: 'preview-2503' },
   texts: {
     'weapon|wpn_claym_0018|skill|sk_wpn_claym_0018|name': 'Efficacy: Dabbles of Ink',
     'weapon|wpn_claym_0018|skill|sk_wpn_claym_0018|description': 'ATK <@ba.vup>+44.8%</>.\nDMG Taken <@ba.vup>+21.0%</> for 30s.',
@@ -70,13 +71,13 @@ test('parseDungeons reads all three pools and orders by group number', () => {
   assert.deepEqual(second.skill, ['gst_passive_magabn', 'gst_passive_keyword', 'gst_passive_force']);
 });
 
-test('plainText strips markup, trailing .0 and fullwidth signs', () => {
-  assert.equal(plainText('ATK <@ba.vup>+44.0%</>.\n<#ba.guard>Protected</> ＞ 2.05'), 'ATK +44%. Protected > 2.05');
+test('plainText strips markup, trailing .0 and fullwidth signs, keeping line breaks', () => {
+  assert.equal(plainText('ATK <@ba.vup>+44.0%</>. \n\n<#ba.guard>Protected</> ＞ 2.05'), 'ATK +44%.\nProtected > 2.05');
 });
 
-test('skillEffect uses the max-rank description and the skill name', () => {
-  assert.equal(skillEffect(SOURCES.texts, 'wpn_claym_0018'), 'Dabbles of Ink: ATK +44.8%. DMG Taken +21% for 30s.');
-  assert.equal(skillEffect(SOURCES.texts, 'wpn_sword_0025'), '');
+test('skillText reads the max-rank description and the skill name', () => {
+  assert.deepEqual(skillText(SOURCES.texts, 'wpn_claym_0018'), { name: 'Dabbles of Ink', text: 'ATK +44.8%.\nDMG Taken +21% for 30s.' });
+  assert.equal(skillText(SOURCES.texts, 'wpn_sword_0025'), null);
 });
 
 test('build keys entries by game id and names the stats it uses', () => {
@@ -85,23 +86,40 @@ test('build keys entries by game id and names the stats it uses', () => {
   assert.deepEqual(data.weapons.map((w) => w.name), ['Jade Vessel', 'Lunar Calling', 'Tarr 11']);
   const lunar = data.weapons.find((w) => w.id === 'wpn_sword_0025');
   assert.equal(lunar.announced, true);
+  assert.equal(lunar.skillName, undefined);
   assert.equal(lunar.effect, undefined);
+  assert.equal(data.weapons.find((w) => w.name === 'Jade Vessel').skillName, 'Dabbles of Ink');
   assert.equal(data.weapons.find((w) => w.name === 'Tarr 11').secondary, undefined);
   assert.deepEqual(data.locations.map((l) => [l.name, l.region]), [['Originium Science Park', 'Valley IV'], ['Yinglung Pass', 'Wuling']]);
   assert.equal(data.stats.gat_passive_attr_atk, 'ATK');
 });
 
-test('resolveOperators names linked operators, folding variants of one operator', () => {
-  const { charNamesZh, charNamesEn } = SOURCES;
-  assert.deepEqual(resolveOperators(['管理员(女)', '管理员(男)'], charNamesZh, charNamesEn), { resolved: ['Endministrator'], unresolved: [] });
-  assert.deepEqual(resolveOperators(['祀', '明河'], charNamesZh, charNamesEn), { resolved: ['Si'], unresolved: ['明河'] });
+test('resolveOperators folds the Endministrator variants into one operator with an avatar each', () => {
+  assert.deepEqual(resolveOperators(['管理员(女)', '管理员(男)'], SOURCES), {
+    resolved: [{ id: 'chr_9000_endmin', name: 'Endministrator', avatars: ['chr_9000_endmin-female', 'chr_9000_endmin-male'] }],
+    unresolved: [],
+  });
+  assert.deepEqual(resolveOperators(['祀', '明河'], SOURCES), {
+    resolved: [{ id: 'chr_0036_jsspsi', name: 'Si', avatars: ['chr_0036_jsspsi'] }],
+    unresolved: ['明河'],
+  });
 });
 
-test('build lists named operators and returns the ones cep cannot name', () => {
+test('resolveOperators names other operators from the game text, with their preview avatar', () => {
+  const gameText = indexGameText({ 7: 'Argent Flow', 8: 'Milky Way', 9: 'Other' }, { 7: '明河', 8: '银河', 9: '银河' });
+  assert.deepEqual(resolveOperators(['明河'], SOURCES, gameText), { resolved: [{ name: 'Argent Flow', avatars: ['preview-2503'] }], unresolved: [] });
+  // A Chinese name under several text ids has no single English name.
+  assert.deepEqual(resolveOperators(['银河'], SOURCES, gameText), { resolved: [], unresolved: ['银河'] });
+});
+
+test('build lists named operators and returns the ones it cannot name', () => {
   const { data, unresolvedOperators } = build(SOURCES, null);
-  assert.deepEqual(data.weapons.find((w) => w.name === 'Jade Vessel').operators, ['Si']);
+  assert.deepEqual(data.weapons.find((w) => w.name === 'Jade Vessel').operators.map((o) => o.name), ['Si']);
   assert.equal(data.weapons.find((w) => w.name === 'Lunar Calling').operators, undefined);
   assert.deepEqual([...unresolvedOperators], [['wpn_sword_0025', ['明河']]]);
+  const withText = build({ ...SOURCES, gameText: indexGameText({ 7: 'Argent Flow' }, { 7: '明河' }) }, null);
+  assert.deepEqual(withText.data.weapons.find((w) => w.name === 'Lunar Calling').operators.map((o) => o.name), ['Argent Flow']);
+  assert.equal(withText.unresolvedOperators.size, 0);
 });
 
 test('build records renames under formerly', () => {

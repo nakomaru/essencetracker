@@ -1,5 +1,5 @@
 import { TYPE_ORDER, PRIORITY, defaultPriority, hasSecondary, solve } from './solver.js';
-import { iconPath, typeIconPath } from './icons.js';
+import { iconPath, avatarPath, typeIconPath } from './icons.js';
 
 // Saved selections are keyed by game id. The older keys held weapon and location names.
 const PRIORITY_KEY = 'endfield_priorities_v6';
@@ -10,8 +10,7 @@ const LEGACY_EXCLUDED_KEY = 'endfield_excluded_locations_v1';
 const PAGE_SIZE = 50;
 const HITS_PREVIEW = 14;
 const RARITIES = [6, 5, 4, 3];
-const ANNOUNCED_NOTE = 'Announced, not yet released. Its stats come from preview game data and can change before release.';
-const DEDUCED_LABELS = { skillName: 'Skill name', operators: 'Signature operator' };
+const ANNOUNCED_NOTE = 'Announced: preview data, can change before release.';
 
 const $ = (sel) => document.querySelector(sel);
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
@@ -97,22 +96,23 @@ function statChips(w) {
 }
 
 const fixedChip = (option) => statChip(option.kind, option.stat, ' fixed');
-const announcedTag = (w) => (w.announced ? `<span class="tag-announced" title="${esc(ANNOUNCED_NOTE)}">Announced</span>` : '');
+const announcedTag = (w) => (w.announced ? '<span class="tag-announced">Announced</span>' : '');
 
-// The skill effect first, then the signature operator. Announced weapons can
-// predate their skill text; their caveats and any reviewed deductions follow,
-// each with its basis.
-function weaponTitle(w) {
-  const skillName = w.deduced?.skillName?.value;
-  const lines = [w.effect ?? (skillName ? `${skillName} (deduced name): skill text not published yet.` : 'Skill text not published yet.')];
-  if (w.operators) lines.push('', `Signature operator: ${w.operators.join(', ')}`);
-  if (w.announced) lines.push('', ANNOUNCED_NOTE);
-  const deduced = Object.entries(w.deduced ?? {});
-  if (deduced.length) {
-    lines.push('', 'Deduced, not confirmed by the game data:');
-    for (const [key, d] of deduced) lines.push(`${DEDUCED_LABELS[key] ?? key}: ${d.value}. ${d.basis}`);
-  }
-  return w.effect || w.announced || deduced.length ? lines.join('\n') : '';
+// Weapon tooltip: name, then type and operator, then the skill, then notes.
+function tipHtml(w) {
+  const deduced = w.deduced?.skillName;
+  const skillName = w.skillName ?? deduced?.value;
+  const operators = (w.operators ?? []).map((o) => `<div class="tip-op">
+      <span class="tip-avatars">${o.avatars.map((a) => `<img src="${esc(avatarPath(a))}" alt="">`).join('')}</span>
+      <span><small>Signature operator</small>${esc(o.name)}</span>
+    </div>`).join('');
+  const notes = [deduced ? `* Deduced name: ${deduced.basis}` : '', w.announced ? ANNOUNCED_NOTE : ''].filter(Boolean);
+  return `<div class="tip-head"><b>${esc(w.name)}</b>${announcedTag(w)}</div>
+    <div class="tip-meta r${w.rarity}">${w.rarity}&#9733; ${esc(w.type)}</div>
+    ${operators}
+    <div class="tip-skill">${statChip('skill', w.skill)}${skillName ? `<b>${esc(skillName)}${deduced ? '*' : ''}</b>` : ''}</div>
+    <p class="tip-effect${w.effect ? '' : ' missing'}">${w.effect ? esc(w.effect) : 'Skill text not published yet.'}</p>
+    ${notes.length ? `<p class="tip-note">${notes.map(esc).join('<br>')}</p>` : ''}`;
 }
 
 function priorityLabel(p) {
@@ -122,8 +122,8 @@ function priorityLabel(p) {
 function matchesQuery(w, q) {
   if (!q) return true;
   const stats = [w.attribute, w.secondary, w.skill].filter(Boolean).map(statName);
-  const operators = [...(w.operators ?? []), w.deduced?.operators?.value].filter(Boolean);
-  return [w.name, w.type, ...stats, ...operators, ...(w.formerly ?? [])].some((s) => s.toLowerCase().includes(q));
+  const names = [w.name, w.type, w.skillName, w.deduced?.skillName?.value, ...(w.operators ?? []).map((o) => o.name), ...(w.formerly ?? [])];
+  return [...names, ...stats].filter(Boolean).some((s) => s.toLowerCase().includes(q));
 }
 
 // Each filter chip toggles one bucket: rarity chips cover released weapons,
@@ -146,9 +146,8 @@ function renderFilters() {
 }
 
 function cardHtml(w) {
-  const title = weaponTitle(w);
   const p = state.priorities[w.id];
-  return `<button type="button" class="card r${w.rarity}${w.announced ? ' announced' : ''}" data-id="${esc(w.id)}" data-p="${p}" aria-label="${esc(`${w.name}${w.announced ? ' (announced)' : ''}: ${priorityLabel(p)}`)}"${title ? ` title="${esc(title)}"` : ''}>
+  return `<button type="button" class="card r${w.rarity}${w.announced ? ' announced' : ''}" data-id="${esc(w.id)}" data-tip="${esc(w.id)}" data-p="${p}" aria-label="${esc(`${w.name}${w.announced ? ' (announced)' : ''}: ${priorityLabel(p)}`)}">
     ${icon(w)}
     <span class="card-name">${esc(w.name)}</span>
     <span class="card-meta">${w.rarity}&#9733; ${esc(w.type)}${announcedTag(w)}</span>
@@ -224,7 +223,7 @@ function engravingHtml(row) {
 
 function hitHtml(h) {
   const w = h.weapon;
-  return `<span class="hit${w.announced ? ' announced' : ''}" data-p="${h.priority}"${w.announced ? ' title="Announced"' : ''}>${icon(w, 'sm')}<span class="hit-name">${esc(w.name)}</span></span>`;
+  return `<span class="hit${w.announced ? ' announced' : ''}" data-p="${h.priority}" data-tip="${esc(w.id)}">${icon(w, 'sm')}<span class="hit-name">${esc(w.name)}</span></span>`;
 }
 
 function resultHtml(row, i) {
@@ -274,9 +273,8 @@ function detailHtml(row) {
       const other = roll === '' ? '' : ` <span class="or">+</span> ${statChip(o.kind === 'secondary' ? 'skill' : 'secondary', roll)}`;
       return `<div class="roll">${multi ? `${fixedChip(o)} <span class="or">&rarr;</span> ` : ''}${statChip('attr', w.attribute)}${other}</div>`;
     }).join('');
-    const title = weaponTitle(w);
     return `<tr data-p="${h.priority}">
-      <td><div class="who">${icon(w, 'md')}<div><span class="name"${title ? ` title="${esc(title)}"` : ''}>${esc(w.name)}</span><small>${w.rarity}&#9733; ${esc(w.type)}${announcedTag(w)}</small></div></div></td>
+      <td><div class="who" data-tip="${esc(w.id)}">${icon(w, 'md')}<div><span class="name">${esc(w.name)}</span><small>${w.rarity}&#9733; ${esc(w.type)}${announcedTag(w)}</small></div></div></td>
       <td>${rolls}</td>
     </tr>`;
   }).join('');
@@ -313,6 +311,85 @@ function openDetail(row) {
   dialog.showModal();
   dialog.scrollTop = 0;
   history.pushState({ detail: true }, '');
+}
+
+/* Weapon tooltip */
+
+// One shared popover, which shows above the modal detail dialog too. Mouse
+// hover and keyboard focus show it. On touch, where a tap cycles priority or
+// opens a row, a long press shows it instead and swallows the tap.
+const LONG_PRESS_MS = 450;
+const PRESS_SLOP_PX = 10;
+let tipAnchor = null;
+let press = null;
+
+function showTip(anchor) {
+  const w = state.weaponsById.get(anchor.dataset.tip);
+  if (!w) return;
+  const tip = $('#tip');
+  tip.innerHTML = tipHtml(w);
+  if (!tip.matches(':popover-open')) tip.showPopover();
+  tipAnchor?.removeAttribute('aria-describedby');
+  tipAnchor = anchor;
+  anchor.setAttribute('aria-describedby', 'tip');
+  // Below the anchor, or above it when there is no room, inside the viewport.
+  const gap = 6;
+  const margin = 8;
+  const a = anchor.getBoundingClientRect();
+  const t = tip.getBoundingClientRect();
+  const below = a.bottom + gap + t.height <= innerHeight - margin;
+  tip.style.top = `${below ? a.bottom + gap : Math.max(margin, a.top - gap - t.height)}px`;
+  tip.style.left = `${Math.min(Math.max(margin, a.left), innerWidth - margin - t.width)}px`;
+}
+
+function hideTip() {
+  tipAnchor?.removeAttribute('aria-describedby');
+  tipAnchor = null;
+  if ($('#tip').matches(':popover-open')) $('#tip').hidePopover();
+}
+
+function bindTip() {
+  document.addEventListener('pointerover', (e) => {
+    if (e.pointerType === 'touch') return;
+    const anchor = e.target.closest('[data-tip]');
+    if (anchor && anchor !== tipAnchor) showTip(anchor);
+    else if (!anchor && tipAnchor) hideTip();
+  });
+  document.addEventListener('focusin', (e) => {
+    const anchor = e.target.closest('[data-tip]');
+    if (anchor?.matches(':focus-visible')) showTip(anchor);
+  });
+  document.addEventListener('focusout', (e) => {
+    if (e.target === tipAnchor) hideTip();
+  });
+  document.addEventListener('pointerdown', (e) => {
+    hideTip();
+    const anchor = e.pointerType === 'touch' && e.target.closest('[data-tip]');
+    if (!anchor) return;
+    press = { x: e.clientX, y: e.clientY, shown: false };
+    press.timer = setTimeout(() => {
+      press.shown = true;
+      showTip(anchor);
+    }, LONG_PRESS_MS);
+  });
+  document.addEventListener('pointermove', (e) => {
+    if (press && !press.shown && Math.hypot(e.clientX - press.x, e.clientY - press.y) > PRESS_SLOP_PX) {
+      clearTimeout(press.timer);
+      press = null;
+    }
+  });
+  for (const type of ['pointerup', 'pointercancel']) document.addEventListener(type, () => clearTimeout(press?.timer));
+  // The tap that ends a long press does not cycle priority or open a row.
+  document.addEventListener('click', (e) => {
+    if (!press?.shown) return;
+    press = null;
+    e.preventDefault();
+    e.stopPropagation();
+  }, true);
+  document.addEventListener('contextmenu', (e) => {
+    if (e.target.closest('[data-tip]')) e.preventDefault();
+  });
+  addEventListener('scroll', hideTip, { capture: true, passive: true });
 }
 
 /* Events */
@@ -488,6 +565,8 @@ function bindEvents() {
     for (const b of document.querySelectorAll('.pane-tabs button')) b.setAttribute('aria-pressed', String(b.dataset.pane === pane));
     window.scrollTo({ top: 0 });
   });
+
+  bindTip();
 
   // Missing icons fall back to the weapon's initial.
   document.addEventListener('error', (e) => {

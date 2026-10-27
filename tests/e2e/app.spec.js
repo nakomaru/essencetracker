@@ -75,14 +75,18 @@ test('announced weapons are marked and can be filtered out', async ({ page }) =>
   const cards = page.locator('.card.announced');
   await expect(cards).toHaveCount(announced.length);
   await expect(cards.first().locator('.tag-announced')).toHaveText('Announced');
-  await expect(cards.first().locator('.tag-announced')).toHaveAttribute('title', /^Announced, not yet released/);
-  // The card tooltip leads with the skill effect, then the caveats and any deductions.
   const w = announced[0];
-  const title = await cards.first().getAttribute('title');
-  expect(title.startsWith(w.effect ?? w.deduced?.skillName?.value ?? 'Skill text not published yet.')).toBe(true);
-  expect(title).toContain('Announced, not yet released');
-  for (const d of Object.values(w.deduced ?? {})) expect(title).toContain(`${d.value}. ${d.basis}`);
-  if (w.deduced) expect(title).toContain('Deduced, not confirmed by the game data:');
+  await cards.first().hover();
+  const tip = page.locator('#tip');
+  await expect(tip.locator('.tip-head b')).toHaveText(w.name);
+  await expect(tip.locator('.tip-effect')).toHaveText(w.effect ?? 'Skill text not published yet.');
+  await expect(tip.locator('.tip-note')).toContainText('Announced: preview data');
+  if (w.deduced?.skillName) {
+    await expect(tip.locator('.tip-skill b')).toHaveText(`${w.deduced.skillName.value}*`);
+    await expect(tip.locator('.tip-note')).toContainText(`* Deduced name: ${w.deduced.skillName.basis}`);
+  }
+  await page.mouse.move(0, 0);
+  await expect(tip).toBeHidden();
   await page.click('#announced-filter button');
   await expect(cards).toHaveCount(0);
   await expect(page.locator('.card')).toHaveCount(data.weapons.length - announced.length);
@@ -186,9 +190,12 @@ test('rarity filter hides weapons', async ({ page }) => {
 
 test('weapons show and match their signature operator', async ({ page }) => {
   const w = data.weapons.find((x) => x.operators?.length === 1);
+  const [operator] = w.operators;
   await open(page);
-  await expect(card(page, w.name)).toHaveAttribute('title', new RegExp(`Signature operator: ${w.operators[0]}`));
-  await page.fill('#search', w.operators[0]);
+  await card(page, w.name).hover();
+  await expect(page.locator('#tip .tip-op')).toContainText(operator.name);
+  await expect(page.locator('#tip .tip-avatars img')).toHaveCount(operator.avatars.length);
+  await page.fill('#search', operator.name);
   await expect(card(page, w.name)).toBeVisible();
 });
 
@@ -280,7 +287,23 @@ test('track and skip only touch weapons the filter shows', async ({ page }) => {
 });
 
 test.describe('phone width', () => {
-  test.use({ viewport: { width: 390, height: 844 } });
+  test.use({ viewport: { width: 390, height: 844 }, hasTouch: true });
+
+  test('a long press shows the weapon tooltip without cycling priority; a tap still cycles', async ({ page }) => {
+    await open(page);
+    const wedge = card(page, 'Wedge');
+    await wedge.scrollIntoViewIfNeeded();
+    const box = await wedge.boundingBox();
+    const point = { x: box.x + box.width / 2, y: box.y + box.height / 2 };
+    const cdp = await page.context().newCDPSession(page);
+    await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [point] });
+    await expect(page.locator('#tip .tip-head b')).toHaveText('Wedge');
+    await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+    await expect(wedge).toHaveAttribute('data-p', '1');
+    await page.touchscreen.tap(point.x, point.y);
+    await expect(page.locator('#tip')).toBeHidden();
+    await expect(wedge).toHaveAttribute('data-p', '2');
+  });
 
   test('tabs switch panes without horizontal scroll', async ({ page }) => {
     await open(page);

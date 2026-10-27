@@ -3,7 +3,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
 import { TYPE_ORDER, PRIORITY, defaultPriority, hasSecondary, requiredRoll, solve } from '../solver.js';
-import { iconPath } from '../icons.js';
+import { iconPath, avatarPath } from '../icons.js';
 
 const root = new URL('../', import.meta.url);
 const data = JSON.parse(readFileSync(new URL('data.json', root), 'utf8'));
@@ -68,6 +68,10 @@ test('weapon data is complete and uses known stats', () => {
     // Announced weapons can predate their skill text.
     assert.ok(w.announced || w.effect, `${w.name} effect`);
     assert.ok(existsSync(new URL(iconPath(w), root)), `${w.name} icon ${iconPath(w)}`);
+    for (const o of w.operators ?? []) {
+      assert.ok(o.name && o.avatars.length, `${w.name} operator`);
+      for (const a of o.avatars) assert.ok(existsSync(new URL(avatarPath(a), root)), `${o.name} avatar ${a}`);
+    }
   }
 });
 

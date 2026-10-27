@@ -140,6 +140,30 @@ button { font: inherit; color: inherit; }
   color: var(--announced); border: 1px solid currentColor; border-radius: var(--radius);
 }
 .chip-toggle.announced[aria-pressed="true"] { background: var(--announced); border-color: var(--announced); }
+
+/* Weapon tooltip */
+@media (hover: hover) { .touch-hint { display: none; } }
+[data-tip] { -webkit-touch-callout: none; }
+#tip {
+  position: fixed; inset: auto; margin: 0; pointer-events: none;
+  width: max-content; max-width: min(360px, calc(100vw - 16px)); padding: 10px 12px;
+  color: var(--text); font-size: 12.5px; line-height: 1.45;
+  background: var(--panel-2); border: 1px solid var(--line-strong); border-radius: var(--radius);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.5);
+}
+.tip-head { display: flex; align-items: center; gap: 6px; font-family: var(--display); font-size: 14px; }
+.tip-head .tag-announced { margin-left: 0; }
+.tip-meta { color: var(--rarity); font-family: var(--display); font-weight: 600; font-size: 11.5px; letter-spacing: 0.04em; }
+.tip-op { display: flex; align-items: center; gap: 8px; margin-top: 8px; font-weight: 600; }
+.tip-op small { display: block; color: var(--faint); font-size: 10.5px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; }
+.tip-avatars { display: flex; flex: none; }
+.tip-avatars img { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; background: var(--panel); border: 1px solid var(--line-strong); }
+.tip-avatars img + img { margin-left: -12px; }
+.tip-skill { display: flex; align-items: center; gap: 6px; margin-top: 8px; }
+.tip-skill b { color: var(--stat-skill); }
+.tip-effect { margin: 4px 0 0; white-space: pre-line; }
+.tip-effect.missing { color: var(--muted); }
+.tip-note { margin: 8px 0 0; padding-top: 6px; border-top: 1px solid var(--line); color: var(--muted); font-size: 11.5px; }
 .chip-toggle .count { opacity: 0.7; margin-left: 2px; }
 
 .r6 { --rarity: var(--r6); }
