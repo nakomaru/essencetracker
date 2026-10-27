@@ -38,6 +38,7 @@
         <div class="toolbar">
           <input id="search" type="search" placeholder="Filter by name, stat or skill" autocomplete="off" aria-label="Filter weapons">
           <div class="chip-group" id="rarity-filter" role="group" aria-label="Rarity"></div>
+          <div class="chip-group" id="announced-filter" role="group" aria-label="Release status" hidden></div>
           <div class="bulk">
             <button type="button" class="btn" data-bulk="track">Track shown</button>
             <button type="button" class="btn" data-bulk="skip">Skip shown</button>
@@ -64,7 +65,7 @@
   </main>
 
   <footer class="foot">
-    Weapon data from the <a href="https://endfield.wiki.gg/wiki/Weapons">Endfield Talos Wiki</a>. Selections are saved in this browser.
+    <span id="source"></span> Selections are saved in this browser.
   </footer>
 
   <dialog id="detail" aria-labelledby="detail-title"></dialog>

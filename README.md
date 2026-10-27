@@ -21,18 +21,26 @@ Pick the weapons you want Flawless Essences for, and the tracker lists the Sever
 
 Engravings that only differ in untracked outcomes are merged into one row, and rows that are strictly worse than another row at the same location are dropped.
 
+Weapons that are announced but not yet released are tracked like the rest, so their essences can be farmed ahead of time. They carry an **Announced** tag, a striped rarity edge and a dashed outline, and their stats come from preview game data that can change before release. Toggle **Announced** to hide them, then **Skip shown** to drop them from the results.
+
 ## Development
 
-The site is plain static files with no build step. Development tooling needs Node 22+ and, for the wiki sync, Python 3.
+The site is plain static files with no build step. Development tooling needs Node 22+.
 
 ```sh
 npm install          # Playwright, for browser tests and screenshots
 npm run serve        # http://127.0.0.1:8000/ (data.json is fetched, so file:// won't work)
-npm test             # solver and data tests
+npm test             # solver, sync and data tests
 npm run test:e2e     # browser tests in the installed Chrome
 npm run previews     # regenerate the README screenshots
+npm run sync         # update data.json and icons from game data
 ```
 
-### Updating data
-- **Weapons:** `npm run sync` pulls every weapon from the [Endfield Talos Wiki](https://endfield.wiki.gg/wiki/Weapons), updates `data.json` and downloads missing icons. Run `python tools/sync_weapons.py --dry-run` to preview changes. When a weapon is renamed, rename its entry and icon, and list the old name under `formerly` so saved selections carry over.
-- **Locations:** edit `alluvium` in `data.json` by hand. The wiki's [Energy Alluvium](https://endfield.wiki.gg/wiki/Energy_Alluvium) page lists each location's skill pool but not its secondary pool; the secondary pools come from game data published by [cmyyx/cep](https://github.com/cmyyx/cep/blob/main/src/data/dungeons.ts).
+### Data
+
+`data.json` is generated from the datamined game data published by [cmyyx/cep](https://github.com/cmyyx/cep): weapons, their English names and skill text, the stat names, and each Severe Energy Alluvium location's attribute, secondary and skill pools. Icons in `images/weapons/` come from the same source.
+
+- Weapons, locations and stats are keyed by game id (`wpn_sword_0025`, `world_energy_point_group13`, `gat_passive_attr_atk`), and `stats` maps each stat id to its in-game name. Saved selections are keyed by id, so renames don't lose them.
+- `npm run sync` reads every file from one cep commit, recorded under `source`, and prints what changed. `node tools/sync.js --dry-run` previews the changes without writing.
+- A weapon cep marks as preview gets `announced: true`; the next sync after its release removes it. A weapon or location whose English name changes keeps its old name under `formerly`, which search and older saved selections still match.
+- Nothing in `data.json` is edited by hand. A sync that finds an unknown weapon type or a stat without an English name stops instead of guessing.

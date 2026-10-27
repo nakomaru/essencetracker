@@ -1,19 +1,20 @@
 // Engraving solver for Severe Energy Alluvium runs.
 //
-// An engraving picks 3 of the 5 attribute stats plus one fixed stat from the
-// location's pool (a secondary stat or a skill stat). Each Flawless Essence
-// then rolls one of the 3 picked attributes, carries the fixed stat, and rolls
-// the remaining stat from the location's pool. A weapon can drop from an
-// engraving when its attribute is picked, its fixed-side stat equals the fixed
-// stat, and its other stat is in the location's pool. Weapons without a
-// secondary stat (3-star) accept any secondary.
+// An engraving picks 3 attributes from the location's attribute pool plus one
+// fixed stat from its secondary or skill pool. Each Flawless Essence then rolls
+// one of the 3 picked attributes, carries the fixed stat, and rolls the
+// remaining stat from the location's pool. A weapon can drop from an engraving
+// when its attribute is picked, its fixed-side stat equals the fixed stat, and
+// its other stat is in the location's pool. Weapons without a secondary stat
+// (3-star) accept any secondary.
+//
+// Stats are game ids such as `gat_passive_attr_atk`; data.stats names them.
 
-export const ATTRIBUTES = ['Strength', 'Agility', 'Will', 'Intellect', 'Main Attribute'];
 export const TYPE_ORDER = ['Greatsword', 'Handcannon', 'Arts Unit', 'Sword', 'Polearm'];
 export const PRIORITY = { SKIP: 0, TRACK: 1, STAR: 2 };
 const ENGRAVED_ATTRIBUTES = 3;
 
-export const hasSecondary = (w) => w.sec_stat !== 'None';
+export const hasSecondary = (w) => w.secondary !== undefined;
 
 export function defaultPriority(w) {
   return w.rarity === 3 ? PRIORITY.SKIP : PRIORITY.TRACK;
@@ -22,13 +23,14 @@ export function defaultPriority(w) {
 // Returns the stat that must roll for weapon `w` to drop, '' when no roll is
 // needed, or null when `w` cannot drop from this location and fixed stat.
 export function requiredRoll(w, pool, fixed) {
+  if (!pool.attribute.includes(w.attribute)) return null;
   if (fixed.kind === 'secondary') {
-    if (hasSecondary(w) && w.sec_stat !== fixed.stat) return null;
-    return pool.skill.includes(w.skill_stat) ? w.skill_stat : null;
+    if (hasSecondary(w) && w.secondary !== fixed.stat) return null;
+    return pool.skill.includes(w.skill) ? w.skill : null;
   }
-  if (w.skill_stat !== fixed.stat) return null;
+  if (w.skill !== fixed.stat) return null;
   if (!hasSecondary(w)) return '';
-  return pool.secondary.includes(w.sec_stat) ? w.sec_stat : null;
+  return pool.secondary.includes(w.secondary) ? w.secondary : null;
 }
 
 function combinations(items, k) {
@@ -45,14 +47,14 @@ const isStrictSubset = (a, b) => a.size < b.size && [...a].every((x) => b.has(x)
 // chosen collapse into one row with several `options`. Within a location, a
 // row whose tracked set is a strict subset of another row's is dropped. When
 // any weapon is starred, only rows yielding a starred weapon are kept.
+// `priorities` maps weapon ids to a PRIORITY; `locations` is a set of location ids.
 export function solve(data, priorities, { locations = null, limit = 100 } = {}) {
-  const priorityOf = (w) => priorities[w.name] ?? defaultPriority(w);
+  const priorityOf = (w) => priorities[w.id] ?? defaultPriority(w);
   const anyStarred = data.weapons.some((w) => priorityOf(w) === PRIORITY.STAR);
-  const locationNames = Object.keys(data.alluvium);
   const rows = [];
 
-  for (const [location, pool] of Object.entries(data.alluvium)) {
-    if (locations && !locations.has(location)) continue;
+  for (const [order, pool] of data.locations.entries()) {
+    if (locations && !locations.has(pool.id)) continue;
     const byHits = new Map();
     const fixedOptions = [
       ...pool.secondary.map((stat) => ({ kind: 'secondary', stat })),
@@ -68,27 +70,27 @@ export function solve(data, priorities, { locations = null, limit = 100 } = {}) 
       const tracked = eligible.filter((e) => e.priority > PRIORITY.SKIP);
       if (tracked.length === 0) continue;
 
-      const trackedAttrs = ATTRIBUTES.filter((a) => tracked.some((e) => e.weapon.attr_stat === a));
+      const trackedAttrs = pool.attribute.filter((a) => tracked.some((e) => e.weapon.attribute === a));
       const attrSets = trackedAttrs.length <= ENGRAVED_ATTRIBUTES
         ? [trackedAttrs]
         : combinations(trackedAttrs, ENGRAVED_ATTRIBUTES);
 
       for (const attrs of attrSets) {
         const hits = tracked
-          .filter((e) => attrs.includes(e.weapon.attr_stat))
+          .filter((e) => attrs.includes(e.weapon.attribute))
           .sort((a, b) => b.priority - a.priority || b.weapon.rarity - a.weapon.rarity || a.weapon.name.localeCompare(b.weapon.name));
         const untracked = eligible
-          .filter((e) => e.priority === PRIORITY.SKIP && attrs.includes(e.weapon.attr_stat))
+          .filter((e) => e.priority === PRIORITY.SKIP && attrs.includes(e.weapon.attribute))
           .map((e) => ({ weapon: e.weapon, roll: e.roll }));
-        const key = hits.map((e) => e.weapon.name).sort().join('|');
+        const key = hits.map((e) => e.weapon.id).sort().join('|');
         const option = { ...fixed, untracked };
         const row = byHits.get(key);
         if (row) {
           row.options.push(option);
         } else {
           byHits.set(key, {
-            location,
-            region: pool.region,
+            location: pool,
+            order,
             attrs,
             freeAttrs: ENGRAVED_ATTRIBUTES - attrs.length,
             options: [option],
@@ -112,7 +114,7 @@ export function solve(data, priorities, { locations = null, limit = 100 } = {}) 
       const best = Math.max(...row.options.map(noRoll));
       row.options = row.options.filter((o) => noRoll(o) === best);
     }
-    const hitSets = candidates.map((r) => new Set(r.hits.map((h) => h.weapon.name)));
+    const hitSets = candidates.map((r) => new Set(r.hits.map((h) => h.weapon.id)));
     candidates.forEach((row, i) => {
       if (!hitSets.some((other, j) => j !== i && isStrictSubset(hitSets[i], other))) rows.push(row);
     });
@@ -124,6 +126,6 @@ export function solve(data, priorities, { locations = null, limit = 100 } = {}) 
       b.starred - a.starred ||
       b.tracked - a.tracked ||
       b.freeAttrs - a.freeAttrs ||
-      locationNames.indexOf(a.location) - locationNames.indexOf(b.location))
+      a.order - b.order)
     .slice(0, limit);
 }

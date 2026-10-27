@@ -1,22 +1,28 @@
 import { TYPE_ORDER, PRIORITY, defaultPriority, hasSecondary, solve } from './solver.js';
 import { iconPath, typeIconPath } from './icons.js';
 
-const PRIORITY_KEY = 'endfield_priorities_v5';
-const EXCLUDED_KEY = 'endfield_excluded_locations_v1';
+// Saved selections are keyed by game id. The older keys held weapon and location names.
+const PRIORITY_KEY = 'endfield_priorities_v6';
+const EXCLUDED_KEY = 'endfield_excluded_locations_v2';
+const LEGACY_PRIORITY_KEY = 'endfield_priorities_v5';
+const LEGACY_EXCLUDED_KEY = 'endfield_excluded_locations_v1';
 const PAGE_SIZE = 50;
 const HITS_PREVIEW = 14;
 const RARITIES = [6, 5, 4, 3];
+const ANNOUNCED_NOTE = 'Announced, not yet released. Its stats come from preview game data and can change before release.';
 
 const $ = (sel) => document.querySelector(sel);
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
-const short = (stat) => stat.replace(/ Boost$/, '');
+const plural = (n, word) => `${n} ${word}${n === 1 ? '' : 's'}`;
 
 const state = {
   data: null,
+  weaponsById: new Map(),
   priorities: {},
   excluded: new Set(),
   query: '',
   rarities: new Set(RARITIES),
+  showAnnounced: true,
   rows: [],
   shown: PAGE_SIZE,
   pendingBulk: null,
@@ -38,14 +44,29 @@ function writeStorage(key, value) {
   }
 }
 
+// Looks up a saved value by id, or for legacy data by current or former name.
+function savedValue(saved, legacy, entry) {
+  if (saved) return saved[entry.id];
+  return [entry.name, ...(entry.formerly ?? [])].map((n) => legacy?.[n]).find((v) => v !== undefined);
+}
+
 function loadPriorities(weapons) {
-  const saved = readStorage(PRIORITY_KEY) ?? {};
-  const priorities = {};
-  for (const w of weapons) {
-    const previous = [w.name, ...(w.formerly ?? [])].map((n) => saved[n]).find((p) => p !== undefined);
-    priorities[w.name] = [PRIORITY.SKIP, PRIORITY.TRACK, PRIORITY.STAR].includes(previous) ? previous : defaultPriority(w);
-  }
-  return priorities;
+  const saved = readStorage(PRIORITY_KEY);
+  const legacy = saved ? null : readStorage(LEGACY_PRIORITY_KEY);
+  const valid = new Set(Object.values(PRIORITY));
+  return Object.fromEntries(weapons.map((w) => {
+    const p = savedValue(saved, legacy, w);
+    return [w.id, valid.has(p) ? p : defaultPriority(w)];
+  }));
+}
+
+function loadExcluded(locations) {
+  const saved = readStorage(EXCLUDED_KEY);
+  if (Array.isArray(saved)) return new Set(saved.filter((id) => locations.some((l) => l.id === id)));
+  const legacy = readStorage(LEGACY_EXCLUDED_KEY);
+  if (!Array.isArray(legacy)) return new Set();
+  const names = Object.fromEntries(legacy.map((n) => [n, true]));
+  return new Set(locations.filter((l) => savedValue(null, names, l)).map((l) => l.id));
 }
 
 const savePriorities = () => writeStorage(PRIORITY_KEY, state.priorities);
@@ -57,40 +78,56 @@ function icon(w, size = '') {
   return `<span class="wicon ${size} r${w.rarity}" data-initial="${esc(w.name[0])}"><img src="${esc(iconPath(w))}" alt="" loading="lazy"></span>`;
 }
 
+const statName = (id) => state.data.stats[id] ?? id;
+const statChip = (kind, id, extra = '') => `<span class="stat ${kind}${extra}">${esc(statName(id))}</span>`;
+
 function statChips(w) {
-  return `<span class="stat attr">${esc(short(w.attr_stat))}</span>`
-    + (hasSecondary(w) ? `<span class="stat secondary">${esc(short(w.sec_stat))}</span>` : '')
-    + `<span class="stat skill">${esc(w.skill_stat)}</span>`;
+  return statChip('attr', w.attribute)
+    + (hasSecondary(w) ? statChip('secondary', w.secondary) : '')
+    + statChip('skill', w.skill);
 }
 
-function fixedChip(option) {
-  return `<span class="stat ${option.kind} fixed">${esc(short(option.stat))}</span>`;
+const fixedChip = (option) => statChip(option.kind, option.stat, ' fixed');
+const announcedTag = (w) => (w.announced ? '<span class="tag-announced">Announced</span>' : '');
+
+function weaponTitle(w) {
+  return [w.announced ? ANNOUNCED_NOTE : '', w.effect ?? ''].filter(Boolean).join('\n\n');
+}
+
+function priorityLabel(p) {
+  return p === PRIORITY.STAR ? 'priority' : p === PRIORITY.TRACK ? 'tracked' : 'skipped';
 }
 
 function matchesQuery(w, q) {
   if (!q) return true;
-  return [w.name, w.type, w.attr_stat, w.sec_stat, w.skill_stat, ...(w.formerly ?? [])].some((s) => s.toLowerCase().includes(q));
+  const stats = [w.attribute, w.secondary, w.skill].filter(Boolean).map(statName);
+  return [w.name, w.type, ...stats, ...(w.formerly ?? [])].some((s) => s.toLowerCase().includes(q));
 }
 
 function visibleWeapons() {
   const q = state.query.trim().toLowerCase();
-  return state.data.weapons.filter((w) => state.rarities.has(w.rarity) && matchesQuery(w, q));
+  return state.data.weapons.filter((w) =>
+    state.rarities.has(w.rarity) && (state.showAnnounced || !w.announced) && matchesQuery(w, q));
 }
 
 /* Weapons pane */
 
-function renderRarityFilter() {
+function renderFilters() {
   $('#rarity-filter').innerHTML = RARITIES.map((r) =>
     `<button type="button" class="chip-toggle r${r}" data-rarity="${r}" aria-pressed="${state.rarities.has(r)}">${r}&#9733;</button>`).join('');
+  const announced = state.data.weapons.filter((w) => w.announced).length;
+  $('#announced-filter').hidden = announced === 0;
+  $('#announced-filter').innerHTML =
+    `<button type="button" class="chip-toggle announced" aria-pressed="${state.showAnnounced}" title="${esc(ANNOUNCED_NOTE)}">Announced <span class="count">${announced}</span></button>`;
 }
 
 function cardHtml(w) {
-  const effect = w.skill_effect ? ` title="${esc(w.skill_effect)}"` : '';
-  const p = state.priorities[w.name];
-  return `<button type="button" class="card r${w.rarity}" data-name="${esc(w.name)}" data-p="${p}" aria-label="${esc(`${w.name}: ${priorityLabel(p)}`)}"${effect}>
+  const title = weaponTitle(w);
+  const p = state.priorities[w.id];
+  return `<button type="button" class="card r${w.rarity}${w.announced ? ' announced' : ''}" data-id="${esc(w.id)}" data-p="${p}" aria-label="${esc(`${w.name}${w.announced ? ' (announced)' : ''}: ${priorityLabel(p)}`)}"${title ? ` title="${esc(title)}"` : ''}>
     ${icon(w)}
     <span class="card-name">${esc(w.name)}</span>
-    <span class="card-meta">${w.rarity}&#9733; ${esc(w.type)}</span>
+    <span class="card-meta">${w.rarity}&#9733; ${esc(w.type)}${announcedTag(w)}</span>
     <span class="star" aria-hidden="true">&#9733;</span>
     <span class="stats">${statChips(w)}</span>
   </button>`;
@@ -111,15 +148,10 @@ function renderWeapons() {
   $('#weapon-groups').innerHTML = html || '<p class="empty">No weapons match this filter.</p>';
 }
 
-function priorityLabel(p) {
-  return p === PRIORITY.STAR ? 'priority' : p === PRIORITY.TRACK ? 'tracked' : 'skipped';
-}
-
-function updateCard(name) {
-  const card = document.querySelector(`.card[data-name="${CSS.escape(name)}"]`);
+function updateCard(id) {
+  const card = document.querySelector(`.card[data-id="${CSS.escape(id)}"]`);
   if (!card) return;
-  card.dataset.p = state.priorities[name];
-  card.setAttribute('aria-label', `${name}: ${priorityLabel(state.priorities[name])}`);
+  card.outerHTML = cardHtml(state.weaponsById.get(id));
 }
 
 function renderTally() {
@@ -134,26 +166,25 @@ function renderTally() {
 /* Locations */
 
 function renderLocations() {
-  const regions = {};
-  for (const [name, pool] of Object.entries(state.data.alluvium)) (regions[pool.region] ??= []).push(name);
-  $('#location-filter').innerHTML = Object.entries(regions).map(([region, names]) => `
+  const regions = Map.groupBy(state.data.locations, (l) => l.region);
+  $('#location-filter').innerHTML = [...regions].map(([region, locations]) => `
     <div class="region">
       <div class="region-head">${esc(region)}
         <button type="button" data-region="${esc(region)}" data-on="true">all</button>
         <button type="button" data-region="${esc(region)}" data-on="false">none</button>
       </div>
-      <div class="chip-group">${names.map((n) =>
-        `<button type="button" class="chip-toggle" data-location="${esc(n)}" aria-pressed="${!state.excluded.has(n)}">${esc(n)}</button>`).join('')}
+      <div class="chip-group">${locations.map((l) =>
+        `<button type="button" class="chip-toggle" data-location="${esc(l.id)}" aria-pressed="${!state.excluded.has(l.id)}">${esc(l.name)}</button>`).join('')}
       </div>
     </div>`).join('');
-  const total = Object.keys(state.data.alluvium).length;
+  const total = state.data.locations.length;
   $('#location-count').textContent = `(${total - state.excluded.size} of ${total})`;
 }
 
 /* Results */
 
 function recompute() {
-  const enabled = new Set(Object.keys(state.data.alluvium).filter((n) => !state.excluded.has(n)));
+  const enabled = new Set(state.data.locations.filter((l) => !state.excluded.has(l.id)).map((l) => l.id));
   state.rows = solve(state.data, state.priorities, { locations: enabled, limit: Infinity });
   state.shown = PAGE_SIZE;
   renderResults();
@@ -161,24 +192,27 @@ function recompute() {
 }
 
 function engravingHtml(row) {
-  const attrs = row.attrs.map((a) => `<span class="stat attr">${esc(short(a))}</span>`).join('');
+  const attrs = row.attrs.map((a) => statChip('attr', a)).join('');
   const free = row.freeAttrs ? `<span class="stat any" title="Any attribute works here">any${row.freeAttrs > 1 ? ` &times;${row.freeAttrs}` : ''}</span>` : '';
   const fixed = row.options.map(fixedChip).join('<span class="or">or</span>');
   return `${attrs}${free}<span class="sep" aria-hidden="true"></span>${fixed}`;
 }
 
+function hitHtml(h) {
+  const w = h.weapon;
+  return `<span class="hit${w.announced ? ' announced' : ''}" data-p="${h.priority}"${w.announced ? ' title="Announced"' : ''}>${icon(w, 'sm')}<span class="hit-name">${esc(w.name)}</span></span>`;
+}
+
 function resultHtml(row, i) {
-  const preview = row.hits.slice(0, HITS_PREVIEW).map((h) =>
-    `<span class="hit" data-p="${h.priority}">${icon(h.weapon, 'sm')}<span class="hit-name">${esc(h.weapon.name)}</span></span>`).join('');
+  const preview = row.hits.slice(0, HITS_PREVIEW).map(hitHtml).join('');
   const more = row.hits.length > HITS_PREVIEW ? `<span class="hit">+${row.hits.length - HITS_PREVIEW} more</span>` : '';
-  const total = row.starred + row.tracked;
   const score = (row.starred ? `<span class="p2" title="Priority weapons">${row.starred}</span>` : '')
-    + `<span class="p1">${total} weapon${total > 1 ? 's' : ''}</span>`;
+    + `<span class="p1">${plural(row.starred + row.tracked, 'weapon')}</span>`;
   return `<li><button type="button" class="result" data-row="${i}">
     <span class="result-head">
       <span class="rank">${i + 1}</span>
-      <span class="loc">${esc(row.location)}</span>
-      <span class="loc-region">${esc(row.region)}</span>
+      <span class="loc">${esc(row.location.name)}</span>
+      <span class="loc-region">${esc(row.location.region)}</span>
       <span class="score">${score}</span>
     </span>
     <span class="engraving">${engravingHtml(row)}</span>
@@ -191,7 +225,7 @@ function renderResults() {
   const tracked = Object.values(state.priorities).some((p) => p > PRIORITY.SKIP);
   let html;
   if (!tracked) html = '<li class="empty">Nothing is tracked. Click weapons on the left to track them.</li>';
-  else if (state.excluded.size === Object.keys(state.data.alluvium).length) html = '<li class="empty">All locations are hidden. Enable some under Locations.</li>';
+  else if (state.excluded.size === state.data.locations.length) html = '<li class="empty">All locations are hidden. Enable some under Locations.</li>';
   else if (rows.length === 0) html = '<li class="empty">No engraving can drop these weapons at the enabled locations.</li>';
   else html = rows.slice(0, shown).map(resultHtml).join('');
   $('#results').innerHTML = html;
@@ -202,38 +236,36 @@ function renderResults() {
 
 /* Detail dialog */
 
-function rollText(roll) {
-  return `<span class="stat ${roll.endsWith('Boost') ? 'secondary' : 'skill'}">${esc(short(roll))}</span>`;
-}
-
 function detailHtml(row) {
   const multi = row.options.length > 1;
-  const attrList = row.attrs.map((a) => `<span class="stat attr">${esc(short(a))}</span>`).join(' ');
+  const attrList = row.attrs.map((a) => statChip('attr', a)).join(' ');
   const freeNote = row.freeAttrs ? ` plus any ${row.freeAttrs === 1 ? 'other attribute' : `${row.freeAttrs} others`}` : '';
   const fixedList = row.options.map(fixedChip).join(' <span class="or">or</span> ');
 
   const rows = row.hits.map((h) => {
     const w = h.weapon;
-    const attr = `<span class="stat attr">${esc(short(w.attr_stat))}</span>`;
     const rolls = row.options.map((o) => {
-      const other = h.rollFor[o.stat] === '' ? '' : ` <span class="or">+</span> ${rollText(h.rollFor[o.stat])}`;
-      return `<div class="roll">${multi ? `${fixedChip(o)} <span class="or">&rarr;</span> ` : ''}${attr}${other}</div>`;
+      const roll = h.rollFor[o.stat];
+      // The second roll comes from the pool the fixed stat is not in.
+      const other = roll === '' ? '' : ` <span class="or">+</span> ${statChip(o.kind === 'secondary' ? 'skill' : 'secondary', roll)}`;
+      return `<div class="roll">${multi ? `${fixedChip(o)} <span class="or">&rarr;</span> ` : ''}${statChip('attr', w.attribute)}${other}</div>`;
     }).join('');
+    const title = weaponTitle(w);
     return `<tr data-p="${h.priority}">
-      <td><div class="who">${icon(w, 'md')}<div><span class="name" title="${esc(w.skill_effect)}">${esc(w.name)}</span><small>${w.rarity}&#9733; ${esc(w.type)}</small></div></div></td>
+      <td><div class="who">${icon(w, 'md')}<div><span class="name"${title ? ` title="${esc(title)}"` : ''}>${esc(w.name)}</span><small>${w.rarity}&#9733; ${esc(w.type)}${announcedTag(w)}</small></div></div></td>
       <td>${rolls}</td>
     </tr>`;
   }).join('');
 
   const untracked = row.options.map((o) => {
     if (o.untracked.length === 0) return '';
-    const label = multi ? `with ${esc(short(o.stat))} fixed` : 'from this engraving';
-    return `<details class="untracked"><summary>${o.untracked.length} skipped weapon${o.untracked.length > 1 ? 's' : ''} can also drop ${label}</summary>
+    const label = multi ? `with ${esc(statName(o.stat))} fixed` : 'from this engraving';
+    return `<details class="untracked"><summary>${plural(o.untracked.length, 'skipped weapon')} can also drop ${label}</summary>
       <ul>${o.untracked.map((u) => `<li>${esc(u.weapon.name)}</li>`).join('')}</ul></details>`;
   }).join('');
 
   return `<div class="detail-head">
-      <h3 id="detail-title">${esc(row.location)} <span class="loc-region">${esc(row.region)}</span></h3>
+      <h3 id="detail-title">${esc(row.location.name)} <span class="loc-region">${esc(row.location.region)}</span></h3>
       <button type="button" class="detail-close" aria-label="Close">&times;</button>
       <ol class="steps">
         <li>Engrave attributes ${attrList}${freeNote}</li>
@@ -261,10 +293,10 @@ function openDetail(row) {
 
 /* Events */
 
-function cyclePriority(name) {
+function cyclePriority(id) {
   const next = { [PRIORITY.TRACK]: PRIORITY.STAR, [PRIORITY.STAR]: PRIORITY.SKIP, [PRIORITY.SKIP]: PRIORITY.TRACK };
-  state.priorities[name] = next[state.priorities[name]];
-  updateCard(name);
+  state.priorities[id] = next[state.priorities[id]];
+  updateCard(id);
   savePriorities();
   recompute();
 }
@@ -307,8 +339,8 @@ function bulkChanges(action) {
   const { scope, next } = BULK_ACTIONS[action];
   const changes = new Map();
   for (const w of scope()) {
-    const p = next(w, state.priorities[w.name]);
-    if (p !== state.priorities[w.name]) changes.set(w.name, p);
+    const p = next(w, state.priorities[w.id]);
+    if (p !== state.priorities[w.id]) changes.set(w.id, p);
   }
   return changes;
 }
@@ -319,9 +351,9 @@ function confirmBulk(action) {
   const n = changes.size;
   $('#confirm-title').textContent = def.title;
   $('#confirm-text').textContent = def.text(def.scope().length);
-  $('#confirm-count').textContent = n ? `${n} weapon${n > 1 ? 's' : ''} will change:` : 'No weapons would change.';
-  $('#confirm-list').innerHTML = [...changes].map(([name, p]) =>
-    `<li>${esc(name)} <span class="or">&rarr;</span> <span class="p${p}">${priorityLabel(p)}</span></li>`).join('');
+  $('#confirm-count').textContent = n ? `${plural(n, 'weapon')} will change:` : 'No weapons would change.';
+  $('#confirm-list').innerHTML = [...changes].map(([id, p]) =>
+    `<li>${esc(state.weaponsById.get(id).name)} <span class="or">&rarr;</span> <span class="p${p}">${priorityLabel(p)}</span></li>`).join('');
   $('#confirm-list').hidden = n === 0;
   $('#confirm-ok').textContent = def.button;
   $('#confirm-ok').hidden = n === 0;
@@ -334,7 +366,7 @@ function confirmBulk(action) {
 
 function applyBulk(action) {
   // Recomputed at apply time so the confirmed list matches what changes.
-  for (const [name, p] of bulkChanges(action)) state.priorities[name] = p;
+  for (const [id, p] of bulkChanges(action)) state.priorities[id] = p;
   savePriorities();
   renderWeapons();
   recompute();
@@ -343,7 +375,7 @@ function applyBulk(action) {
 function bindEvents() {
   $('#weapon-groups').addEventListener('click', (e) => {
     const card = e.target.closest('.card');
-    if (card) cyclePriority(card.dataset.name);
+    if (card) cyclePriority(card.dataset.id);
   });
 
   $('#search').addEventListener('input', (e) => {
@@ -356,7 +388,14 @@ function bindEvents() {
     if (!r) return;
     if (state.rarities.has(r)) state.rarities.delete(r);
     else state.rarities.add(r);
-    renderRarityFilter();
+    renderFilters();
+    renderWeapons();
+  });
+
+  $('#announced-filter').addEventListener('click', (e) => {
+    if (!e.target.closest('button')) return;
+    state.showAnnounced = !state.showAnnounced;
+    renderFilters();
     renderWeapons();
   });
 
@@ -373,16 +412,16 @@ function bindEvents() {
   });
 
   $('#location-filter').addEventListener('click', (e) => {
-    const loc = e.target.closest('[data-location]')?.dataset.location;
+    const id = e.target.closest('[data-location]')?.dataset.location;
     const region = e.target.closest('[data-region]');
-    if (loc) {
-      if (state.excluded.has(loc)) state.excluded.delete(loc);
-      else state.excluded.add(loc);
+    if (id) {
+      if (state.excluded.has(id)) state.excluded.delete(id);
+      else state.excluded.add(id);
     } else if (region) {
-      for (const [name, pool] of Object.entries(state.data.alluvium)) {
-        if (pool.region !== region.dataset.region) continue;
-        if (region.dataset.on === 'true') state.excluded.delete(name);
-        else state.excluded.add(name);
+      for (const l of state.data.locations) {
+        if (l.region !== region.dataset.region) continue;
+        if (region.dataset.on === 'true') state.excluded.delete(l.id);
+        else state.excluded.add(l.id);
       }
     } else {
       return;
@@ -410,8 +449,10 @@ function bindEvents() {
   detail.addEventListener('close', () => {
     if (history.state?.detail) history.back();
   });
+  // history.back() settles asynchronously, so a dialog opened in the meantime
+  // pushes its own entry; only an entry without a detail view closes it.
   window.addEventListener('popstate', () => {
-    if (detail.open) detail.close();
+    if (detail.open && !history.state?.detail) detail.close();
   });
 
   document.querySelector('.pane-tabs').addEventListener('click', (e) => {
@@ -428,6 +469,11 @@ function bindEvents() {
   }, true);
 }
 
+function renderSource() {
+  const { repo, commit, date } = state.data.source;
+  $('#source').innerHTML = `Game data from <a href="https://github.com/${esc(repo)}/tree/${esc(commit)}">${esc(repo)}</a>, as of ${esc(date)}.`;
+}
+
 async function main() {
   try {
     const res = await fetch('data.json');
@@ -437,12 +483,14 @@ async function main() {
     $('#weapon-groups').innerHTML = `<p class="empty">Could not load data.json (${esc(err.message)}). Serve this folder over HTTP rather than opening the file directly.</p>`;
     return;
   }
+  state.weaponsById = new Map(state.data.weapons.map((w) => [w.id, w]));
   state.priorities = loadPriorities(state.data.weapons);
+  state.excluded = loadExcluded(state.data.locations);
   savePriorities();
-  const excluded = readStorage(EXCLUDED_KEY);
-  if (Array.isArray(excluded)) state.excluded = new Set(excluded.filter((n) => n in state.data.alluvium));
+  saveExcluded();
 
-  renderRarityFilter();
+  renderSource();
+  renderFilters();
   renderWeapons();
   renderLocations();
   bindEvents();

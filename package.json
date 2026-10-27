@@ -7,7 +7,7 @@
     "test": "node --test",
     "test:e2e": "playwright test",
     "previews": "node tools/update_previews.js",
-    "sync": "python tools/sync_weapons.py"
+    "sync": "node tools/sync.js"
   },
   "devDependencies": {
     "@playwright/test": "^1.63.0"

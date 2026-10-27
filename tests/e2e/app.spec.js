@@ -1,21 +1,36 @@
 // Run with: npm run test:e2e
 import { test, expect } from '@playwright/test';
+import { readFileSync } from 'node:fs';
 
-const PRIORITY_KEY = 'endfield_priorities_v5';
+const data = JSON.parse(readFileSync(new URL('../../data.json', import.meta.url), 'utf8'));
+const PRIORITY_KEY = 'endfield_priorities_v6';
+const LEGACY_PRIORITY_KEY = 'endfield_priorities_v5';
+const LEGACY_EXCLUDED_KEY = 'endfield_excluded_locations_v1';
+
+const weaponId = (name) => data.weapons.find((w) => w.name === name).id;
+const announced = data.weapons.filter((w) => w.announced);
 
 async function open(page) {
   await page.goto('/');
   await page.locator('.card').first().waitFor();
 }
 
-async function seed(page, priorities) {
+// Loads the app with only `entries`, a list of [key, value] pairs, in localStorage.
+async function store(page, entries) {
   await page.goto('/');
-  await page.evaluate(([key, value]) => localStorage.setItem(key, JSON.stringify(value)), [PRIORITY_KEY, priorities]);
+  await page.evaluate((e) => {
+    localStorage.clear();
+    for (const [key, value] of e) localStorage.setItem(key, JSON.stringify(value));
+  }, entries);
   await page.reload();
   await page.locator('.card').first().waitFor();
 }
 
-const card = (page, name) => page.locator(`.card[data-name="${name}"]`);
+// Seeds priorities given by weapon name.
+const seed = (page, byName) =>
+  store(page, [[PRIORITY_KEY, Object.fromEntries(Object.entries(byName).map(([n, p]) => [weaponId(n), p]))]]);
+
+const card = (page, name) => page.locator(`.card[data-id="${weaponId(name)}"]`);
 const detail = (page) => page.locator('#detail');
 
 // A worker runs one test at a time, so one list per worker is enough.
@@ -34,19 +49,42 @@ test.afterEach(() => {
 
 test('renders every weapon with its icon', async ({ page }) => {
   await open(page);
-  await expect(page.locator('.card')).toHaveCount(80);
+  await expect(page.locator('.card')).toHaveCount(data.weapons.length);
   await page.waitForLoadState('networkidle');
   const broken = await page.$$eval('.wicon img', (imgs) => imgs.filter((i) => i.complete && i.naturalWidth === 0).length);
   expect(broken).toBe(0);
 });
 
-test('saved selections survive a weapon rename', async ({ page }) => {
-  await seed(page, { 'Contingent Measure': 2, Wedge: 0 });
+test('selections saved by name, including former names, carry over to ids', async ({ page }) => {
+  await store(page, [
+    [LEGACY_PRIORITY_KEY, { 'Contingent Measure': 2, Wedge: 0 }],
+    [LEGACY_EXCLUDED_KEY, ['North Wuling Exclusion Zone']],
+  ]);
   await expect(card(page, 'Prominent Edge')).toHaveAttribute('data-p', '2');
   await expect(card(page, 'Wedge')).toHaveAttribute('data-p', '0');
   await expect(card(page, 'Farsight')).toHaveAttribute('data-p', '1');
   const saved = await page.evaluate((key) => JSON.parse(localStorage.getItem(key)), PRIORITY_KEY);
-  expect(saved).not.toHaveProperty('Contingent Measure');
+  expect(saved[weaponId('Prominent Edge')]).toBe(2);
+  await page.click('.locations summary');
+  await expect(page.locator('[data-location="world_energy_point_group11"]')).toHaveAttribute('aria-pressed', 'false');
+});
+
+test('announced weapons are marked and can be filtered out', async ({ page }) => {
+  test.skip(announced.length === 0, 'no announced weapons in the data');
+  await open(page);
+  const cards = page.locator('.card.announced');
+  await expect(cards).toHaveCount(announced.length);
+  await expect(cards.first().locator('.tag-announced')).toHaveText('Announced');
+  await expect(cards.first()).toHaveAttribute('title', /^Announced, not yet released/);
+  await page.click('#announced-filter button');
+  await expect(cards).toHaveCount(0);
+  await expect(page.locator('.card')).toHaveCount(data.weapons.length - announced.length);
+});
+
+test('footer names the game data source and its date', async ({ page }) => {
+  await open(page);
+  await expect(page.locator('#source')).toContainText(`as of ${data.source.date}`);
+  await expect(page.locator('#source a')).toHaveAttribute('href', new RegExp(data.source.commit));
 });
 
 test('clicking cycles track, priority, skip', async ({ page }) => {
@@ -83,7 +121,8 @@ test('detail dialog closes with Escape, backdrop and the back button', async ({ 
   await expect(detail(page)).toHaveAttribute('open', '');
   await page.keyboard.press('Escape');
   await expect(detail(page)).not.toHaveAttribute('open', '');
-  expect(await page.evaluate(() => history.state?.detail)).toBeFalsy();
+  // Closing calls history.back(), which settles asynchronously.
+  await expect.poll(() => page.evaluate(() => history.state?.detail)).toBeFalsy();
 
   await page.locator('.result').nth(1).click();
   await page.mouse.click(5, 5);
@@ -97,7 +136,7 @@ test('detail dialog closes with Escape, backdrop and the back button', async ({ 
 
 test('3-star weapon with its skill fixed needs only its attribute', async ({ page }) => {
   await open(page);
-  const skipAll = await page.$$eval('.card', (cs) => Object.fromEntries(cs.map((c) => [c.dataset.name, 0])));
+  const skipAll = Object.fromEntries(data.weapons.map((w) => [w.name, 0]));
   await seed(page, { ...skipAll, 'Tarr 11': 1, 'Lone Barge': 1 });
   const row = page.locator('.result', { has: page.locator('.stat.skill.fixed', { hasText: /^Assault$/ }) }).first();
   await row.click();
@@ -109,7 +148,7 @@ test('search matches stats and former names', async ({ page }) => {
   await page.fill('#search', 'twilight');
   const count = await page.locator('.card').count();
   expect(count).toBeGreaterThan(0);
-  expect(count).toBeLessThan(80);
+  expect(count).toBeLessThan(data.weapons.length);
   await page.fill('#search', 'contingent');
   await expect(page.locator('.card')).toHaveCount(1);
 });
