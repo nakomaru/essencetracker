@@ -88,10 +88,11 @@ function statChips(w) {
 }
 
 const fixedChip = (option) => statChip(option.kind, option.stat, ' fixed');
-const announcedTag = (w) => (w.announced ? '<span class="tag-announced">Announced</span>' : '');
+const announcedTag = (w) => (w.announced ? `<span class="tag-announced" title="${esc(ANNOUNCED_NOTE)}">Announced</span>` : '');
 
+// The skill effect; announced weapons can predate their skill text.
 function weaponTitle(w) {
-  return [w.announced ? ANNOUNCED_NOTE : '', w.effect ?? ''].filter(Boolean).join('\n\n');
+  return w.effect ?? (w.announced ? 'Skill text not published yet.' : '');
 }
 
 function priorityLabel(p) {

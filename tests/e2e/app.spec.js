@@ -75,7 +75,9 @@ test('announced weapons are marked and can be filtered out', async ({ page }) =>
   const cards = page.locator('.card.announced');
   await expect(cards).toHaveCount(announced.length);
   await expect(cards.first().locator('.tag-announced')).toHaveText('Announced');
-  await expect(cards.first()).toHaveAttribute('title', /^Announced, not yet released/);
+  await expect(cards.first().locator('.tag-announced')).toHaveAttribute('title', /^Announced, not yet released/);
+  // The card tooltip is the skill effect, or says the text is not out yet.
+  await expect(cards.first()).toHaveAttribute('title', announced[0].effect ?? 'Skill text not published yet.');
   await page.click('#announced-filter button');
   await expect(cards).toHaveCount(0);
   await expect(page.locator('.card')).toHaveCount(data.weapons.length - announced.length);
