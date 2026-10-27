@@ -30,7 +30,7 @@ The site is plain static files with no build step. Development tooling needs Nod
 ```sh
 npm install          # Playwright, for browser tests and screenshots
 npm run serve        # http://127.0.0.1:8000/ (data.json is fetched, so file:// won't work)
-npm test             # solver, sync and data tests
+npm test             # solver, sync, deduction and data tests
 npm run test:e2e     # browser tests in the installed Chrome
 npm run previews     # regenerate the README screenshots
 npm run sync         # update data.json and icons from game data
@@ -44,3 +44,15 @@ npm run sync         # update data.json and icons from game data
 - `npm run sync` reads every file from one cep commit, recorded under `source`, and prints what changed. `node tools/sync.js --dry-run` previews the changes without writing.
 - A weapon cep marks as preview gets `announced: true`; the next sync after its release removes it. A weapon or location whose English name changes keeps its old name under `formerly`, which search and older saved selections still match.
 - Nothing in `data.json` is edited by hand. A sync that finds an unknown weapon type or a stat without an English name stops instead of guessing.
+
+### Deductions
+
+Announced weapons often arrive before their skill text. The game's full text table, published by [cmyyx/cep-assets](https://github.com/cmyyx/cep-assets), can still hold the answer without linking it to the weapon, such as a weapon skill name that no released weapon uses. `tools/deduce.js` holds the rules that find these, and the sync fetches the text table only while some data is missing.
+
+The rules only propose. A reviewer weighs each proposal and records a verdict in `tools/deductions.json`: `accepted` or `rejected`, the `basis` shown to users, and `review` notes on the evidence and residual risk. The sync then prints:
+
+- `CANDIDATE`: a proposal without a verdict. Nothing is published until one is recorded.
+- `REVIEW`: a verdict the rules no longer support, because the evidence changed. It is held back until reviewed again.
+- `RESOLVED`: the game data has filled the gap. The deduction is dropped; compare it with the real data and retire the verdict.
+
+Accepted deductions appear under the weapon's `deduced`, and the site lists them after the skill text, each with its basis, under "Deduced, not confirmed by the game data".

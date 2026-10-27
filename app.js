@@ -4,12 +4,14 @@ import { iconPath, typeIconPath } from './icons.js';
 // Saved selections are keyed by game id. The older keys held weapon and location names.
 const PRIORITY_KEY = 'endfield_priorities_v6';
 const EXCLUDED_KEY = 'endfield_excluded_locations_v2';
+const FILTERS_KEY = 'endfield_filters_v1';
 const LEGACY_PRIORITY_KEY = 'endfield_priorities_v5';
 const LEGACY_EXCLUDED_KEY = 'endfield_excluded_locations_v1';
 const PAGE_SIZE = 50;
 const HITS_PREVIEW = 14;
 const RARITIES = [6, 5, 4, 3];
 const ANNOUNCED_NOTE = 'Announced, not yet released. Its stats come from preview game data and can change before release.';
+const DEDUCED_LABELS = { skillName: 'Skill name', operator: 'Signature operator' };
 
 const $ = (sel) => document.querySelector(sel);
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
@@ -69,8 +71,15 @@ function loadExcluded(locations) {
   return new Set(locations.filter((l) => savedValue(null, names, l)).map((l) => l.id));
 }
 
+function loadFilters() {
+  const saved = readStorage(FILTERS_KEY);
+  if (Array.isArray(saved?.rarities)) state.rarities = new Set(saved.rarities.filter((r) => RARITIES.includes(r)));
+  if (typeof saved?.announced === 'boolean') state.showAnnounced = saved.announced;
+}
+
 const savePriorities = () => writeStorage(PRIORITY_KEY, state.priorities);
 const saveExcluded = () => writeStorage(EXCLUDED_KEY, [...state.excluded]);
+const saveFilters = () => writeStorage(FILTERS_KEY, { rarities: [...state.rarities], announced: state.showAnnounced });
 
 /* Rendering helpers */
 
@@ -90,9 +99,18 @@ function statChips(w) {
 const fixedChip = (option) => statChip(option.kind, option.stat, ' fixed');
 const announcedTag = (w) => (w.announced ? `<span class="tag-announced" title="${esc(ANNOUNCED_NOTE)}">Announced</span>` : '');
 
-// The skill effect; announced weapons can predate their skill text.
+// The skill effect first. Announced weapons can predate their skill text;
+// their caveats and any reviewed deductions follow, each with its basis.
 function weaponTitle(w) {
-  return w.effect ?? (w.announced ? 'Skill text not published yet.' : '');
+  const skillName = w.deduced?.skillName?.value;
+  const lines = [w.effect ?? (skillName ? `${skillName} (deduced name): skill text not published yet.` : 'Skill text not published yet.')];
+  if (w.announced) lines.push('', ANNOUNCED_NOTE);
+  const deduced = Object.entries(w.deduced ?? {});
+  if (deduced.length) {
+    lines.push('', 'Deduced, not confirmed by the game data:');
+    for (const [key, d] of deduced) lines.push(`${DEDUCED_LABELS[key] ?? key}: ${d.value}. ${d.basis}`);
+  }
+  return w.effect || w.announced || deduced.length ? lines.join('\n') : '';
 }
 
 function priorityLabel(p) {
@@ -391,6 +409,7 @@ function bindEvents() {
     if (!r) return;
     if (state.rarities.has(r)) state.rarities.delete(r);
     else state.rarities.add(r);
+    saveFilters();
     renderFilters();
     renderWeapons();
   });
@@ -398,6 +417,7 @@ function bindEvents() {
   $('#announced-filter').addEventListener('click', (e) => {
     if (!e.target.closest('button')) return;
     state.showAnnounced = !state.showAnnounced;
+    saveFilters();
     renderFilters();
     renderWeapons();
   });
@@ -489,6 +509,7 @@ async function main() {
   state.weaponsById = new Map(state.data.weapons.map((w) => [w.id, w]));
   state.priorities = loadPriorities(state.data.weapons);
   state.excluded = loadExcluded(state.data.locations);
+  loadFilters();
   savePriorities();
   saveExcluded();
 

@@ -7,14 +7,21 @@
 // selections and searches by the old name still find it. Weapons that cep
 // marks as preview (announced, not yet released) get `announced: true`.
 // Stats are stored as game ids; `stats` maps each id in use to its English name.
+//
+// When some data is still missing, deduce.js proposes deductions from the game
+// text tables in cmyyx/cep-assets. Only those with an accepted verdict in
+// tools/deductions.json are published; see deduce.js.
 import { readFile, writeFile, access } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { TYPE_ORDER } from '../solver.js';
 import { iconPath } from '../icons.js';
+import { candidates, applyVerdicts, hasGaps } from './deduce.js';
 
 const ROOT = new URL('..', import.meta.url);
 const DATA = new URL('data.json', ROOT);
+const VERDICTS = new URL('tools/deductions.json', ROOT);
 const REPO = 'cmyyx/cep';
+const TEXT_REPO = 'cmyyx/cep-assets';
 
 const TYPE_NAMES = { 单手剑: 'Sword', 双手剑: 'Greatsword', 施术单元: 'Arts Unit', 长柄武器: 'Polearm', 手铳: 'Handcannon' };
 
@@ -44,6 +51,7 @@ export function parseWeapons(ts) {
       secondary: f.elementalDamage,
       skill: f.specialAbility,
       preview: f.source === 'preview',
+      chars: [...(line.match(/chars: \[([^\]]*)\]/)?.[1] ?? '').matchAll(/'([^']+)'/g)].map((m) => m[1]),
     };
   });
 }
@@ -155,10 +163,14 @@ export function changes(before, after) {
       byId.delete(n.id);
       if (!o) {
         out.push(`NEW       ${kind} ${n.name}${n.announced ? ' (announced)' : ''}`);
+        for (const [key, d] of Object.entries(n.deduced ?? {})) out.push(`DEDUCED   ${kind} ${n.name}: ${key} ${d.value}`);
         continue;
       }
       if (o.name !== n.name) out.push(`RENAMED   ${kind} ${o.name} -> ${n.name}`);
       if (o.announced && !n.announced) out.push(`RELEASED  ${kind} ${n.name}`);
+      for (const [key, d] of Object.entries(n.deduced ?? {})) {
+        if (o.deduced?.[key]?.value !== d.value) out.push(`DEDUCED   ${kind} ${n.name}: ${key} ${d.value}`);
+      }
       const changed = keys.filter((k) => JSON.stringify(o[k]) !== JSON.stringify(n[k]));
       if (changed.length) out.push(`UPDATED   ${kind} ${n.name}: ${changed.join(', ')}`);
     }
@@ -179,8 +191,10 @@ async function get(url, as = 'text') {
   return res[as]();
 }
 
+const latestCommit = (repo) => get(`https://api.github.com/repos/${repo}/commits/HEAD`, 'json');
+
 export async function fetchSources() {
-  const commit = await get(`https://api.github.com/repos/${REPO}/commits/main`, 'json');
+  const commit = await latestCommit(REPO);
   const raw = (path, as) => get(`https://raw.githubusercontent.com/${REPO}/${commit.sha}/${path}`, as);
   const [weaponsTs, dungeonsTs, weaponNames, stats, dungeonNames, texts] = await Promise.all([
     raw('src/data/weapons.ts'),
@@ -194,15 +208,45 @@ export async function fetchSources() {
   return { source, weaponsTs, dungeonsTs, weaponNames, stats, dungeonNames, texts, raw };
 }
 
+// The game's full text tables, split into chunks listed in the repo's manifest.
+async function fetchGameText(locales) {
+  const commit = await latestCommit(TEXT_REPO);
+  const raw = (path) => get(`https://raw.githubusercontent.com/${TEXT_REPO}/${commit.sha}/${path}`, 'json');
+  const manifest = await raw('manifest.json');
+  const tables = await Promise.all(locales.map(async (locale) =>
+    Object.assign({}, ...(await Promise.all(manifest.locales[locale].chunks.map((c) => raw(c.file)))))));
+  return { commit: commit.sha, tables };
+}
+
+// Facts the logical pass reasons from; see deduce.js.
+export function deductionFacts(src, en, zh) {
+  const knownSkillNames = Object.entries(src.texts)
+    .filter(([key]) => /^weapon\|[^|]+\|skill\|sk_[^|]+\|name$/.test(key))
+    .map(([, name]) => name);
+  const chars = new Map(parseWeapons(src.weaponsTs).map((w) => [w.id, w.chars]));
+  return { en, zh, knownSkillNames, chars };
+}
+
 const exists = (url) => access(url).then(() => true, () => false);
 
 async function main() {
   const dryRun = process.argv.includes('--dry-run');
   const previous = (await exists(DATA)) ? JSON.parse(await readFile(DATA, 'utf8')) : null;
   const src = await fetchSources();
-  const { data: next, icons, skipped } = build(src, previous);
+  let { data: next, icons, skipped } = build(src, previous);
   console.log(`cep ${next.source.commit.slice(0, 7)} (${next.source.date})`);
+  let report = [];
+  const verdicts = JSON.parse(await readFile(VERDICTS, 'utf8'));
+  if (hasGaps(next)) {
+    const text = await fetchGameText(['en', 'zh-CN']);
+    console.log(`cep-assets ${text.commit.slice(0, 7)} (game text, for deductions)`);
+    ({ data: next, report } = applyVerdicts(next, candidates(next, deductionFacts(src, ...text.tables)), verdicts));
+    next.source = { ...next.source, text: { repo: TEXT_REPO, commit: text.commit } };
+  } else {
+    ({ data: next, report } = applyVerdicts(next, [], verdicts));
+  }
   for (const line of changes(previous, next)) console.log(line);
+  for (const line of report) console.log(line);
   for (const id of skipped) console.log(`SKIPPED   weapon ${id} (no English name yet)`);
 
   const missingIcons = [];

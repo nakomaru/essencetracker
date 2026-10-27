@@ -51,7 +51,7 @@ test('parseWeapons reads one entry per line, with null secondaries and preview f
   const [lunar, jade, tarr] = parseWeapons(WEAPONS_TS);
   assert.deepEqual(lunar, {
     id: 'wpn_sword_0025', iconId: 'wpn_sword_0025', rarity: 6, type: '单手剑',
-    attribute: 'gat_passive_attr_will', secondary: 'gat_passive_attr_atk', skill: 'gst_passive_magabn', preview: true,
+    attribute: 'gat_passive_attr_will', secondary: 'gat_passive_attr_atk', skill: 'gst_passive_magabn', preview: true, chars: ['明河'],
   });
   assert.equal(jade.preview, false);
   assert.equal(tarr.secondary, null);

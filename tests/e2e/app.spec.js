@@ -76,8 +76,13 @@ test('announced weapons are marked and can be filtered out', async ({ page }) =>
   await expect(cards).toHaveCount(announced.length);
   await expect(cards.first().locator('.tag-announced')).toHaveText('Announced');
   await expect(cards.first().locator('.tag-announced')).toHaveAttribute('title', /^Announced, not yet released/);
-  // The card tooltip is the skill effect, or says the text is not out yet.
-  await expect(cards.first()).toHaveAttribute('title', announced[0].effect ?? 'Skill text not published yet.');
+  // The card tooltip leads with the skill effect, then the caveats and any deductions.
+  const w = announced[0];
+  const title = await cards.first().getAttribute('title');
+  expect(title.startsWith(w.effect ?? w.deduced?.skillName?.value ?? 'Skill text not published yet.')).toBe(true);
+  expect(title).toContain('Announced, not yet released');
+  for (const d of Object.values(w.deduced ?? {})) expect(title).toContain(`${d.value}. ${d.basis}`);
+  if (w.deduced) expect(title).toContain('Deduced, not confirmed by the game data:');
   await page.click('#announced-filter button');
   await expect(cards).toHaveCount(0);
   await expect(page.locator('.card')).toHaveCount(data.weapons.length - announced.length);
@@ -177,6 +182,17 @@ test('rarity filter hides weapons', async ({ page }) => {
   await open(page);
   await page.click('[data-rarity="3"]');
   await expect(page.locator('.card.r3')).toHaveCount(0);
+});
+
+test('rarity and announced filters persist', async ({ page }) => {
+  await open(page);
+  await page.click('[data-rarity="3"]');
+  await page.click('#announced-filter button');
+  await page.reload();
+  await page.locator('.card').first().waitFor();
+  await expect(page.locator('[data-rarity="3"]')).toHaveAttribute('aria-pressed', 'false');
+  await expect(page.locator('.card.r3')).toHaveCount(0);
+  await expect(page.locator('#announced-filter button')).toHaveAttribute('aria-pressed', String(announced.length === 0));
 });
 
 test('location filter applies and persists', async ({ page }) => {

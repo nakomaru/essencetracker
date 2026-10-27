@@ -2,7 +2,11 @@
   "source": {
     "repo": "cmyyx/cep",
     "commit": "c062e742fe4da2cd497466b820591808c6acb0d3",
-    "date": "2026-10-21"
+    "date": "2026-10-21",
+    "text": {
+      "repo": "cmyyx/cep-assets",
+      "commit": "db375355cab356115a485218efb7f3b8fb2698ba"
+    }
   },
   "stats": {
     "gat_passive_attr_agi": "Agility",
@@ -1004,7 +1008,17 @@
       "attribute": "gat_passive_attr_will",
       "secondary": "gat_passive_attr_atk",
       "skill": "gst_passive_magabn",
-      "announced": true
+      "announced": true,
+      "deduced": {
+        "skillName": {
+          "value": "Coursing Stars",
+          "basis": "It is the only Infliction weapon skill name in the game text that no weapon uses, and Lunar Calling is the only Infliction weapon without skill text. A weapon not yet in the data could still own it."
+        },
+        "operator": {
+          "value": "Argent Flow",
+          "basis": "cep links Lunar Calling to the operator 明河, which the game text renders in English as Argent Flow."
+        }
+      }
     },
     {
       "id": "wpn_sword_0022",
