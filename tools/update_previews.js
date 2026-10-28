@@ -12,7 +12,7 @@ const STARRED = ['Amaranthine Tassel', 'Phantom Pain'].map((name) => data.weapon
 
 const server = await serve(PORT);
 try {
-  const browser = await chromium.launch({ channel: 'chrome' });
+  const browser = await chromium.launch();
   const page = await browser.newPage({ viewport: { width: 1600, height: 950 } });
   await page.goto(PAGE_URL);
   await page.locator('.card').first().waitFor();

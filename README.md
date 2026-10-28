@@ -29,10 +29,10 @@ Weapons that are announced but not yet released are tracked like the rest, so th
 The site is plain static files with no build step. Development tooling needs Node 22+.
 
 ```sh
-npm install          # Playwright, for browser tests and screenshots
+npm install          # Playwright and its headless Chromium, for browser tests and screenshots
 npm run serve        # http://127.0.0.1:8000/ (data.json is fetched, so file:// won't work)
 npm test             # solver, sync, deduction and data tests
-npm run test:e2e     # browser tests in the installed Chrome
+npm run test:e2e     # browser tests in Playwright's headless Chromium
 npm run previews     # regenerate the README screenshots
 npm run sync         # update data.json and icons from game data
 ```

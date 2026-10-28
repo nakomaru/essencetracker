@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "postinstall": "playwright install --only-shell chromium",
     "serve": "node tools/serve.js 8000",
     "test": "node --test",
     "test:e2e": "playwright test",
